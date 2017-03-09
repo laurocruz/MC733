@@ -1,6 +1,6 @@
-SOURCE=main.c calc_primo.c
+SOURCE=main.c
 OBJ=primo
-FLAGS=-pg
+FLAGS=-fopenmp -lm
 
 all: ${SOURCE}
 	gcc ${SOURCE} -o ${OBJ} ${FLAGS}

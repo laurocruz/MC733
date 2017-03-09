@@ -72,4 +72,8 @@ Todos primos entre 1 e n:
             user    0m28.315s
             sys 0m0.003s
 
+GPROF:
+    O programa, como era esparado, gasta mais tempo na função que descobre se um número é primo ou não (calc_primo).
+    
+    Paralelização
 

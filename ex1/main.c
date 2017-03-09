@@ -17,9 +17,9 @@ int main() {
     int n, x = 0;
     scanf("%d", &n);
 
-    //if (n >= 2) x++;
+    if (n >= 2) x++;
 
-    for (int i = 2; i <= n; i++) {
+    for (int i = 3; i <= n; i += 2) {
         if (primo(i)) x++;
     }
 
