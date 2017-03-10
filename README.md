@@ -153,10 +153,12 @@ seja a mesma sempre.
 
 ## Por que Ã© bom para medir desempenho?
 
-O programa é bom para medir desempenho pois podemos esperar que para um tamanho grande de texto a
-atividade usará bastante o processor. COnsiderando que vamos usar grandes textos, também podemos
-esperar um levantamento do desempenho do disco, por existe o trabalho de trazer esse texto bloco a
-bloco para ser cifrado e escrito novamente no disco.
+Para grandes tamanhos de input (plaintext/ciphertext) podemos obter bons levantamentos do trabalho
+do processador, por o trabalho para cifrar cada bloco é relativamente extenso.
+
+Usando grandes textos também podemos esperar uma utilização do disco que afetará o benchmark, visto
+que existe o trabalho de copiar bloco a bloco do texto para a memória, e então copiar esse bloco de
+volta para o disco (em forma de ciphertext/plaintext).
 
 Podem existir implementações do AES que fazem uso de aceleradores ou de execução paralela. Nesse
 caso, se encontramos boas implementações que fazem uso dessas ferramentas, nosso benchmark também
