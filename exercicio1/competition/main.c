@@ -1,7 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
+#include <omp.h>
 
-int nesimo_primo(long int n, long int primos[], long int* tam);
+int nesimo_primo(long int n, long int primos[]);
+int ompPrime(long int n); 
 
 int main() {
     long int n, ant = 1, tam = 1;
@@ -14,10 +17,13 @@ int main() {
     if (n > 1) {
         for (int i = 2; i <= n; i++) {
             ant += 2;
-            while (!nesimo_primo(ant, primos, &tam))
+            while (!nesimo_primo(ant, primos))
                 ant += 2;
+            primos[tam++] = ant;
         }
     } else if (n < 1) return 1;
+
+    else ant++;
 
     printf("%d-ésimo primo: %d\n", n, ant);
 
@@ -25,14 +31,3 @@ int main() {
 }
 
 
-int nesimo_primo(long int n, long int primos[], long int* tam) {
-    int i;
-
-    for(i = 0; primos[i]*primos[i] <= n; i++)
-        if (n % primos[i] == 0)
-            return 0;
-
-    primos[(*tam)++] = n;
-    return 1;
-
-}

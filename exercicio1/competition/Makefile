@@ -1,4 +1,4 @@
-SOURCE=main.c
+SOURCE=main.c primo_omp.c primo_array.c
 OBJ=primo
 FLAGS=-fopenmp -lm
 
