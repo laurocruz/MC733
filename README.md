@@ -128,3 +128,55 @@ Os tempos obtidos foram:
 * `mtune`: 10.580s
 
 Pode-se perceber que os tempos ficaram bem mais lentos que a versão sem paralelização.
+
+---
+
+# Exercício 2
+
+# Programa 0 - Cifra de bloco AES usado modo de operação CBC
+## O programa cifra e decifra texto de bloco em bloco. Com o modo de operação CBC podemos realizar
+## essa operação para grandes extensões de texto.
+
+A cifra realiza a cifração de blocos de 128 bits com chaves de tamanho 128, 192 ou 256 bits (tamanho
+da chave ainda a ser definido). Para garantir que grandes quantidades de dados seja cifradas para
+realizar o benchmark usaremos o modo de operação CBC, que divide o plaintext em váriops blocos de
+128 bits, realiza um ou-exclusivo desse plaintext com o ciphertext da cifração anterior e passa esse
+bloco pelo AES, gerando assim um novo ciphertext:
+
+![alt tag](https://upload.wikimedia.org/wikipedia/commons/8/80/CBC_encryption.svg)
+
+![alt_tag](https://upload.wikimedia.org/wikipedia/commons/2/2a/CBC_decryption.svg)
+
+Podemos esperar que, para boas implementações da cifra, o tempo para realizar uma operação com
+plaintexts de mesmo tamanho seja a mesma. Se não, que pelo menos a operação para o mesmo plaintext
+seja a mesma sempre.
+
+## Por que Ã© bom para medir desempenho?
+
+O programa é bom para medir desempenho pois podemos esperar que para um tamanho grande de texto a
+atividade usará bastante o processor. COnsiderando que vamos usar grandes textos, também podemos
+esperar um levantamento do desempenho do disco, por existe o trabalho de trazer esse texto bloco a
+bloco para ser cifrado e escrito novamente no disco.
+
+Podem existir implementações do AES que fazem uso de aceleradores ou de execução paralela. Nesse
+caso, se encontramos boas implementações que fazem uso dessas ferramentas, nosso benchmark também
+poderá fazer uma avaliação disso.
+
+## O que baixar
+Onde pode ser baixado o cÃ³digo fonte dele. NÃ£o Ã© permitido utilizar nenhum versÃ£o jÃ¡ instalada
+nos computadores.
+## Como compilar/instalar
+O programa deverÃ¡ ser instalado no computador, compilado localmente. NÃ£o deixar o binÃ¡rio
+disponÃ­vel. NÃ£o deve ser necessÃ¡rio instalar como administrador do computador (root)
+## Como executar
+InstruÃ§Ãµes para execuÃ§Ã£o. Se seu programa precisa de entradas, vocÃª deve fornece-las para que
+todos executem corretamente.
+## Como medir o desempenho
+Como que o desempenho Ã© medido atravÃ©s deste programa? Se for atravÃ©s de tempo, vocÃª deve
+especificar claramente qual tempo deverÃ¡ ser utilizado e indicar o motivo aqui. Quantas vezes a
+medida deverÃ¡ ser feita? O que fazer com ela (mÃ©dia, etc) ? NÃ£o especificar o tempo serÃ¡
+considerado falha grave.
+## Como apresentar o desempenho
+Como o desempenho deverÃ¡ ser mostrado. Margem de erro, etc. 
+## MediÃ§Ãµes base (uma mÃ¡quina)
+Inclua a especificaÃ§Ã£o dos componentes relevantes e os resultados de desempenho.
