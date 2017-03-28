@@ -1,0 +1,351 @@
+1 -----------------------------------------------------------------------
+Branch Misses: 246062057.0
+Desvio Padrao de branch misses:  2.43 %
+
+Numero de Bus-Cycles:  3810355765.0
+Desvio Padrao de Bus-Cycles:  0.38 %
+
+IPC do processador:  2.32
+
+Numero de Cache L1 Misses:  1371675943.0
+Desvio Padrao do Caches L1 misses 0.11 %
+
+Tempo de Execucao:  39.215325675
+Desvio Padrao do tempo de execucao:  0.41 %
+
+NOTA PARA O DESEMPENHO:  32.5119064532
+2 -----------------------------------------------------------------------
+41.96995752
+3 -----------------------------------------------------------------------
+87
+91
+92
+96
+91
+95
+94
+94
+94
+93
+Uso medio de CPU (%): 92.70
+Tempo medio de execucao (s): 24.31
+Uso medio de memoria (kB): 1551.20
+4 -----------------------------------------------------------------------
+Setup is 16444 bytes (padded to 16896 bytes).
+System is 3463 kB
+CRC f8f197f6
+Kernel: arch/x86/boot/bzImage is ready  (#5)
+Cache miss:
+3,668,658,990
+Tempo da primeira execução:
+375.427542506 s
+Tempo da segunda execução:
+426.227499219 s
+Média da memória virtual:
+1625945.8970520063 kB
+7 -----------------------------------------------------------------------
+Degree of each polynomial: 2000000
+FFT exec #1: 2.451s
+FFT exec #2: 2.421s
+FFT exec #3: 2.845s
+FFT exec #4: 2.405s
+FFT exec #5: 5.116s
+
+|NN's training set|: 300
+NN exec #1: 6.054s
+NN exec #2: 7.119s
+NN exec #3: 7.176s
+NN exec #4: 7.172s
+NN exec #5: 7.180s
+
+score = 725 (the more, the better)
+9 -----------------------------------------------------------------------
+15.94589901
+10 ----------------------------------------------------------------------
+-------------
+METRIC STATS:
+	min: 2.745000
+	max: 3.350000
+	mean: 2.823875
+	std: 0.138190
+	confidence interval (95%): 0.074277
+	CONF IVAL MIN, CONF IVAL MAX: 2.749598, 2.898152
+14 ----------------------------------------------------------------------
+Cycles per Instructions: 0.711758260458 +- 0.427200187266%
+L1 cache miss ratio: 0.0126572100215 +- 0.238537208838%
+Data TLB miss ratio: 0.464058328253 +- 1.04637469388%
+branchMispredictRatio: 0.0133245952087 +- 0.166433169771%
+Tempo: 28.284635648 +- 1.99%
+Disk Time Usage: 0.83%
+Media: 12.3450136041
+15 ----------------------------------------------------------------------
+Performance counter stats for 'python2 benchmark.py' (3 runs):
+
+  422,577,884,052      cycles:u                  #    2.704 GHz                      ( +-  0.20% )  (37.50%)
+  113,253,943,669      branches:u                #  724.653 M/sec                    ( +-  0.01% )  (50.00%)
+    5,037,999,847      branch-misses:u           #    4.45% of all branches          ( +-  0.07% )  (50.00%)
+    156287.031881      cpu-clock:u (msec)        #    1.000 CPUs utilized            ( +-  1.26% )
+    4,528,674,564      cache-references:u        #   28.977 M/sec                    ( +-  0.19% )  (50.00%)
+      969,883,936      cache-misses:u            #   21.417 % of all cache refs      ( +-  0.12% )  (50.00%)
+  202,585,184,158      L1-dcache-loads:u         # 1296.238 M/sec                    ( +-  0.01% )  (50.00%)
+    8,663,179,180      L1-dcache-load-misses:u   #    4.28% of all L1-dcache hits    ( +-  0.03% )  (25.00%)
+    4,510,999,754      LLC-loads:u               #   28.864 M/sec                    ( +-  0.33% )  (25.00%)
+  <not supported>      LLC-load-misses:u
+
+    156.294801355 seconds time elapsed                                          ( +-  1.26% )
+16 ----------------------------------------------------------------------
+real	0m26.311s
+user	0m20.877s
+sys	0m5.433s
+
+real	0m26.230s
+user	0m20.663s
+sys	0m5.563s
+
+real	0m26.140s
+user	0m20.653s
+sys	0m5.487s
+
+real	0m26.116s
+user	0m20.680s
+sys	0m5.433s
+
+real	0m26.158s
+user	0m20.717s
+sys	0m5.440s
+
+real	0m26.206s
+user	0m20.560s
+sys	0m5.643s
+
+real	0m26.141s
+user	0m20.667s
+sys	0m5.473s
+
+real	0m26.169s
+user	0m20.577s
+sys	0m5.590s
+17 ---------------------------------------------------------------------
+
+   775,915,717,242      cycles:u                  #    2.298 GHz                      ( +-  0.72% )  (34.20%)
+    33,229,646,665      bus-cycles:u              #   98.395 M/sec                    ( +-  5.05% )  (43.68%)
+                 1      major-faults:u            #    0.000 K/sec                    ( +-100.00% )
+            74,610      minor-faults:u            #    0.221 K/sec                    ( +-  0.14% )
+   129,163,476,086      branches:u                #  382.463 M/sec                    ( +-  0.04% )  (43.62%)
+     1,271,109,298      branch-misses:u           #    0.98% of all branches          ( +-  0.19% )  (43.40%)
+     337715.109403      cpu-clock:u (msec)        #    2.328 CPUs utilized            ( +-  4.99% )
+     6,707,600,601      cache-references:u        #   19.862 M/sec                    ( +-  0.13% )  (43.60%)
+     3,734,477,401      cache-misses:u            #   55.675 % of all cache refs      ( +-  0.13% )  (43.47%)
+   426,964,019,337      L1-dcache-loads:u         # 1264.273 M/sec                    ( +-  0.10% )  (36.31%)
+    32,210,439,753      L1-dcache-load-misses:u   #    7.54% of all L1-dcache hits    ( +-  0.62% )  (26.09%)
+     5,466,893,346      LLC-loads:u               #   16.188 M/sec                    ( +-  0.34% )  (24.42%)
+   <not supported>      LLC-load-misses:u
+
+     145.059393290 seconds time elapsed                                          ( +-  5.13% )
+
+18----------------------------------------------------------------------
+22.9681
+19 ---------------------------------------------------------------------
+----- Executando para n = 70000000 -----
+
+-- Execucao 1 para n = 70000000 --
+DFT1D:
+  Aplica FFTW3 sobre um único vetor complexo.
+
+  Transforma a entrada em coeficiente da DFT.
+  Reverte os coeficientes da DFT obtida nos dados originais.
+  Compara os dados originais com os obtidos.
+
+  Criando um vetor aleatório de entrada...
+
+  Criando um vetor de saída com os coeficientes da DFT...
+
+  Recuperando o vetor original a partir dos coeficientes da DFT...
+
+  Fim da execução do algoritmo.
+
+real	0m8.968s
+user	0m8.340s
+sys	0m0.627s
+
+-- Execucao 2 para n = 70000000 --
+DFT1D:
+  Aplica FFTW3 sobre um único vetor complexo.
+
+  Transforma a entrada em coeficiente da DFT.
+  Reverte os coeficientes da DFT obtida nos dados originais.
+  Compara os dados originais com os obtidos.
+
+  Criando um vetor aleatório de entrada...
+
+  Criando um vetor de saída com os coeficientes da DFT...
+
+  Recuperando o vetor original a partir dos coeficientes da DFT...
+
+  Fim da execução do algoritmo.
+
+real	0m8.172s
+user	0m7.510s
+sys	0m0.660s
+
+-- Execucao 3 para n = 70000000 --
+DFT1D:
+  Aplica FFTW3 sobre um único vetor complexo.
+
+  Transforma a entrada em coeficiente da DFT.
+  Reverte os coeficientes da DFT obtida nos dados originais.
+  Compara os dados originais com os obtidos.
+
+  Criando um vetor aleatório de entrada...
+
+  Criando um vetor de saída com os coeficientes da DFT...
+
+  Recuperando o vetor original a partir dos coeficientes da DFT...
+
+  Fim da execução do algoritmo.
+
+real	0m8.266s
+user	0m7.593s
+sys	0m0.670s
+
+-- Execucao 4 para n = 70000000 --
+DFT1D:
+  Aplica FFTW3 sobre um único vetor complexo.
+
+  Transforma a entrada em coeficiente da DFT.
+  Reverte os coeficientes da DFT obtida nos dados originais.
+  Compara os dados originais com os obtidos.
+
+  Criando um vetor aleatório de entrada...
+
+  Criando um vetor de saída com os coeficientes da DFT...
+
+  Recuperando o vetor original a partir dos coeficientes da DFT...
+
+  Fim da execução do algoritmo.
+
+real	0m8.155s
+user	0m7.507s
+sys	0m0.647s
+
+-- Execucao 5 para n = 70000000 --
+DFT1D:
+  Aplica FFTW3 sobre um único vetor complexo.
+
+  Transforma a entrada em coeficiente da DFT.
+  Reverte os coeficientes da DFT obtida nos dados originais.
+  Compara os dados originais com os obtidos.
+
+  Criando um vetor aleatório de entrada...
+
+  Criando um vetor de saída com os coeficientes da DFT...
+
+  Recuperando o vetor original a partir dos coeficientes da DFT...
+
+  Fim da execução do algoritmo.
+
+real	0m7.939s
+user	0m7.240s
+sys	0m0.697s
+
+----- Executando para n = 3000000 -----
+
+-- Execucao 1 para n = 3000000 --
+DFT1D:
+  Aplica FFTW3 sobre um único vetor complexo.
+
+  Transforma a entrada em coeficiente da DFT.
+  Reverte os coeficientes da DFT obtida nos dados originais.
+  Compara os dados originais com os obtidos.
+
+  Criando um vetor aleatório de entrada...
+
+  Criando um vetor de saída com os coeficientes da DFT...
+
+  Recuperando o vetor original a partir dos coeficientes da DFT...
+
+  Fim da execução do algoritmo.
+
+real	0m25.719s
+user	0m21.030s
+sys	0m0.467s
+
+-- Execucao 2 para n = 3000000 --
+DFT1D:
+  Aplica FFTW3 sobre um único vetor complexo.
+
+  Transforma a entrada em coeficiente da DFT.
+  Reverte os coeficientes da DFT obtida nos dados originais.
+  Compara os dados originais com os obtidos.
+
+  Criando um vetor aleatório de entrada...
+
+  Criando um vetor de saída com os coeficientes da DFT...
+
+  Recuperando o vetor original a partir dos coeficientes da DFT...
+
+  Fim da execução do algoritmo.
+
+real	0m25.634s
+user	0m21.113s
+sys	0m0.547s
+
+-- Execucao 3 para n = 3000000 --
+DFT1D:
+  Aplica FFTW3 sobre um único vetor complexo.
+
+  Transforma a entrada em coeficiente da DFT.
+  Reverte os coeficientes da DFT obtida nos dados originais.
+  Compara os dados originais com os obtidos.
+
+  Criando um vetor aleatório de entrada...
+
+  Criando um vetor de saída com os coeficientes da DFT...
+
+  Recuperando o vetor original a partir dos coeficientes da DFT...
+
+  Fim da execução do algoritmo.
+
+real	0m26.479s
+user	0m20.987s
+sys	0m0.633s
+
+-- Execucao 4 para n = 3000000 --
+DFT1D:
+  Aplica FFTW3 sobre um único vetor complexo.
+
+  Transforma a entrada em coeficiente da DFT.
+  Reverte os coeficientes da DFT obtida nos dados originais.
+  Compara os dados originais com os obtidos.
+
+  Criando um vetor aleatório de entrada...
+
+  Criando um vetor de saída com os coeficientes da DFT...
+
+  Recuperando o vetor original a partir dos coeficientes da DFT...
+
+  Fim da execução do algoritmo.
+
+real	0m29.947s
+user	0m21.013s
+sys	0m0.680s
+
+-- Execucao 5 para n = 3000000 --
+DFT1D:
+  Aplica FFTW3 sobre um único vetor complexo.
+
+  Transforma a entrada em coeficiente da DFT.
+  Reverte os coeficientes da DFT obtida nos dados originais.
+  Compara os dados originais com os obtidos.
+
+  Criando um vetor aleatório de entrada...
+
+  Criando um vetor de saída com os coeficientes da DFT...
+
+  Recuperando o vetor original a partir dos coeficientes da DFT...
+
+  Fim da execução do algoritmo.
+
+real	0m28.417s
+user	0m20.900s
+sys	0m0.623s
