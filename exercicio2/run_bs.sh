@@ -2,7 +2,7 @@
 
 declare -a traces=("164.gzip.f2b" "176.gcc.m2b" "177.mesa.f2b" "254.gap.m2b")
 declare -a tfiles=("gzip_f2b" "gcc_m2b" "mesa_f2b" "gap_m2b")
-declare -a l1sizes=(2K 4K 8K 16K 32K)
+declare -a bsizes=(2 4 8 16 32)
 
 export REPO="/home/ubuntu/MC733/exercicio2"
 
@@ -13,9 +13,9 @@ for ((i=0;i<${#traces[@]};++i))
 do
 	cd ${traces[i]}
 
-	for l in "${l1sizes[@]}" 
+	for l in "${bsizes[@]}" 
 	do
-		dineroIV -informat s -trname ${tfiles[i]} -maxtrace 101 -l1-isize $l -l1-dsize $l -l1-ibsize 32 -l1-dbsize 32 >> $REPO/test1.txt
+		dineroIV -informat s -trname ${tfiles[i]} -maxtrace 101 -l1-isize 32K -l1-dsize 32K -l1-ibsize $l -l1-dbsize $l >> $REPO/test2.txt
 	done
 
 	cd ../
