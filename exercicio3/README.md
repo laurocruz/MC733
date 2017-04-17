@@ -1035,3 +1035,33 @@ TOTAL = 1801580154 ciclos
 
 CPI = 1801580154/483862588 = 3.72 ciclos/instrução
 ```
+
+## Conclusão
+
+Segue abaixo os valores obtidos para todos os programas executados no simulador do mips.
+
+### hello
+    Ciclos = 20819 ciclos
+    CPI = 3.88 ciclos/instrução
+
+### qsort (small)
+    Ciclos = 189233536 ciclos
+    CPI = 4.79 ciclos/instrução
+
+### fft (small)
+#### 1
+    Ciclos = 1878273199 ciclos
+    CPI = 3.47 ciclos/instrução
+
+#### 2
+    Ciclos = 4506387131 ciclos
+    CPI = 3.48 ciclos/instrução
+
+### rijndael (large)
+#### enc
+    Ciclos = 1647997344 ciclos
+    CPI = 3.63 ciclos/instrução
+
+#### dec
+    Ciclos = 1801580154 ciclos
+    CPI = 3.72 ciclos/instrução
