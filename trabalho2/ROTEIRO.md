@@ -10,7 +10,10 @@
 - 7 estágios: escalar
 - 13 estágios: escalar
 
+O simulador do MIPS não oferece uma implementação de pipeline. Sendo assim, teremos que modificar os códigos para contar os ciclos.
+
 ### - Hazard de dados e controle
+Teremos que alterar o código do simulador do MIPS para obter os hazards, pois será necessário mantes um contador de hazards no código.
 
 ### - Branch predictor (2 configurações distintas)
 - Sem predictor (sempre atrasa pipeline ao encontrar um branch)
