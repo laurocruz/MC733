@@ -14,8 +14,11 @@ O simulador do MIPS não oferece uma implementação de pipeline. Sendo assim, t
 
 ### - Hazard de dados e controle
 Teremos que alterar o código do simulador do MIPS para obter os hazards, pois será necessário manter um contador de hazards no código.
+
 No caso do processador escalar, podemos encontrar hazards de dados do tipo RAW (Read After Write), adicionando um ou dois ciclos de stall a mais, dependendo das instruções que causaram a dependência.
+
 No processador superescalar, podem ocorrer hazards de dados do tipo WAR (Write After Read) e WAW (Write After Write). Nesses caso será contabilizado um ciclo adicional.
+
 Hazards de controle ocorrem quando não tem branch predictor, ou quando este erra na predição. O número de ciclos adicionados nesse caso dependerá dos tipos de branch e de branch predictor.
 
 ### - Branch predictor (3 configurações distintas)
