@@ -18,7 +18,7 @@ No caso do processador escalar, podemos encontrar hazards de dados do tipo RAW (
 No processador superescalar, podem ocorrer hazards de dados do tipo WAR (Write After Read) e WAW (Write After Write). Nesses caso será contabilizado um ciclo adicional.
 Hazards de controle ocorrem quando não tem branch predictor, ou quando este erra na predição. O número de ciclos adicionados nesse caso dependerá dos tipos de branch e de branch predictor.
 
-### - Branch predictor (2 configurações distintas)
+### - Branch predictor (3 configurações distintas)
 - Sem predictor (sempre atrasa pipeline ao encontrar um branch)
 - Always taken
 - Two-bit prediction
