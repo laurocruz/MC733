@@ -73,15 +73,14 @@ Escolhemos esses três pois foram os que tiveram a execução mais demorada em n
 | 2  | Superescalar de 5 estágios | 1                     | Sem              |
 | 3  | Escalar de 7 estágios      | 1                     | Sem              |
 | 4  | Escalar de 13 estágios     | 1                     | Sem              |
-| 5  | Escalar de 5 estágios      | 1                     | Sem              |
-| 6  | Escalar de 5 estágios      | 2                     | Sem              |
-| 7  | Escalar de 5 estágios      | 3                     | Sem              |
-| 8  | Escalar de 5 estágios      | 4                     | Sem              |
-| 9  | Escalar de 5 estágios      | 5                     | Sem              |
-| 10 | Escalar de 5 estágios      | 6                     | Sem              |
-| 11 | Escalar de 5 estágios      | 7                     | Sem              |
-| 12 | Escalar de 5 estágios      | 8                     | Sem              |
-| 13 | Escalar de 5 estágios      | 1                     | Always Taken     |
-| 14 | Escalar de 5 estágios      | 1                     | Two-Bit          |
-| 15 | Superescalar de 5 estágios | 1                     | Always Taken     |
-| 16 | Superescalar de 5 estágios | 1                     | Two-Bit          |
+| 5  | Escalar de 5 estágios      | 2                     | Sem              |
+| 6  | Escalar de 5 estágios      | 3                     | Sem              |
+| 7  | Escalar de 5 estágios      | 4                     | Sem              |
+| 8  | Escalar de 5 estágios      | 5                     | Sem              |
+| 9  | Escalar de 5 estágios      | 6                     | Sem              |
+| 10 | Escalar de 5 estágios      | 7                     | Sem              |
+| 11 | Escalar de 5 estágios      | 8                     | Sem              |
+| 12 | Escalar de 5 estágios      | 1                     | Always Taken     |
+| 13 | Escalar de 5 estágios      | 1                     | Two-Bit          |
+| 14 | Superescalar de 5 estágios | 1                     | Always Taken     |
+| 15 | Superescalar de 5 estágios | 1                     | Two-Bit          |
