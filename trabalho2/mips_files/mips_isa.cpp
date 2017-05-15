@@ -13,9 +13,9 @@
  *
  * @version   1.0
  * @date      Mon, 19 Jun 2006 15:50:52 -0300
- * 
+ *
  * @brief     The ArchC i8051 functional model.
- * 
+ *
  * @attention Copyright (C) 2002-2006 --- The ArchC Team
  *
  */
@@ -25,6 +25,7 @@
 #include  "mips_isa.H"
 #include  "mips_isa_init.cpp"
 #include  "mips_bhv_macros.H"
+#include <vector>
 
 extern "C" {
 #include "d4.h"
@@ -54,6 +55,20 @@ typedef struct {
     Inst_format inst;
     int rs, rt, rd;
 } Instruction;
+
+/* Valores de saída */
+int cycles;
+int instr;
+int
+
+/* O pipeline será implementado de maneira a só verificar se existe hazard ou
+ * não. 
+ *
+ */
+#define PIPELINE_SIZE 5
+
+vector<Instruction> pipeline(PIPELINE_SIZE);
+
 
 //If you want debug information for this model, uncomment next line
 #define DEBUG_MODEL
@@ -109,11 +124,11 @@ void doinstrn(unsigned int addr, size_t size, d4cache* Cache) {
 
 void print_cache_line(double m, double f, char * name) {
 
-    std::cout << name << m << " of " << f << " --> "; 
+    std::cout << name << m << " of " << f << " --> ";
 
-    if (f != 0) 
+    if (f != 0)
         std::cout << (m * 100)/f << " %" << endl;
-    else 
+    else
         std::cout << "0 %" << endl;
 }
 
@@ -126,7 +141,7 @@ void ac_behavior( instruction )
 #ifndef NO_NEED_PC_UPDATE
     ac_pc = npc;
     npc = ac_pc + 4;
-#endif 
+#endif
 };
 
 //! Instruction Format behavior methods.
@@ -148,7 +163,7 @@ void ac_behavior(begin)
     lo = 0;
 
     RB[29] =  AC_RAM_END - 1024 - processors_started++ * DEFAULT_STACK_SIZE;
-    
+
     // Setting caches
     DataMem = d4new(NULL);
 
@@ -236,7 +251,7 @@ void ac_behavior(end)
     m = DL1->miss[D4XWRITE+D4PREFETCH]; ms += m; f = DL1->fetch[D4XWRITE+D4PREFETCH]; fs += f;
     print_cache_line(m, f, "WRITE+PF: ");
 
-    print_cache_line(ms, fs, "TOTAL:    "); 
+    print_cache_line(ms, fs, "TOTAL:    ");
     std::cout << endl;
 
 
@@ -492,7 +507,7 @@ void ac_behavior( sltiu )
 
 //!Instruction andi behavior method.
 void ac_behavior( andi )
-{	
+{
     dbg_printf("andi r%d, r%d, %d\n", rt, rs, imm & 0xFFFF);
     RB[rt] = RB[rs] & (imm & 0xFFFF) ;
     dbg_printf("Result = %#x\n", RB[rt]);
@@ -500,7 +515,7 @@ void ac_behavior( andi )
 
 //!Instruction ori behavior method.
 void ac_behavior( ori )
-{	
+{
     dbg_printf("ori r%d, r%d, %d\n", rt, rs, imm & 0xFFFF);
     RB[rt] = RB[rs] | (imm & 0xFFFF) ;
     dbg_printf("Result = %#x\n", RB[rt]);
@@ -508,7 +523,7 @@ void ac_behavior( ori )
 
 //!Instruction xori behavior method.
 void ac_behavior( xori )
-{	
+{
     dbg_printf("xori r%d, r%d, %d\n", rt, rs, imm & 0xFFFF);
     RB[rt] = RB[rs] ^ (imm & 0xFFFF) ;
     dbg_printf("Result = %#x\n", RB[rt]);
@@ -516,7 +531,7 @@ void ac_behavior( xori )
 
 //!Instruction lui behavior method.
 void ac_behavior( lui )
-{	
+{
     dbg_printf("lui r%d, r%d, %d\n", rt, rs, imm & 0xFFFF);
     // Load a constant in the upper 16 bits of a register
     // To achieve the desired behaviour, the constant was shifted 16 bits left
@@ -567,7 +582,7 @@ void ac_behavior( subu )
 
 //!Instruction slt behavior method.
 void ac_behavior( slt )
-{	
+{
     dbg_printf("slt r%d, r%d, r%d\n", rd, rs, rt);
     // Set the RD if RS< RT
     if( (ac_Sword) RB[rs] < (ac_Sword) RB[rt] )
@@ -625,13 +640,13 @@ void ac_behavior( instr_nor )
 
 //!Instruction nop behavior method.
 void ac_behavior( nop )
-{  
+{
     dbg_printf("nop\n");
 };
 
 //!Instruction sll behavior method.
 void ac_behavior( sll )
-{  
+{
     dbg_printf("sll r%d, r%d, %d\n", rd, rs, shamt);
     RB[rd] = RB[rt] << shamt;
     dbg_printf("Result = %#x\n", RB[rd]);
@@ -780,7 +795,7 @@ void ac_behavior( j )
     addr = addr << 2;
 #ifndef NO_NEED_PC_UPDATE
     npc =  (ac_pc & 0xF0000000) | addr;
-#endif 
+#endif
     dbg_printf("Target = %#x\n", (ac_pc & 0xF0000000) | addr );
 };
 
@@ -796,7 +811,7 @@ void ac_behavior( jal )
     addr = addr << 2;
 #ifndef NO_NEED_PC_UPDATE
     npc = (ac_pc & 0xF0000000) | addr;
-#endif 
+#endif
 
     dbg_printf("Target = %#x\n", (ac_pc & 0xF0000000) | addr );
     dbg_printf("Return = %#x\n", ac_pc+4);
@@ -810,7 +825,7 @@ void ac_behavior( jr )
     // It must also flush the instructions that were loaded into the pipeline
 #ifndef NO_NEED_PC_UPDATE
     npc = RB[rs], 1;
-#endif 
+#endif
     dbg_printf("Target = %#x\n", RB[rs]);
 };
 
@@ -823,7 +838,7 @@ void ac_behavior( jalr )
 
 #ifndef NO_NEED_PC_UPDATE
     npc = RB[rs], 1;
-#endif 
+#endif
     dbg_printf("Target = %#x\n", RB[rs]);
 
     if( rd == 0 )  //If rd is not defined use default
@@ -839,21 +854,21 @@ void ac_behavior( beq )
     if( RB[rs] == RB[rt] ){
 #ifndef NO_NEED_PC_UPDATE
         npc = ac_pc + (imm<<2);
-#endif 
+#endif
         dbg_printf("Taken to %#x\n", ac_pc + (imm<<2));
-    }	
+    }
 };
 
 //!Instruction bne behavior method.
 void ac_behavior( bne )
-{	
+{
     dbg_printf("bne r%d, r%d, %d\n", rt, rs, imm & 0xFFFF);
     if( RB[rs] != RB[rt] ){
 #ifndef NO_NEED_PC_UPDATE
         npc = ac_pc + (imm<<2);
-#endif 
+#endif
         dbg_printf("Taken to %#x\n", ac_pc + (imm<<2));
-    }	
+    }
 };
 
 //!Instruction blez behavior method.
@@ -863,9 +878,9 @@ void ac_behavior( blez )
     if( (RB[rs] == 0 ) || (RB[rs]&0x80000000 ) ){
 #ifndef NO_NEED_PC_UPDATE
         npc = ac_pc + (imm<<2), 1;
-#endif 
+#endif
         dbg_printf("Taken to %#x\n", ac_pc + (imm<<2));
-    }	
+    }
 };
 
 //!Instruction bgtz behavior method.
@@ -875,9 +890,9 @@ void ac_behavior( bgtz )
     if( !(RB[rs] & 0x80000000) && (RB[rs]!=0) ){
 #ifndef NO_NEED_PC_UPDATE
         npc = ac_pc + (imm<<2);
-#endif 
+#endif
         dbg_printf("Taken to %#x\n", ac_pc + (imm<<2));
-    }	
+    }
 };
 
 //!Instruction bltz behavior method.
@@ -887,9 +902,9 @@ void ac_behavior( bltz )
     if( RB[rs] & 0x80000000 ){
 #ifndef NO_NEED_PC_UPDATE
         npc = ac_pc + (imm<<2);
-#endif 
+#endif
         dbg_printf("Taken to %#x\n", ac_pc + (imm<<2));
-    }	
+    }
 };
 
 //!Instruction bgez behavior method.
@@ -899,9 +914,9 @@ void ac_behavior( bgez )
     if( !(RB[rs] & 0x80000000) ){
 #ifndef NO_NEED_PC_UPDATE
         npc = ac_pc + (imm<<2);
-#endif 
+#endif
         dbg_printf("Taken to %#x\n", ac_pc + (imm<<2));
-    }	
+    }
 };
 
 //!Instruction bltzal behavior method.
@@ -912,9 +927,9 @@ void ac_behavior( bltzal )
     if( RB[rs] & 0x80000000 ){
 #ifndef NO_NEED_PC_UPDATE
         npc = ac_pc + (imm<<2);
-#endif 
+#endif
         dbg_printf("Taken to %#x\n", ac_pc + (imm<<2));
-    }	
+    }
     dbg_printf("Return = %#x\n", ac_pc+4);
 };
 
@@ -926,9 +941,9 @@ void ac_behavior( bgezal )
     if( !(RB[rs] & 0x80000000) ){
 #ifndef NO_NEED_PC_UPDATE
         npc = ac_pc + (imm<<2);
-#endif 
+#endif
         dbg_printf("Taken to %#x\n", ac_pc + (imm<<2));
-    }	
+    }
     dbg_printf("Return = %#x\n", ac_pc+4);
 };
 
@@ -942,6 +957,6 @@ void ac_behavior( sys_call )
 //!Instruction instr_break behavior method.
 void ac_behavior( instr_break )
 {
-    fprintf(stderr, "instr_break behavior not implemented.\n"); 
+    fprintf(stderr, "instr_break behavior not implemented.\n");
     exit(EXIT_FAILURE);
 }
