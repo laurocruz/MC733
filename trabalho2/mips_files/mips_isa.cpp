@@ -115,18 +115,18 @@ long int stalls;
 #define PIPELINE_TYPE 1 // 1 = Escalar ; 2 = Superescalar
 
 /* Define as posições no vetor */
-#define IF  0
-#define ID  1
-#define EX  2
-#define MEM 3
-#define WB  4
-#define IT  0
-#define IF  1
-#define ID  2
-#define EX  3
-#define MT  4
-#define MM  5
-#define WB  6
+#define IF5  0
+#define ID5  1
+#define EX5  2
+#define MEM5 3
+#define WB5  4
+#define IT7  0
+#define IF7  1
+#define ID7  2
+#define EX7  3
+#define MT7  4
+#define MM7  5
+#define WB7  6
 
 /* Posição 0 - ultima instrução inserida no pipeline
  * Posicao N - N depois da 0
@@ -135,7 +135,7 @@ vector<Instruction> pipeline(PIPELINE_SIZE), pipeline2(PIPELINE_SIZE);
 
 /* Insere uma nova instrução no pipeline */
 void insert_inst(Instruction newinst) {
-    for (i = i.size(); i > 0; i++) {
+    for (i = i.size(); i > 1; i--) {
         pipeline[i-1] = pipeline[i-2];
     }
     pipeline[0] = newinst;
@@ -148,13 +148,13 @@ void executing_pipeline() {
             /* Pipeline escalar de 5 estágios
 
             /* Verifica data hazards */
-            if (pipeline[EX].rd == pipeline[ID].rs) {
+            if (pipeline[EX5].rd == pipeline[ID5].rs) {
                 /* Dois stalls */
-            } else if (pipeline[EX].rd == pipeline[ID].rt)  {
+            } else if (pipeline[EX5].rd == pipeline[ID5].rt)  {
                 /* Dois stalls */
-            } else if (pipeline[MEM].rd == pipeline[ID].rs) {
+            } else if (pipeline[MEM5].rd == pipeline[ID5].rs) {
                 /* Um stalls */
-            } else if (pipeline[MEM].rd == pipeline[ID].rt) {
+            } else if (pipeline[MEM5].rd == pipeline[ID5].rt) {
                 /* Um stall */
             }
 
@@ -164,59 +164,59 @@ void executing_pipeline() {
 
             /** Verifica data hazards **/
             /* Pipeline 1 */
-            if (pipeline[EX].rd == pipeline[ID].rs) {
+            if (pipeline[EX5].rd == pipeline[ID5].rs) {
                 /* Dois stalls */
-            } else if (pipeline[EX].rd == pipeline[ID].rt)  {
+            } else if (pipeline[EX5].rd == pipeline[ID5].rt)  {
                 /* Dois stalls */
-            } else if (pipeline[MEM].rd == pipeline[ID].rs) {
+            } else if (pipeline[MEM5].rd == pipeline[ID5].rs) {
                 /* Um stalls */
-            } else if (pipeline[MEM].rd == pipeline[ID].rt) {
+            } else if (pipeline[MEM5].rd == pipeline[ID5].rt) {
                 /* Um stall */
             }
 
             /* Pipeline 2 */
-            if (pipeline2[EX].rd == pipeline2[ID].rs) {
+            if (pipeline2[EX5].rd == pipeline2[ID5].rs) {
                 /* Dois stalls */
-            } else if (pipeline2[EX].rd == pipeline2[ID].rt)  {
+            } else if (pipeline2[EX5].rd == pipeline2[ID5].rt)  {
                 /* Dois stalls */
-            } else if (pipeline2[MEM].rd == pipeline2[ID].rs) {
+            } else if (pipeline2[MEM5].rd == pipeline2[ID5].rs) {
                 /* Um stalls */
-            } else if (pipeline2[MEM].rd == pipeline2[ID].rt) {
+            } else if (pipeline2[MEM5].rd == pipeline2[ID5].rt) {
                 /* Um stall */
             }
 
             /* Merge deles */
-            if (pipeline1[EX].rd == pipeline2[ID].rs) {
+            if (pipeline1[EX5].rd == pipeline2[ID5].rs) {
                 /* 4 stalls */
-            } else if (pipeline1[EX].rd == pipeline2[ID].rt) {
+            } else if (pipeline1[EX5].rd == pipeline2[ID5].rt) {
                 /* 4 stalls */
-            } else if (pipeline1[MEM].rd == pipeline2[ID].rs) {
+            } else if (pipeline1[MEM5].rd == pipeline2[ID5].rs) {
                 /* 2 stalls */
-            } else if (pipeline1[MEM].rd == pipeline2[ID].rt) {
+            } else if (pipeline1[MEM5].rd == pipeline2[ID5].rt) {
                 /* 2 stalls */
-            } else if (pipeline2[EX].rd == pipeline2[ID].rs) {
+            } else if (pipeline2[EX5].rd == pipeline2[ID5].rs) {
                 /* 4 stalls */
-            } else if (pipeline2[EX].rd == pipeline2[ID].rt) {
+            } else if (pipeline2[EX5].rd == pipeline2[ID5].rt) {
                 /* 4 stalls */
-            } else if (pipeline2[MEM].rd == pipeline2[ID].rs) {
+            } else if (pipeline2[MEM5].rd == pipeline2[ID5].rs) {
                 /* 2 stalls */
-            } else if (pipeline2[MEM].rd == pipeline2[ID].rt) {
+            } else if (pipeline2[MEM5].rd == pipeline2[ID5].rt) {
                 /* 2 stalls */
             }
         }
     } else if (PIPELINE_SIZE == 7) {
         /* Pipeline escalar de 7 estágios */
-        if (pipeline[EX] == pipeline[ID].rs) {
+        if (pipeline[EX7] == pipeline[ID7].rs) {
             /* 3 stalls */
-        } else if (pipeline[EX] == pipeline[ID].rt) {
+        } else if (pipeline[EX7] == pipeline[ID7].rt) {
             /* 3 stalls */
-        } else if (pipeline[MT] == pipeline[ID].rs) {
+        } else if (pipeline[MT7] == pipeline[ID7].rs) {
             /* 2 stalls */
-        } else if (pipeline[MT] == pipeline[ID].rt) {
+        } else if (pipeline[MT7] == pipeline[ID7].rt) {
             /* 2 stalls */
-        } else if (pipeline[MM] == pipeline[ID].rs) {
+        } else if (pipeline[MM7] == pipeline[ID7].rs) {
             /* 1 stalls */
-        } else if (pipeline[MM] == pipeline[ID].rt) {
+        } else if (pipeline[MM7] == pipeline[ID7].rt) {
             /* 1 stalls */
         }
     }
