@@ -145,7 +145,7 @@ d4cache* IL2;
  *    -
  */
 
-#ifndef PIPELINE_SIZE 
+#ifndef PIPELINE_SIZE
     #define PIPELINE_SIZE 5            // 5 , 7 ou 13
 #endif
 
@@ -595,7 +595,7 @@ void ac_behavior(begin)
     IL1->lg2blocksize = _L1_CACHE_LG2_B_SIZE;
     IL1->lg2subblocksize = 0;
     IL1->lg2size = _L1_CACHE_LG2_SIZE;
-    IL1->assoc = _CACHE_ASSOC; 
+    IL1->assoc = _CACHE_ASSOC;
     IL1->replacementf = d4rep_lru;
     IL1->prefetchf = d4prefetch_none;
     IL1->wallocf = d4walloc_always;
@@ -1289,7 +1289,7 @@ void ac_behavior( jal )
     dbg_printf("Target = %#x\n", (ac_pc & 0xF0000000) | addr );
     dbg_printf("Return = %#x\n", ac_pc+4);
 
-    insert_inst_pipeline(createInst(Jtype, -1, -2, -3));
+    insert_inst_pipeline(createInst(Jtype, -1, -2, Ra));
 };
 
 //!Instruction jr behavior method.
@@ -1302,6 +1302,8 @@ void ac_behavior( jr )
     npc = RB[rs], 1;
 #endif
     dbg_printf("Target = %#x\n", RB[rs]);
+
+    insert_inst_pipeline(createInst(Jtype, rs, -2, -3));
 };
 
 //!Instruction jalr behavior method.
@@ -1320,6 +1322,8 @@ void ac_behavior( jalr )
         rd = Ra;
     RB[rd] = ac_pc+4;
     dbg_printf("Return = %#x\n", ac_pc+4);
+
+    insert_inst_pipeline(createInst(Jtype, rs, -2, rd));
 };
 
 //!Instruction beq behavior method.
@@ -1332,6 +1336,8 @@ void ac_behavior( beq )
 #endif
         dbg_printf("Taken to %#x\n", ac_pc + (imm<<2));
     }
+
+    insert_inst_pipeline(createInst(Itype, rs, rt, -3));
 };
 
 //!Instruction bne behavior method.
@@ -1344,6 +1350,8 @@ void ac_behavior( bne )
 #endif
         dbg_printf("Taken to %#x\n", ac_pc + (imm<<2));
     }
+
+    insert_inst_pipeline(createInst(Itype, rs, rt, -3));
 };
 
 //!Instruction blez behavior method.
@@ -1356,6 +1364,8 @@ void ac_behavior( blez )
 #endif
         dbg_printf("Taken to %#x\n", ac_pc + (imm<<2));
     }
+
+    insert_inst_pipeline(createInst(Itype, rs, -2, -3));
 };
 
 //!Instruction bgtz behavior method.
@@ -1368,6 +1378,8 @@ void ac_behavior( bgtz )
 #endif
         dbg_printf("Taken to %#x\n", ac_pc + (imm<<2));
     }
+
+    insert_inst_pipeline(createInst(Itype, rs, -2, -3));
 };
 
 //!Instruction bltz behavior method.
@@ -1380,6 +1392,8 @@ void ac_behavior( bltz )
 #endif
         dbg_printf("Taken to %#x\n", ac_pc + (imm<<2));
     }
+
+    insert_inst_pipeline(createInst(Itype, rs, -2, -3));
 };
 
 //!Instruction bgez behavior method.
@@ -1392,6 +1406,8 @@ void ac_behavior( bgez )
 #endif
         dbg_printf("Taken to %#x\n", ac_pc + (imm<<2));
     }
+
+    insert_inst_pipeline(createInst(Itype, rs, -2, -3));
 };
 
 //!Instruction bltzal behavior method.
@@ -1406,6 +1422,8 @@ void ac_behavior( bltzal )
         dbg_printf("Taken to %#x\n", ac_pc + (imm<<2));
     }
     dbg_printf("Return = %#x\n", ac_pc+4);
+
+    insert_inst_pipeline(createInst(Itype, rs, -2, Ra));
 };
 
 //!Instruction bgezal behavior method.
@@ -1420,11 +1438,16 @@ void ac_behavior( bgezal )
         dbg_printf("Taken to %#x\n", ac_pc + (imm<<2));
     }
     dbg_printf("Return = %#x\n", ac_pc+4);
+
+    insert_inst_pipeline(createInst(Itype, rs, -2, Ra));
 };
 
 //!Instruction sys_call behavior method.
 void ac_behavior( sys_call )
 {
+
+    insert_inst_pipeline(createInst(Itype, -1, -2, -3));
+
     dbg_printf("syscall\n");
     stop();
 }
