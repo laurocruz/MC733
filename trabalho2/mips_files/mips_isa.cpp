@@ -31,39 +31,25 @@ extern "C" {
 #include "d4.h"
 }
 
-/* ~~ Implementação do Branch Prediction e Pipeline ~~ */
-/* Primeiramente, precisamos saber qual a instrução está sendo executada e seus
+/* ~~~ Implementação do Branch Prediction e Pipeline ~~~
+ * Primeiramente, precisamos saber qual a instrução está sendo executada e seus
  * parâmetros - por isso, temos esse struct que possui qual o tipo de instrução
  * (inst) que pode ser uma instrução do formato R, I ou J
- * R: Usada para operações aritméticas
- *    Opcode - rs - rt - rd - shift amt - functional
- *    rs ~> src | rt ~> src | rd ~> dst
- * I: Usada para operações de load e store e jump condicional
- *    opcode - rs - rt - address
- *    rs ~> base| rt ~> dst
- * J: Usada para jump não condicional
- *    Opcode - address
- *
+ *      R: Usada para operações aritméticas
+ *         Opcode - rs - rt - rd - shift amt - functional
+ *         rs ~> src | rt ~> src | rd ~> dst
+ *      I: Usada para operações de load e store e jump condicional
+ *         opcode - rs - rt - address
+ *         rs ~> base| rt ~> dst
+ *      J: Usada para jump não condicional
+ *         Opcode - address
  * Algumas obs:
  *  - Inst com imediato usa instrução do tipo I
  * mais info: homepage.cs.uiowa.edu/~ghosh/1-24-06.pdf
- */
-
-enum Inst_format { Rtype, Itype, Jype };
-
-typedef struct {
-    Inst_format inst;
-    int rs, rt, rd;
-} Instruction;
-
-/* Valores que queremos de saída */
-long int cycles;                              // Número de ciclos
-long int instr, instr_R, instr_L, instr_J;    // Número de instruções executadas
-long int data_hazards;                        // Numero de data hazards
-long int control_hazard;                      // Numero de control hazards
-long int stalls;
-
-/* ~~ Pipeline de 5 Estágios ~~
+ *
+ *
+ * ~~~~ Explicações dos pipelines ~~~~
+ * ~~ Pipeline de 5 Estágios ~~
  * ~ Escalar
  * | IF | ID | EX | MEM | WB |
  *  Data Hazards nos seguintes casos (Sem Fowarding):
@@ -111,9 +97,10 @@ long int stalls;
  *  Control Hazards:
  *    -
  */
-#define PIPELINE_SIZE 5 // 5 , 7 ou 13
-#define PIPELINE_TYPE 1 // 1 = Escalar ; 2 = Superescalar
-#define BRANCH_PRED   0 // 0 = Sem ; 1 = always not taken ; 2 = 2 bit
+
+#define PIPELINE_SIZE 5            // 5 , 7 ou 13
+#define PIPELINE_TYPE 1            // 1 = Escalar ; 2 = Superescalar
+#define BRANCH_PRED   0            // 0 = Sem ; 1 = always not taken ; 2 = 2 bit
 
 /* Define as posições no vetor */
 /* 5 estágios */
@@ -131,6 +118,19 @@ long int stalls;
 #define MM7  5
 #define WB7  6
 
+enum Inst_format { Rtype, Itype, Jype };
+
+typedef struct {
+    Inst_format type;
+    int rs, rt, rd;
+} Instruction;
+
+/* Valores que queremos de saída */
+unsigned int cycles;                              // Número de ciclos
+unsigned int instr, instr_R, instr_I, instr_J;    // Número de instruções execu
+unsigned int data_hazards, control_hazard;        // Numero de data hazards
+unsigned int stalls, d_stalls, c_stalls;          // Número total de stalls
+
 /* Posição 0 - ultima instrução inserida no pipeline
  * Posicao N - Ultima do pipeline
  */
@@ -138,7 +138,17 @@ vector<Instruction> pipeline(PIPELINE_SIZE), pipeline2(PIPELINE_SIZE);
 
 /* Insere uma nova instrução no pipeline */
 void insert_inst_pipeline(Instruction newinst) {
-    /* Incrementar contador de intruções */
+    /* Contador de # intruções */
+    instr += 1;
+    if (newinst.type == Rtype) {
+        instr_R += 1;
+    } else if (newinst.type == Itype) {
+        instr_I += 1;
+    } else if (newinst.type == Jtype) {
+        instr_J += 1;
+    }
+
+    /* Adiciona essa instrução no pipeline */
     for (i = i.size(); i > 1; i--) {
         pipeline[i-1] = pipeline[i-2];
     }
@@ -152,12 +162,20 @@ void data_hazards_pipeline() {
             /* Pipeline escalar de 5 estágios */
             if (pipeline[EX5].rd == pipeline[ID5].rs) {
                 /* Dois stalls */
+                stalls += 2;
+                d_stalls += 2;
             } else if (pipeline[EX5].rd == pipeline[ID5].rt)  {
                 /* Dois stalls */
+                stalls += 2;
+                d_stalls += 2;
             } else if (pipeline[MEM5].rd == pipeline[ID5].rs) {
                 /* Um stalls */
+                stalls += 1;
+                d_stalls += 1;
             } else if (pipeline[MEM5].rd == pipeline[ID5].rt) {
                 /* Um stall */
+                stalls += 1;
+                d_stalls += 1;
             }
 
         } else if (PIPELINE_TYPE == 2) {
@@ -166,58 +184,102 @@ void data_hazards_pipeline() {
             /* Pipeline 1 */
             if (pipeline[EX5].rd == pipeline[ID5].rs) {
                 /* Dois stalls */
+                stalls += 2;
+                d_stalls += 2;
             } else if (pipeline[EX5].rd == pipeline[ID5].rt)  {
                 /* Dois stalls */
+                stalls += 2;
+                d_stalls += 2;
             } else if (pipeline[MEM5].rd == pipeline[ID5].rs) {
                 /* Um stalls */
+                stalls += 1;
+                d_stalls += 1;
             } else if (pipeline[MEM5].rd == pipeline[ID5].rt) {
                 /* Um stall */
+                stalls += 1;
+                d_stalls += 1;
             }
 
             /* Pipeline 2 */
             if (pipeline2[EX5].rd == pipeline2[ID5].rs) {
                 /* Dois stalls */
+                stalls += 2;
+                d_stalls += 2;
             } else if (pipeline2[EX5].rd == pipeline2[ID5].rt)  {
                 /* Dois stalls */
+                stalls += 2;
+                d_stalls += 2;
             } else if (pipeline2[MEM5].rd == pipeline2[ID5].rs) {
                 /* Um stalls */
+                stalls += 1;
+                d_stalls += 1;
             } else if (pipeline2[MEM5].rd == pipeline2[ID5].rt) {
                 /* Um stall */
+                stalls += 1;
+                d_stalls += 1;
             }
 
             /* Merge deles */
             if (pipeline1[EX5].rd == pipeline2[ID5].rs) {
                 /* 4 stalls */
+                stalls += 4;
+                d_stalls += 4;
             } else if (pipeline1[EX5].rd == pipeline2[ID5].rt) {
                 /* 4 stalls */
+                stalls += 4;
+                d_stalls += 4;
             } else if (pipeline1[MEM5].rd == pipeline2[ID5].rs) {
                 /* 2 stalls */
+                stalls += 2;
+                d_stalls += 2;
             } else if (pipeline1[MEM5].rd == pipeline2[ID5].rt) {
                 /* 2 stalls */
+                stalls += 2;
+                d_stalls += 2;
             } else if (pipeline2[EX5].rd == pipeline2[ID5].rs) {
                 /* 4 stalls */
+                stalls += 4;
+                d_stalls += 4;
             } else if (pipeline2[EX5].rd == pipeline2[ID5].rt) {
                 /* 4 stalls */
+                stalls += 4;
+                d_stalls += 4;
             } else if (pipeline2[MEM5].rd == pipeline2[ID5].rs) {
                 /* 2 stalls */
+                stalls += 2;
+                d_stalls += 2;
             } else if (pipeline2[MEM5].rd == pipeline2[ID5].rt) {
                 /* 2 stalls */
+                stalls += 2;
+                d_stalls += 2;
             }
         }
     } else if (PIPELINE_SIZE == 7) {
         /* Pipeline escalar de 7 estágios */
         if (pipeline[EX7] == pipeline[ID7].rs) {
             /* 3 stalls */
+            stalls += 3;
+            d_stalls += 3;
         } else if (pipeline[EX7] == pipeline[ID7].rt) {
             /* 3 stalls */
+            stalls += 3;
+            d_stalls += 3;
         } else if (pipeline[MT7] == pipeline[ID7].rs) {
             /* 2 stalls */
+            stalls += 2;
+            d_stalls += 2;
         } else if (pipeline[MT7] == pipeline[ID7].rt) {
             /* 2 stalls */
+            stalls += 2;
+            d_stalls += 2;
         } else if (pipeline[MM7] == pipeline[ID7].rs) {
             /* 1 stalls */
+            stalls += 1;
+            d_stalls += 1;
         } else if (pipeline[MM7] == pipeline[ID7].rt) {
             /* 1 stalls */
+            stalls += 1;
+            d_stalls += 1;
         }
     }
     return;
@@ -232,6 +294,9 @@ int twobitprediction;
 void branch_taken_pipeline() {
     if (PIPELINE_SIZE == 5) {
         if (BRANCH_PRED == 0) {
+            stalls += 1;
+            c_stalls += 1;
+            control_hazard += 1;
             /* PIPELINE_SIZE-1 Stalls */
         } else if (BRANCH_PRED == 1) {
             /* PIPELINE_SIZE-1 Stalls */
