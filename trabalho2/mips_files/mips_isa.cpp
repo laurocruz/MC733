@@ -31,6 +31,53 @@ extern "C" {
 #include "d4.h"
 }
 
+//If you want debug information for this model, uncomment next line
+#define DEBUG_MODEL
+#include "ac_debug_model.H"
+
+
+//!User defined macros to reference registers.
+#define Ra 31
+#define Sp 29
+
+// 'using namespace' statement to allow access to all
+// mips-specific datatypes
+using namespace mips_parms;
+
+static int processors_started = 0;
+#define DEFAULT_STACK_SIZE (256*1024)
+
+// Cache descriptors
+d4cache* DataMem;
+d4cache* InstrMem;
+d4cache* DL1;
+d4cache* DL2;
+d4cache* IL1;
+d4cache* IL2;
+
+#define I_SIZE 4
+
+#ifndef _L1_CACHE_LG2_SIZE
+    #define _L1_CACHE_LG2_SIZE 16
+#endif
+
+#ifndef _L1_CACHE_LG2_B_SIZE
+    #define _L1_CACHE_LG2_B_SIZE 3
+#endif
+
+#ifndef _L2_CACHE_LG2_SIZE
+    #define _L2_CACHE_LG2_SIZE 18
+#endif
+
+#ifndef _L2_CACHE_LG2_B_SIZE
+    #define _L2_CACHE_LG2_B_SIZE 7
+#endif
+
+#ifndef _CACHE_ASSOC
+    #define _CACHE_ASSOC 2
+#endif
+
+
 /* ~~~ Implementação do Branch Prediction e Pipeline ~~~
  * Primeiramente, precisamos saber qual a instrução está sendo executada e seus
  * parâmetros - por isso, temos esse struct que possui qual o tipo de instrução
@@ -98,9 +145,17 @@ extern "C" {
  *    -
  */
 
-#define PIPELINE_SIZE 5            // 5 , 7 ou 13
-#define PIPELINE_TYPE 1            // 1 = Escalar ; 2 = Superescalar
-#define BRANCH_PRED   0            // 0 = Sem ; 1 = always not taken ; 2 = 2 bit
+#ifndef PIPELINE_SIZE 
+    #define PIPELINE_SIZE 5            // 5 , 7 ou 13
+#endif
+
+#ifndef PIPELINE_TYPE
+    #define PIPELINE_TYPE 1            // 1 = Escalar ; 2 = Superescalar
+#endif
+
+#ifndef BRANCH_PRED
+    #define BRANCH_PRED   0            // 0 = Sem ; 1 = always not taken ; 2 = 2 bit
+#endif
 
 /* Define as posições no vetor */
 /* 5 estágios */
@@ -210,6 +265,7 @@ void insert_inst_pipeline(Instruction newinst) {
     }
 
 }
+
 
 /* Implementa toda a lógica do pipeline */
 void data_hazards_pipeline() {
@@ -416,32 +472,8 @@ void branch_not_taken_pipeline() {
     }
 }
 
-//If you want debug information for this model, uncomment next line
-#define DEBUG_MODEL
-#include "ac_debug_model.H"
 
-
-//!User defined macros to reference registers.
-#define Ra 31
-#define Sp 29
-
-// 'using namespace' statement to allow access to all
-// mips-specific datatypes
-using namespace mips_parms;
-
-static int processors_started = 0;
-#define DEFAULT_STACK_SIZE (256*1024)
-
-// Cache descriptors
-d4cache* DataMem;
-d4cache* InstrMem;
-d4cache* DL1;
-d4cache* DL2;
-d4cache* IL1;
-d4cache* IL2;
-
-#define I_SIZE 4
-
+// ----------------------- CACHE FUNCTIONS --------------------------------
 // Read operation on the cache
 void doread(unsigned int addr, size_t size, d4cache* Cache) {
     d4memref R;
@@ -519,10 +551,10 @@ void ac_behavior(begin)
     // Data L2 Cache
     DL2 = d4new(DataMem);
     DL2->name = "DL2";
-    DL2->lg2blocksize = 7;
+    DL2->lg2blocksize = _L2_CACHE_LG2_B_SIZE;
     DL2->lg2subblocksize = 0;
-    DL2->lg2size = 18;
-    DL2->assoc = 2;
+    DL2->lg2size = _L2_CACHE_LG2_SIZE;
+    DL2->assoc = _CACHE_ASSOC;
     DL2->replacementf = d4rep_lru;
     DL2->prefetchf = d4prefetch_none;
     DL2->wallocf = d4walloc_always;
@@ -532,10 +564,10 @@ void ac_behavior(begin)
     // Data L1 Cache
     DL1 = d4new(DL2);
     DL1->name = "DL1";
-    DL1->lg2blocksize = 3;
+    DL1->lg2blocksize = _L1_CACHE_LG2_B_SIZE;
     DL1->lg2subblocksize = 0;
-    DL1->lg2size = 16;
-    DL1->assoc = 2;
+    DL1->lg2size = _L1_CACHE_LG2_SIZE;
+    DL1->assoc = _CACHE_ASSOC;
     DL1->replacementf = d4rep_lru;
     DL1->prefetchf = d4prefetch_none;
     DL1->wallocf = d4walloc_always;
@@ -547,10 +579,10 @@ void ac_behavior(begin)
     // Instruction L2 Cache
     IL2 = d4new(InstrMem);
     IL2->name = "IL2";
-    IL2->lg2blocksize = 7;
+    IL2->lg2blocksize = _L2_CACHE_LG2_B_SIZE;
     IL2->lg2subblocksize = 0;
-    IL2->lg2size = 18;
-    IL2->assoc = 2;
+    IL2->lg2size = _L1_CACHE_LG2_SIZE;
+    IL2->assoc = _CACHE_ASSOC;
     IL2->replacementf = d4rep_lru;
     IL2->prefetchf = d4prefetch_none;
     IL2->wallocf = d4walloc_always;
@@ -560,10 +592,10 @@ void ac_behavior(begin)
     // Instruction L1 Cache
     IL1 = d4new(IL2);
     IL1->name = "IL1";
-    IL1->lg2blocksize = 3;
+    IL1->lg2blocksize = _L1_CACHE_LG2_B_SIZE;
     IL1->lg2subblocksize = 0;
-    IL1->lg2size = 16;
-    IL1->assoc = 2;
+    IL1->lg2size = _L1_CACHE_LG2_SIZE;
+    IL1->assoc = _CACHE_ASSOC; 
     IL1->replacementf = d4rep_lru;
     IL1->prefetchf = d4prefetch_none;
     IL1->wallocf = d4walloc_always;
