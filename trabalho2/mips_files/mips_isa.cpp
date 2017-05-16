@@ -164,18 +164,22 @@ void data_hazards_pipeline() {
                 /* Dois stalls */
                 stalls += 2;
                 d_stalls += 2;
+                data_hazards += 1;
             } else if (pipeline[EX5].rd == pipeline[ID5].rt)  {
                 /* Dois stalls */
                 stalls += 2;
                 d_stalls += 2;
+                data_hazards += 1;
             } else if (pipeline[MEM5].rd == pipeline[ID5].rs) {
                 /* Um stalls */
                 stalls += 1;
                 d_stalls += 1;
+                data_hazards += 1;
             } else if (pipeline[MEM5].rd == pipeline[ID5].rt) {
                 /* Um stall */
                 stalls += 1;
                 d_stalls += 1;
+                data_hazards += 1;
             }
 
         } else if (PIPELINE_TYPE == 2) {
@@ -186,18 +190,22 @@ void data_hazards_pipeline() {
                 /* Dois stalls */
                 stalls += 2;
                 d_stalls += 2;
+                data_hazards += 1;
             } else if (pipeline[EX5].rd == pipeline[ID5].rt)  {
                 /* Dois stalls */
                 stalls += 2;
                 d_stalls += 2;
+                data_hazards += 1;
             } else if (pipeline[MEM5].rd == pipeline[ID5].rs) {
                 /* Um stalls */
                 stalls += 1;
                 d_stalls += 1;
+                data_hazards += 1;
             } else if (pipeline[MEM5].rd == pipeline[ID5].rt) {
                 /* Um stall */
                 stalls += 1;
                 d_stalls += 1;
+                data_hazards += 1;
             }
 
             /* Pipeline 2 */
@@ -205,18 +213,22 @@ void data_hazards_pipeline() {
                 /* Dois stalls */
                 stalls += 2;
                 d_stalls += 2;
+                data_hazards += 1;
             } else if (pipeline2[EX5].rd == pipeline2[ID5].rt)  {
                 /* Dois stalls */
                 stalls += 2;
                 d_stalls += 2;
+                data_hazards += 1;
             } else if (pipeline2[MEM5].rd == pipeline2[ID5].rs) {
                 /* Um stalls */
                 stalls += 1;
                 d_stalls += 1;
+                data_hazards += 1;
             } else if (pipeline2[MEM5].rd == pipeline2[ID5].rt) {
                 /* Um stall */
                 stalls += 1;
                 d_stalls += 1;
+                data_hazards += 1;
             }
 
             /* Merge deles */
@@ -224,34 +236,42 @@ void data_hazards_pipeline() {
                 /* 4 stalls */
                 stalls += 4;
                 d_stalls += 4;
+                data_hazards += 1;
             } else if (pipeline1[EX5].rd == pipeline2[ID5].rt) {
                 /* 4 stalls */
                 stalls += 4;
                 d_stalls += 4;
+                data_hazards += 1;
             } else if (pipeline1[MEM5].rd == pipeline2[ID5].rs) {
                 /* 2 stalls */
                 stalls += 2;
                 d_stalls += 2;
+                data_hazards += 1;
             } else if (pipeline1[MEM5].rd == pipeline2[ID5].rt) {
                 /* 2 stalls */
                 stalls += 2;
                 d_stalls += 2;
+                data_hazards += 1;
             } else if (pipeline2[EX5].rd == pipeline2[ID5].rs) {
                 /* 4 stalls */
                 stalls += 4;
                 d_stalls += 4;
+                data_hazards += 1;
             } else if (pipeline2[EX5].rd == pipeline2[ID5].rt) {
                 /* 4 stalls */
                 stalls += 4;
                 d_stalls += 4;
+                data_hazards += 1;
             } else if (pipeline2[MEM5].rd == pipeline2[ID5].rs) {
                 /* 2 stalls */
                 stalls += 2;
                 d_stalls += 2;
+                data_hazards += 1;
             } else if (pipeline2[MEM5].rd == pipeline2[ID5].rt) {
                 /* 2 stalls */
                 stalls += 2;
                 d_stalls += 2;
+                data_hazards += 1;
             }
         }
     } else if (PIPELINE_SIZE == 7) {
@@ -260,26 +280,32 @@ void data_hazards_pipeline() {
             /* 3 stalls */
             stalls += 3;
             d_stalls += 3;
+            data_hazards += 1;
         } else if (pipeline[EX7] == pipeline[ID7].rt) {
             /* 3 stalls */
             stalls += 3;
             d_stalls += 3;
+            data_hazards += 1;
         } else if (pipeline[MT7] == pipeline[ID7].rs) {
             /* 2 stalls */
             stalls += 2;
             d_stalls += 2;
+            data_hazards += 1;
         } else if (pipeline[MT7] == pipeline[ID7].rt) {
             /* 2 stalls */
             stalls += 2;
             d_stalls += 2;
+            data_hazards += 1;
         } else if (pipeline[MM7] == pipeline[ID7].rs) {
             /* 1 stalls */
             stalls += 1;
             d_stalls += 1;
+            data_hazards += 1;
         } else if (pipeline[MM7] == pipeline[ID7].rt) {
             /* 1 stalls */
             stalls += 1;
             d_stalls += 1;
+            data_hazards += 1;
         }
     }
     return;
@@ -294,20 +320,29 @@ int twobitprediction;
 void branch_taken_pipeline() {
     if (PIPELINE_SIZE == 5) {
         if (BRANCH_PRED == 0) {
-            stalls += 1;
-            c_stalls += 1;
-            control_hazard += 1;
             /* PIPELINE_SIZE-1 Stalls */
+            stalls += PIPELINE_SIZE-1;
+            c_stalls += PIPELINE_SIZE-1;
+            control_hazard += 1;
         } else if (BRANCH_PRED == 1) {
             /* PIPELINE_SIZE-1 Stalls */
+            stalls += PIPELINE_SIZE-1;
+            c_stalls += PIPELINE_SIZE-1;
+            control_hazard += 1;
         } else if (BRANCH_PRED == 2) {
             if (twobitprediction == 0 || twobitprediction == 1) {
                 /* PIPELINE_SIZE-1 Stalls */
+                stalls += PIPELINE_SIZE-1;
+                c_stalls += PIPELINE_SIZE-1;
+                control_hazard += 1;
             }
         }
     } else if (PIPELINE_SIZE == 7) {
         /* Não tem branch prediction */
         /* PIPELINE_SIZE-1 Stalls */
+        stalls += PIPELINE_SIZE-1;
+        c_stalls += PIPELINE_SIZE-1;
+        control_hazard += 1;
     }
 }
 
@@ -317,6 +352,9 @@ void branch_not_taken_pipeline() {
         if (BRANCH_PRED == 2) {
             if (twobitprediction == 2 || twobitprediction == 3) {
                 /* PIPELINE_SIZE-1 Stalls */
+                stalls += PIPELINE_SIZE-1;
+                c_stalls += PIPELINE_SIZE-1;
+                control_hazard += 1;
             }
         }
     }
