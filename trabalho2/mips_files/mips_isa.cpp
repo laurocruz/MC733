@@ -56,7 +56,7 @@ typedef struct {
     int rs, rt, rd;
 } Instruction;
 
-/* Valores de saída */
+/* Valores que queremos de saída */
 long int cycles;                              // Número de ciclos
 long int instr, instr_R, instr_L, instr_J;    // Número de instruções executadas
 long int data_hazards;                        // Numero de data hazards
@@ -113,13 +113,16 @@ long int stalls;
  */
 #define PIPELINE_SIZE 5 // 5 , 7 ou 13
 #define PIPELINE_TYPE 1 // 1 = Escalar ; 2 = Superescalar
+#define BRANCH_PRED   0 // 0 = Sem ; 1 = always not taken ; 2 = 2 bit
 
 /* Define as posições no vetor */
+/* 5 estágios */
 #define IF5  0
 #define ID5  1
 #define EX5  2
 #define MEM5 3
 #define WB5  4
+/* 7 estágios */
 #define IT7  0
 #define IF7  1
 #define ID7  2
@@ -129,12 +132,13 @@ long int stalls;
 #define WB7  6
 
 /* Posição 0 - ultima instrução inserida no pipeline
- * Posicao N - N depois da 0
+ * Posicao N - Ultima do pipeline
  */
 vector<Instruction> pipeline(PIPELINE_SIZE), pipeline2(PIPELINE_SIZE);
 
 /* Insere uma nova instrução no pipeline */
-void insert_inst(Instruction newinst) {
+void insert_inst_pipeline(Instruction newinst) {
+    /* Incrementar contador de intruções */
     for (i = i.size(); i > 1; i--) {
         pipeline[i-1] = pipeline[i-2];
     }
@@ -142,12 +146,10 @@ void insert_inst(Instruction newinst) {
 }
 
 /* Implementa toda a lógica do pipeline */
-void executing_pipeline() {
+void data_hazards_pipeline() {
     if (PIPELINE_SIZE == 5) {
         if (PIPELINE_TYPE == 1) {
-            /* Pipeline escalar de 5 estágios
-
-            /* Verifica data hazards */
+            /* Pipeline escalar de 5 estágios */
             if (pipeline[EX5].rd == pipeline[ID5].rs) {
                 /* Dois stalls */
             } else if (pipeline[EX5].rd == pipeline[ID5].rt)  {
@@ -158,11 +160,9 @@ void executing_pipeline() {
                 /* Um stall */
             }
 
-            /* Control Hazard*/
         } else if (PIPELINE_TYPE == 2) {
             /* Pipeline Superescalar de 5 estágios */
 
-            /** Verifica data hazards **/
             /* Pipeline 1 */
             if (pipeline[EX5].rd == pipeline[ID5].rs) {
                 /* Dois stalls */
@@ -223,6 +223,39 @@ void executing_pipeline() {
     return;
 }
 
+/* Se for 0 ou 1 ele não deveria saltar
+ * Se for 2 ou 3 ele deveria saltar
+ */
+int twobitprediction;
+
+/* Funcao chamada quando um branch é executado */
+void branch_taken_pipeline() {
+    if (PIPELINE_SIZE == 5) {
+        if (BRANCH_PRED == 0) {
+            /* PIPELINE_SIZE-1 Stalls */
+        } else if (BRANCH_PRED == 1) {
+            /* PIPELINE_SIZE-1 Stalls */
+        } else if (BRANCH_PRED == 2) {
+            if (twobitprediction == 0 || twobitprediction == 1) {
+                /* PIPELINE_SIZE-1 Stalls */
+            }
+        }
+    } else if (PIPELINE_SIZE == 7) {
+        /* Não tem branch prediction */
+        /* PIPELINE_SIZE-1 Stalls */
+    }
+}
+
+/* Funcão chamada quando um branch não é executado */
+void branch_not_taken_pipeline() {
+    if (PIPELINE_SIZE == 5) {
+        if (BRANCH_PRED == 2) {
+            if (twobitprediction == 2 || twobitprediction == 3) {
+                /* PIPELINE_SIZE-1 Stalls */
+            }
+        }
+    }
+}
 
 //If you want debug information for this model, uncomment next line
 #define DEBUG_MODEL
