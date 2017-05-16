@@ -118,7 +118,7 @@ extern "C" {
 #define MM7  5
 #define WB7  6
 
-enum Inst_format { Rtype, Itype, Jype };
+enum Inst_format { Rtype, Itype, Jtype };
 
 typedef struct {
     Inst_format type;
@@ -134,7 +134,7 @@ unsigned int stalls, d_stalls, c_stalls;          // Número total de stalls
 /* Posição 0 - ultima instrução inserida no pipeline
  * Posicao N - Ultima do pipeline
  */
-vector<Instruction> pipeline(PIPELINE_SIZE), pipeline2(PIPELINE_SIZE);
+std::vector<Instruction> pipeline(PIPELINE_SIZE), pipeline2(PIPELINE_SIZE);
 
 /* Insere uma nova instrução no pipeline */
 void insert_inst_pipeline(Instruction newinst) {
@@ -149,10 +149,19 @@ void insert_inst_pipeline(Instruction newinst) {
     }
 
     /* Adiciona essa instrução no pipeline */
-    for (i = i.size(); i > 1; i--) {
+    for (i = pipeline.size(); i > 1; i--) {
         pipeline[i-1] = pipeline[i-2];
     }
     pipeline[0] = newinst;
+
+    if (PIPELINE_TYPE == 1){
+        if (instr > PIPELINE_SIZE-1){
+            data_hazard_pipeline();
+        }
+    } else if (PIPELINE_TYPE == 2) {
+
+    }
+
 }
 
 /* Implementa toda a lógica do pipeline */
@@ -160,17 +169,7 @@ void data_hazards_pipeline() {
     if (PIPELINE_SIZE == 5) {
         if (PIPELINE_TYPE == 1) {
             /* Pipeline escalar de 5 estágios */
-            if (pipeline[EX5].rd == pipeline[ID5].rs) {
-                /* Dois stalls */
-                stalls += 2;
-                d_stalls += 2;
-                data_hazards += 1;
-            } else if (pipeline[EX5].rd == pipeline[ID5].rt)  {
-                /* Dois stalls */
-                stalls += 2;
-                d_stalls += 2;
-                data_hazards += 1;
-            } else if (pipeline[MEM5].rd == pipeline[ID5].rs) {
+            if (pipeline[MEM5].rd == pipeline[ID5].rs) {
                 /* Um stalls */
                 stalls += 1;
                 d_stalls += 1;
@@ -179,6 +178,16 @@ void data_hazards_pipeline() {
                 /* Um stall */
                 stalls += 1;
                 d_stalls += 1;
+                data_hazards += 1;
+            } else if (pipeline[EX5].rd == pipeline[ID5].rs) {
+                /* Dois stalls */
+                stalls += 2;
+                d_stalls += 2;
+                data_hazards += 1;
+            } else if (pipeline[EX5].rd == pipeline[ID5].rt)  {
+                /* Dois stalls */
+                stalls += 2;
+                d_stalls += 2;
                 data_hazards += 1;
             }
 
@@ -232,42 +241,42 @@ void data_hazards_pipeline() {
             }
 
             /* Merge deles */
-            if (pipeline1[EX5].rd == pipeline2[ID5].rs) {
+            if (pipeline[EX5].rd == pipeline2[ID5].rs) {
                 /* 4 stalls */
                 stalls += 4;
                 d_stalls += 4;
                 data_hazards += 1;
-            } else if (pipeline1[EX5].rd == pipeline2[ID5].rt) {
+            } else if (pipeline[EX5].rd == pipeline2[ID5].rt) {
                 /* 4 stalls */
                 stalls += 4;
                 d_stalls += 4;
                 data_hazards += 1;
-            } else if (pipeline1[MEM5].rd == pipeline2[ID5].rs) {
+            } else if (pipeline[MEM5].rd == pipeline2[ID5].rs) {
                 /* 2 stalls */
                 stalls += 2;
                 d_stalls += 2;
                 data_hazards += 1;
-            } else if (pipeline1[MEM5].rd == pipeline2[ID5].rt) {
+            } else if (pipeline[MEM5].rd == pipeline2[ID5].rt) {
                 /* 2 stalls */
                 stalls += 2;
                 d_stalls += 2;
                 data_hazards += 1;
-            } else if (pipeline2[EX5].rd == pipeline2[ID5].rs) {
+            } else if (pipeline2[EX5].rd == pipeline[ID5].rs) {
                 /* 4 stalls */
                 stalls += 4;
                 d_stalls += 4;
                 data_hazards += 1;
-            } else if (pipeline2[EX5].rd == pipeline2[ID5].rt) {
+            } else if (pipeline2[EX5].rd == pipeline[ID5].rt) {
                 /* 4 stalls */
                 stalls += 4;
                 d_stalls += 4;
                 data_hazards += 1;
-            } else if (pipeline2[MEM5].rd == pipeline2[ID5].rs) {
+            } else if (pipeline2[MEM5].rd == pipeline[ID5].rs) {
                 /* 2 stalls */
                 stalls += 2;
                 d_stalls += 2;
                 data_hazards += 1;
-            } else if (pipeline2[MEM5].rd == pipeline2[ID5].rt) {
+            } else if (pipeline2[MEM5].rd == pipeline[ID5].rt) {
                 /* 2 stalls */
                 stalls += 2;
                 d_stalls += 2;
@@ -276,32 +285,32 @@ void data_hazards_pipeline() {
         }
     } else if (PIPELINE_SIZE == 7) {
         /* Pipeline escalar de 7 estágios */
-        if (pipeline[EX7] == pipeline[ID7].rs) {
+        if (pipeline[EX7].rd == pipeline[ID7].rs) {
             /* 3 stalls */
             stalls += 3;
             d_stalls += 3;
             data_hazards += 1;
-        } else if (pipeline[EX7] == pipeline[ID7].rt) {
+        } else if (pipeline[EX7].rd == pipeline[ID7].rt) {
             /* 3 stalls */
             stalls += 3;
             d_stalls += 3;
             data_hazards += 1;
-        } else if (pipeline[MT7] == pipeline[ID7].rs) {
+        } else if (pipeline[MT7].rd == pipeline[ID7].rs) {
             /* 2 stalls */
             stalls += 2;
             d_stalls += 2;
             data_hazards += 1;
-        } else if (pipeline[MT7] == pipeline[ID7].rt) {
+        } else if (pipeline[MT7].rd == pipeline[ID7].rt) {
             /* 2 stalls */
             stalls += 2;
             d_stalls += 2;
             data_hazards += 1;
-        } else if (pipeline[MM7] == pipeline[ID7].rs) {
+        } else if (pipeline[MM7].rd == pipeline[ID7].rs) {
             /* 1 stalls */
             stalls += 1;
             d_stalls += 1;
             data_hazards += 1;
-        } else if (pipeline[MM7] == pipeline[ID7].rt) {
+        } else if (pipeline[MM7].rd == pipeline[ID7].rt) {
             /* 1 stalls */
             stalls += 1;
             d_stalls += 1;
