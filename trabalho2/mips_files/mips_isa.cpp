@@ -57,7 +57,7 @@ extern "C" {
  *    - MEM|WB.rd = ID/EX.rs ou ID/EX.rt - 1 stalls
  *  Control Hazards:
  *    - Sem Branch Prediction:
- *      - O pipeline para a execução até calcular o branch - 4 stalls
+ *      - O pipeline para a execução até calcular o branch - 3 stalls
  *    - Always not Taken
  *      - Se tomar o branch - 4 stalls
  *      - Se não tomar      - 0 stalls
@@ -321,13 +321,13 @@ void branch_taken_pipeline() {
     if (PIPELINE_SIZE == 5) {
         if (BRANCH_PRED == 0) {
             /* PIPELINE_SIZE-1 Stalls */
-            stalls += PIPELINE_SIZE-1;
-            c_stalls += PIPELINE_SIZE-1;
+            stalls += PIPELINE_SIZE-2;
+            c_stalls += PIPELINE_SIZE-2;
             control_hazard += 1;
         } else if (BRANCH_PRED == 1) {
             /* PIPELINE_SIZE-1 Stalls */
-            stalls += PIPELINE_SIZE-1;
-            c_stalls += PIPELINE_SIZE-1;
+            stalls += PIPELINE_SIZE-2;
+            c_stalls += PIPELINE_SIZE-2;
             control_hazard += 1;
         } else if (BRANCH_PRED == 2) {
             if (twobitprediction == 0 || twobitprediction == 1) {
@@ -340,8 +340,8 @@ void branch_taken_pipeline() {
     } else if (PIPELINE_SIZE == 7) {
         /* Não tem branch prediction */
         /* PIPELINE_SIZE-1 Stalls */
-        stalls += PIPELINE_SIZE-1;
-        c_stalls += PIPELINE_SIZE-1;
+        stalls += PIPELINE_SIZE-2;
+        c_stalls += PIPELINE_SIZE-2;
         control_hazard += 1;
     }
 }
