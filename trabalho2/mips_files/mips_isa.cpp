@@ -57,17 +57,67 @@ typedef struct {
 } Instruction;
 
 /* Valores de saída */
-int cycles;
-int instr;
-int
+long int cycles;                              // Número de ciclos
+long int instr, instr_R, instr_L, instr_J;    // Número de instruções executadas
+long int data_hazards;                        // Numero de data hazards
+long int control_hazard;                      // Numero de control hazards
+long int stalls;
 
-/* O pipeline será implementado de maneira a só verificar se existe hazard ou
- * não. 
+/* ~~ Pipeline de 5 Estágios ~~
+ * ~ Escalar
+ * | IF | ID | EX | MEM | WB |
+ *  Data Hazards nos seguintes casos (Sem Fowarding):
+ *    - EX|MEM.rd = ID/EX.rs ou ID/EX.rt - 2 stalls
+ *    - MEM|WB.rd = ID/EX.rs ou ID/EX.rt - 1 stalls
+ *  Control Hazards:
+ *    - Sem Branch Prediction:
+ *      - O pipeline para a execução até calcular o branch - 4 stalls
+ *    - Always not Taken
+ *      - Se tomar o branch - 4 stalls
+ *      - Se não tomar      - 0 stalls
+ *    - Two-bit (não toma <-> não toma <-> toma <-> toma )
+ *      - Se nao tomar e for para tomar e vice e versa - 4 stalls
  *
+ * ~ Superescalar de dois níveis in-order-commit
+ * | IF | ID | EX | MEM | WB |
+ * | IF | ID | EX | MEM | WB |
+ *  Data Hazards nos seguintes casos (Sem Fowarding):
+ *    -  1EX|1MEM.rd = 1ID/1EX.rs ou 1ID/1EX.rt - 2 stalls-|
+ *    -  1MEM|1WB.rd = 1ID/1EX.rs ou 1ID/1EX.rt - 1 stalls |\ Casos escalar
+ *    -  2EX|2MEM.rd = 2ID/2EX.rs ou 2ID/2EX.rt - 2 stalls |/
+ *    -  2MEM|2WB.rd = 2ID/2EX.rs ou 2ID/2EX.rt - 1 stalls-|
+ *    Como eles devem estar alinhados (ioc) dobra os números de stalls
+ *    -  1EX|1MEM.rd = 2ID|2EX.rs ou 2ID/2EX.rt - 4 stalls
+ *    -  1MEM|1WB.rd = 2ID/2EX.rs ou 2ID/2EX.rt - 2 stalls
+ *    -  2EX|2MEM.rd = 1ID/1EX.rs ou 1ID/1EX.rt - 4 stalls
+ *    -  2MEM|2WB.rd = 1ID/1EX.rs ou 1ID/1EX.rt - 2 stalls
+ *
+ * ~~ Pipeline de 7 estágios ~~
+ * | IT | IF | ID | EX | MT | MM | WB |
+ *  Data Hazards nos seguintes casos (Sem Fowarding):
+ *    - EX|MT.rd = ID|EX.rs ou ID|EX.rt - 3 stalls
+ *    - MT|MM.rd = ID|EX.rs ou ID|EX.rt - 2 stalls
+ *    - MM|WB.rd = ID|EX.rs ou ID|EX.rt - 1 stalls
+ *  Control Hazards:
+ *    - Sem Branch Prediction:
+ *      - O pipeline para a execução até calcular o branch - 6 stalls
+ *
+ * ~~ Pipeline de 13 estágios ~~
+ * Baseado no Cortex A8 pipeline de 13 estágios
+ * Vamos não fazer ....?....
+ * | F1 | F2 | D0 | D1 | D2 | D3 | D4 | E0 | E1 | E2 | E3 | E4 | E5 |
+ *  Data Hazards nos seguintes casos (Sem Fowarding):
+ *    -
+ *  Control Hazards:
+ *    -
  */
 #define PIPELINE_SIZE 5
-
 vector<Instruction> pipeline(PIPELINE_SIZE);
+
+/* Implementa toda a lógica do pipeline */
+void executing_pipeline() {
+    return;
+}
 
 
 //If you want debug information for this model, uncomment next line
