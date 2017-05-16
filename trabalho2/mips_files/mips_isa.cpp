@@ -125,6 +125,11 @@ typedef struct {
     int rs, rt, rd;
 } Instruction;
 
+void data_hazards_pipeline();
+void insert_inst_pipeline(Instruction newinst);
+void branch_taken_pipeline();
+void branch_not_taken_pipeline();
+
 /* Valores que queremos de saída */
 unsigned int cycles;                              // Número de ciclos
 unsigned int instr, instr_R, instr_I, instr_J;    // Número de instruções execu
@@ -136,7 +141,31 @@ unsigned int stalls, d_stalls, c_stalls;          // Número total de stalls
  */
 std::vector<Instruction> pipeline(PIPELINE_SIZE), pipeline2(PIPELINE_SIZE);
 
+void initialize(){
+    cycles = 0;
+    instr = 0;
+    instr_R = 0;
+    instr_I = 0;
+    instr_J = 0;
+    data_hazards = 0;
+    control_hazard = 0;
+    stalls = 0;
+    d_stalls = 0;
+    c_stalls = 0;
+}
+
+Instruction createInst(Inst_format type, int rs, int rt, int rd){
+    Instruction newinst;
+    newinst.type = type;
+    newinst.rs = rs;
+    newinst.rt = rt;
+    newinst.rd = rd;
+
+    return newinst;
+}
+
 /* Insere uma nova instrução no pipeline */
+bool oneOrTwo = false;
 void insert_inst_pipeline(Instruction newinst) {
     /* Contador de # intruções */
     instr += 1;
@@ -149,17 +178,35 @@ void insert_inst_pipeline(Instruction newinst) {
     }
 
     /* Adiciona essa instrução no pipeline */
-    for (i = pipeline.size(); i > 1; i--) {
-        pipeline[i-1] = pipeline[i-2];
-    }
-    pipeline[0] = newinst;
-
     if (PIPELINE_TYPE == 1){
-        if (instr > PIPELINE_SIZE-1){
-            data_hazard_pipeline();
+        for (int i = pipeline.size(); i > 1; i--) {
+            pipeline[i-1] = pipeline[i-2];
+        }
+        pipeline[0] = newinst;
+
+        if (instr >= PIPELINE_SIZE-1){
+            data_hazards_pipeline();
         }
     } else if (PIPELINE_TYPE == 2) {
+        if (oneOrTwo == false) {
+            for (int i = pipeline.size(); i > 1; i--) {
+                pipeline[i-1] = pipeline[i-2];
+            }
+            pipeline[0] = newinst;
 
+            oneOrTwo = true;
+        } else {
+            for (int i = pipeline2.size(); i > 1; i--) {
+                pipeline2[i-1] = pipeline2[i-2];
+            }
+            pipeline2[0] = newinst;
+
+            if (instr >= PIPELINE_SIZE-1){
+                data_hazards_pipeline();
+            }
+
+            oneOrTwo = false;
+        }
     }
 
 }
