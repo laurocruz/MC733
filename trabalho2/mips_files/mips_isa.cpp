@@ -141,7 +141,7 @@ unsigned int stalls, d_stalls, c_stalls;          // Número total de stalls
  */
 std::vector<Instruction> pipeline(PIPELINE_SIZE), pipeline2(PIPELINE_SIZE);
 
-void initialize(){
+void initialize_pipeline(){
     cycles = 0;
     instr = 0;
     instr_R = 0;
@@ -498,6 +498,9 @@ void ac_behavior( Type_J ){}
 //!Behavior called before starting simulation
 void ac_behavior(begin)
 {
+    /* Initialize the pipeline */
+    initialize_pipeline();
+
     dbg_printf("@@@ begin behavior @@@\n");
     RB[0] = 0;
     npc = ac_pc + 4;
@@ -662,6 +665,8 @@ void ac_behavior( lb )
     byte = DATA_PORT->read_byte(RB[rs]+ imm);
     RB[rt] = (ac_Sword)byte ;
     dbg_printf("Result = %#x\n", RB[rt]);
+
+    insert_inst_pipeline(createInst(Itype, rs, -2, rt));
 };
 
 //!Instruction lbu behavior method.
@@ -673,6 +678,8 @@ void ac_behavior( lbu )
     byte = DATA_PORT->read_byte(RB[rs]+ imm);
     RB[rt] = byte ;
     dbg_printf("Result = %#x\n", RB[rt]);
+
+    insert_inst_pipeline(createInst(Itype, rs, -2, rt));
 };
 
 //!Instruction lh behavior method.
@@ -684,6 +691,8 @@ void ac_behavior( lh )
     half = DATA_PORT->read_half(RB[rs]+ imm);
     RB[rt] = (ac_Sword)half ;
     dbg_printf("Result = %#x\n", RB[rt]);
+
+    insert_inst_pipeline(createInst(Itype, rs, -2, rt));
 };
 
 //!Instruction lhu behavior method.
@@ -694,6 +703,8 @@ void ac_behavior( lhu )
     half = DATA_PORT->read_half(RB[rs]+ imm);
     RB[rt] = half ;
     dbg_printf("Result = %#x\n", RB[rt]);
+
+    insert_inst_pipeline(createInst(Itype, rs, -2, rt));
 };
 
 //!Instruction lw behavior method.
@@ -703,6 +714,8 @@ void ac_behavior( lw )
     dbg_printf("lw r%d, %d(r%d)\n", rt, imm & 0xFFFF, rs);
     RB[rt] = DATA_PORT->read(RB[rs]+ imm);
     dbg_printf("Result = %#x\n", RB[rt]);
+
+    insert_inst_pipeline(createInst(Itype, rs, -2, rt));
 };
 
 //!Instruction lwl behavior method.
@@ -720,6 +733,8 @@ void ac_behavior( lwl )
     data |= RB[rt] & ((1<<offset)-1);
     RB[rt] = data;
     dbg_printf("Result = %#x\n", RB[rt]);
+
+    insert_inst_pipeline(createInst(Itype, rs, -2, rt));
 };
 
 //!Instruction lwr behavior method.
@@ -737,6 +752,8 @@ void ac_behavior( lwr )
     data |= RB[rt] & (0xFFFFFFFF << (32-offset));
     RB[rt] = data;
     dbg_printf("Result = %#x\n", RB[rt]);
+
+    insert_inst_pipeline(createInst(Itype, rs, -2, rt));
 };
 
 //!Instruction sb behavior method.
@@ -748,6 +765,8 @@ void ac_behavior( sb )
     byte = RB[rt] & 0xFF;
     DATA_PORT->write_byte(RB[rs] + imm, byte);
     dbg_printf("Result = %#x\n", (int) byte);
+
+    insert_inst_pipeline(createInst(Itype, rs, rt, -3));
 };
 
 //!Instruction sh behavior method.
@@ -759,6 +778,8 @@ void ac_behavior( sh )
     half = RB[rt] & 0xFFFF;
     DATA_PORT->write_half(RB[rs] + imm, half);
     dbg_printf("Result = %#x\n", (int) half);
+
+    insert_inst_pipeline(createInst(Itype, rs, rt, -3));
 };
 
 //!Instruction sw behavior method.
@@ -768,6 +789,8 @@ void ac_behavior( sw )
     dbg_printf("sw r%d, %d(r%d)\n", rt, imm & 0xFFFF, rs);
     DATA_PORT->write(RB[rs] + imm, RB[rt]);
     dbg_printf("Result = %#x\n", RB[rt]);
+
+    insert_inst_pipeline(createInst(Itype, rs, rt, -3));
 };
 
 //!Instruction swl behavior method.
@@ -785,6 +808,8 @@ void ac_behavior( swl )
     data |= DATA_PORT->read(addr & 0xFFFFFFFC) & (0xFFFFFFFF << (32-offset));
     DATA_PORT->write(addr & 0xFFFFFFFC, data);
     dbg_printf("Result = %#x\n", data);
+
+    insert_inst_pipeline(createInst(Itype, rs, rt, -3));
 };
 
 //!Instruction swr behavior method.
@@ -802,6 +827,8 @@ void ac_behavior( swr )
     data |= DATA_PORT->read(addr & 0xFFFFFFFC) & ((1<<offset)-1);
     DATA_PORT->write(addr & 0xFFFFFFFC, data);
     dbg_printf("Result = %#x\n", data);
+
+    insert_inst_pipeline(createInst(Itype, rs, rt, -3));
 };
 
 //!Instruction addi behavior method.
@@ -815,6 +842,8 @@ void ac_behavior( addi )
             ((imm & 0x80000000) != (RB[rt] & 0x80000000)) ) {
         fprintf(stderr, "EXCEPTION(addi): integer overflow.\n"); exit(EXIT_FAILURE);
     }
+
+    insert_inst_pipeline(createInst(Itype, rs, -2, rt));
 };
 
 //!Instruction addiu behavior method.
@@ -823,6 +852,8 @@ void ac_behavior( addiu )
     dbg_printf("addiu r%d, r%d, %d\n", rt, rs, imm & 0xFFFF);
     RB[rt] = RB[rs] + imm;
     dbg_printf("Result = %#x\n", RB[rt]);
+
+    insert_inst_pipeline(createInst(Itype, rs, -2, rt));
 };
 
 //!Instruction slti behavior method.
@@ -836,6 +867,8 @@ void ac_behavior( slti )
     else
         RB[rt] = 0;
     dbg_printf("Result = %#x\n", RB[rt]);
+
+    insert_inst_pipeline(createInst(Itype, rs, -2, rt));
 };
 
 //!Instruction sltiu behavior method.
@@ -849,6 +882,8 @@ void ac_behavior( sltiu )
     else
         RB[rt] = 0;
     dbg_printf("Result = %#x\n", RB[rt]);
+
+    insert_inst_pipeline(createInst(Itype, rs, -2, rt));
 };
 
 //!Instruction andi behavior method.
@@ -857,6 +892,8 @@ void ac_behavior( andi )
     dbg_printf("andi r%d, r%d, %d\n", rt, rs, imm & 0xFFFF);
     RB[rt] = RB[rs] & (imm & 0xFFFF) ;
     dbg_printf("Result = %#x\n", RB[rt]);
+
+    insert_inst_pipeline(createInst(Itype, rs, -2, rt));
 };
 
 //!Instruction ori behavior method.
@@ -865,6 +902,8 @@ void ac_behavior( ori )
     dbg_printf("ori r%d, r%d, %d\n", rt, rs, imm & 0xFFFF);
     RB[rt] = RB[rs] | (imm & 0xFFFF) ;
     dbg_printf("Result = %#x\n", RB[rt]);
+
+    insert_inst_pipeline(createInst(Itype, rs, -2, rt));
 };
 
 //!Instruction xori behavior method.
@@ -873,6 +912,8 @@ void ac_behavior( xori )
     dbg_printf("xori r%d, r%d, %d\n", rt, rs, imm & 0xFFFF);
     RB[rt] = RB[rs] ^ (imm & 0xFFFF) ;
     dbg_printf("Result = %#x\n", RB[rt]);
+
+    insert_inst_pipeline(createInst(Itype, rs, -2, rt));
 };
 
 //!Instruction lui behavior method.
@@ -884,6 +925,8 @@ void ac_behavior( lui )
     // and moved to the target register ( rt )
     RB[rt] = imm << 16;
     dbg_printf("Result = %#x\n", RB[rt]);
+
+    insert_inst_pipeline(createInst(Itype, rs, -2, rt));
 };
 
 //!Instruction add behavior method.
@@ -897,6 +940,8 @@ void ac_behavior( add )
             ((RB[rd] & 0x80000000) != (RB[rt] & 0x80000000)) ) {
         fprintf(stderr, "EXCEPTION(add): integer overflow.\n"); exit(EXIT_FAILURE);
     }
+
+    insert_inst_pipeline(createInst(Rtype, rs, rt, rd));
 };
 
 //!Instruction addu behavior method.
@@ -907,6 +952,8 @@ void ac_behavior( addu )
     //cout << "  RS: " << (unsigned int)RB[rs] << " RT: " << (unsigned int)RB[rt] << endl;
     //cout << "  Result =  " <<  (unsigned int)RB[rd] <<endl;
     dbg_printf("Result = %#x\n", RB[rd]);
+
+    insert_inst_pipeline(createInst(Rtype, rs, rt, rd));
 };
 
 //!Instruction sub behavior method.
@@ -916,6 +963,8 @@ void ac_behavior( sub )
     RB[rd] = RB[rs] - RB[rt];
     dbg_printf("Result = %#x\n", RB[rd]);
     //TODO: test integer overflow exception for sub
+
+    insert_inst_pipeline(createInst(Rtype, rs, rt, rd));
 };
 
 //!Instruction subu behavior method.
@@ -924,6 +973,8 @@ void ac_behavior( subu )
     dbg_printf("subu r%d, r%d, r%d\n", rd, rs, rt);
     RB[rd] = RB[rs] - RB[rt];
     dbg_printf("Result = %#x\n", RB[rd]);
+
+    insert_inst_pipeline(createInst(Rtype, rs, rt, rd));
 };
 
 //!Instruction slt behavior method.
@@ -937,6 +988,8 @@ void ac_behavior( slt )
     else
         RB[rd] = 0;
     dbg_printf("Result = %#x\n", RB[rd]);
+
+    insert_inst_pipeline(createInst(Rtype, rs, rt, rd));
 };
 
 //!Instruction sltu behavior method.
@@ -950,6 +1003,8 @@ void ac_behavior( sltu )
     else
         RB[rd] = 0;
     dbg_printf("Result = %#x\n", RB[rd]);
+
+    insert_inst_pipeline(createInst(Rtype, rs, rt, rd));
 };
 
 //!Instruction instr_and behavior method.
@@ -958,6 +1013,8 @@ void ac_behavior( instr_and )
     dbg_printf("instr_and r%d, r%d, r%d\n", rd, rs, rt);
     RB[rd] = RB[rs] & RB[rt];
     dbg_printf("Result = %#x\n", RB[rd]);
+
+    insert_inst_pipeline(createInst(Rtype, rs, rt, rd));
 };
 
 //!Instruction instr_or behavior method.
@@ -966,6 +1023,8 @@ void ac_behavior( instr_or )
     dbg_printf("instr_or r%d, r%d, r%d\n", rd, rs, rt);
     RB[rd] = RB[rs] | RB[rt];
     dbg_printf("Result = %#x\n", RB[rd]);
+
+    insert_inst_pipeline(createInst(Rtype, rs, rt, rd));
 };
 
 //!Instruction instr_xor behavior method.
@@ -974,6 +1033,8 @@ void ac_behavior( instr_xor )
     dbg_printf("instr_xor r%d, r%d, r%d\n", rd, rs, rt);
     RB[rd] = RB[rs] ^ RB[rt];
     dbg_printf("Result = %#x\n", RB[rd]);
+
+    insert_inst_pipeline(createInst(Rtype, rs, rt, rd));
 };
 
 //!Instruction instr_nor behavior method.
@@ -982,12 +1043,16 @@ void ac_behavior( instr_nor )
     dbg_printf("nor r%d, r%d, r%d\n", rd, rs, rt);
     RB[rd] = ~(RB[rs] | RB[rt]);
     dbg_printf("Result = %#x\n", RB[rd]);
+
+    insert_inst_pipeline(createInst(Rtype, rs, rt, rd));
 };
 
 //!Instruction nop behavior method.
 void ac_behavior( nop )
 {
     dbg_printf("nop\n");
+
+    insert_inst_pipeline(createInst(Rtype, -1, -2, -3));
 };
 
 //!Instruction sll behavior method.
@@ -996,6 +1061,8 @@ void ac_behavior( sll )
     dbg_printf("sll r%d, r%d, %d\n", rd, rs, shamt);
     RB[rd] = RB[rt] << shamt;
     dbg_printf("Result = %#x\n", RB[rd]);
+
+    insert_inst_pipeline(createInst(Rtype, rs, rt, rd));
 };
 
 //!Instruction srl behavior method.
@@ -1004,6 +1071,8 @@ void ac_behavior( srl )
     dbg_printf("srl r%d, r%d, %d\n", rd, rs, shamt);
     RB[rd] = RB[rt] >> shamt;
     dbg_printf("Result = %#x\n", RB[rd]);
+
+    insert_inst_pipeline(createInst(Rtype, rs, rt, rd));
 };
 
 //!Instruction sra behavior method.
@@ -1012,6 +1081,8 @@ void ac_behavior( sra )
     dbg_printf("sra r%d, r%d, %d\n", rd, rs, shamt);
     RB[rd] = (ac_Sword) RB[rt] >> shamt;
     dbg_printf("Result = %#x\n", RB[rd]);
+
+    insert_inst_pipeline(createInst(Rtype, rs, rt, rd));
 };
 
 //!Instruction sllv behavior method.
@@ -1020,6 +1091,8 @@ void ac_behavior( sllv )
     dbg_printf("sllv r%d, r%d, r%d\n", rd, rt, rs);
     RB[rd] = RB[rt] << (RB[rs] & 0x1F);
     dbg_printf("Result = %#x\n", RB[rd]);
+
+    insert_inst_pipeline(createInst(Rtype, rs, rt, rd));
 };
 
 //!Instruction srlv behavior method.
@@ -1028,6 +1101,8 @@ void ac_behavior( srlv )
     dbg_printf("srlv r%d, r%d, r%d\n", rd, rt, rs);
     RB[rd] = RB[rt] >> (RB[rs] & 0x1F);
     dbg_printf("Result = %#x\n", RB[rd]);
+
+    insert_inst_pipeline(createInst(Rtype, rs, rt, rd));
 };
 
 //!Instruction srav behavior method.
@@ -1036,6 +1111,8 @@ void ac_behavior( srav )
     dbg_printf("srav r%d, r%d, r%d\n", rd, rt, rs);
     RB[rd] = (ac_Sword) RB[rt] >> (RB[rs] & 0x1F);
     dbg_printf("Result = %#x\n", RB[rd]);
+
+    insert_inst_pipeline(createInst(Rtype, rs, rt, rd));
 };
 
 //!Instruction mult behavior method.
@@ -1058,6 +1135,8 @@ void ac_behavior( mult )
     hi = half_result ;
 
     dbg_printf("Result = %#llx\n", result);
+
+    insert_inst_pipeline(createInst(Rtype, rs, rt, -3));
 };
 
 //!Instruction multu behavior method.
@@ -1080,6 +1159,8 @@ void ac_behavior( multu )
     hi = half_result ;
 
     dbg_printf("Result = %#llx\n", result);
+
+    insert_inst_pipeline(createInst(Rtype, rs, rt, -3));
 };
 
 //!Instruction div behavior method.
@@ -1090,6 +1171,8 @@ void ac_behavior( div )
     lo = (ac_Sword) RB[rs] / (ac_Sword) RB[rt];
     // Register HI receives remainder
     hi = (ac_Sword) RB[rs] % (ac_Sword) RB[rt];
+
+    insert_inst_pipeline(createInst(Rtype, rs, rt, -3));
 };
 
 //!Instruction divu behavior method.
@@ -1100,6 +1183,8 @@ void ac_behavior( divu )
     lo = RB[rs] / RB[rt];
     // Register HI receives remainder
     hi = RB[rs] % RB[rt];
+
+    insert_inst_pipeline(createInst(Rtype, rs, rt, -3));
 };
 
 //!Instruction mfhi behavior method.
@@ -1108,6 +1193,8 @@ void ac_behavior( mfhi )
     dbg_printf("mfhi r%d\n", rd);
     RB[rd] = hi;
     dbg_printf("Result = %#x\n", RB[rd]);
+
+    insert_inst_pipeline(createInst(Rtype, -1, -2, rd));
 };
 
 //!Instruction mthi behavior method.
@@ -1116,6 +1203,8 @@ void ac_behavior( mthi )
     dbg_printf("mthi r%d\n", rs);
     hi = RB[rs];
     dbg_printf("Result = %#x\n", (unsigned int) hi);
+
+    insert_inst_pipeline(createInst(Rtype, rs, -2, -3));
 };
 
 //!Instruction mflo behavior method.
@@ -1124,6 +1213,8 @@ void ac_behavior( mflo )
     dbg_printf("mflo r%d\n", rd);
     RB[rd] = lo;
     dbg_printf("Result = %#x\n", RB[rd]);
+
+    insert_inst_pipeline(createInst(Rtype, -1, -2, rd));
 };
 
 //!Instruction mtlo behavior method.
@@ -1132,6 +1223,8 @@ void ac_behavior( mtlo )
     dbg_printf("mtlo r%d\n", rs);
     lo = RB[rs];
     dbg_printf("Result = %#x\n", (unsigned int) lo);
+
+    insert_inst_pipeline(createInst(Rtype, rs, -2, -3));
 };
 
 //!Instruction j behavior method.
@@ -1143,6 +1236,8 @@ void ac_behavior( j )
     npc =  (ac_pc & 0xF0000000) | addr;
 #endif
     dbg_printf("Target = %#x\n", (ac_pc & 0xF0000000) | addr );
+
+    insert_inst_pipeline(createInst(Jtype, -1, -2, -3));
 };
 
 //!Instruction jal behavior method.
@@ -1161,6 +1256,8 @@ void ac_behavior( jal )
 
     dbg_printf("Target = %#x\n", (ac_pc & 0xF0000000) | addr );
     dbg_printf("Return = %#x\n", ac_pc+4);
+
+    insert_inst_pipeline(createInst(Jtype, -1, -2, -3));
 };
 
 //!Instruction jr behavior method.
