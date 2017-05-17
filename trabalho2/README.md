@@ -63,3 +63,27 @@ De forma a analisar os diferentes cenários simulados, foram determinados os seg
 - Quantidade de Branch Predictions Incorretos.
 - Porcentagem de Cache Misses na L1.
 - Porcentagem de Cache Misses na L2.
+
+## Cenários Analisados
+A seguir apresentamos uma tabela que identifica as diferentes combinações das configurações que foram medidas. Estas combinações foram escolhidas de forma a facilitar a análise da influência das mudanças em cada configuração individualmente, além de nos fornecer uma visão geral das vantagens e desvantagens de cada cenário.
+
+| Cenário  | Pipeline                   | Configuração de Cache | Branch Predictor |
+|----|----------------------------|-----------------------|------------------|
+| 1  | Escalar de 5 estágios      | 1                     | Sem              |
+| 2  | Superescalar de 5 estágios | 1                     | Sem              |
+| 3  | Escalar de 7 estágios      | 1                     | Sem              |
+| 4  | Escalar de 5 estágios      | 2                     | Sem              |
+| 5  | Escalar de 5 estágios      | 3                     | Sem              |
+| 6  | Escalar de 5 estágios      | 4                     | Sem              |
+| 7  | Escalar de 5 estágios      | 5                     | Sem              |
+| 8  | Escalar de 5 estágios      | 6                     | Sem              |
+| 9  | Escalar de 5 estágios      | 7                     | Sem              |
+| 10 | Escalar de 5 estágios      | 8                     | Sem              |
+| 11 | Escalar de 5 estágios      | 1                     | Always Not Taken |
+| 12 | Escalar de 5 estágios      | 1                     | Two-Bit          |
+| 13 | Superescalar de 5 estágios | 1                     | Always Not Taken |
+| 14 | Superescalar de 5 estágios | 1                     | Two-Bit          |
+
+## Metodologia
+
+## Análise dos Resultados
