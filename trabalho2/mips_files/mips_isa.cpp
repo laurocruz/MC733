@@ -146,16 +146,16 @@ d4cache* IL2;
  *    -
  */
 
-#ifndef PIPELINE_SIZE
-    #define PIPELINE_SIZE 5            // 5 , 7 ou 13
+#ifndef _PIPELINE_SIZE
+    #define _PIPELINE_SIZE 5            // 5 , 7 ou 13
 #endif
 
-#ifndef PIPELINE_TYPE
-    #define PIPELINE_TYPE 1            // 1 = Escalar ; 2 = Superescalar
+#ifndef _PIPELINE_TYPE
+    #define _PIPELINE_TYPE 1            // 1 = Escalar ; 2 = Superescalar
 #endif
 
-#ifndef BRANCH_PRED
-    #define BRANCH_PRED   0            // 0 = Sem ; 1 = always not taken ; 2 = 2 bit
+#ifndef _BRANCH_PRED
+    #define _BRANCH_PRED   0            // 0 = Sem ; 1 = always not taken ; 2 = 2 bit
 #endif
 
 /* Define as posições no vetor */
@@ -198,7 +198,7 @@ unsigned int branches, c_branches, i_branches;
 /* Posição 0 - ultima instrução inserida no pipeline
  * Posicao N - Ultima do pipeline
  */
-std::vector<Instruction> pipeline(PIPELINE_SIZE), pipeline2(PIPELINE_SIZE);
+std::vector<Instruction> pipeline(_PIPELINE_SIZE), pipeline2(_PIPELINE_SIZE);
 
 void initialize_pipeline(){
     instr = 0;
@@ -243,16 +243,16 @@ void insert_inst_pipeline(Instruction newinst) {
     }
 
     /* Adiciona essa instrução no pipeline */
-    if (PIPELINE_TYPE == 1){
+    if (_PIPELINE_TYPE == 1){
         for (int i = pipeline.size(); i > 1; i--) {
             pipeline[i-1] = pipeline[i-2];
         }
         pipeline[0] = newinst;
 
-        if (instr >= PIPELINE_SIZE-1){
+        if (instr >= _PIPELINE_SIZE-1){
             data_hazards_pipeline();
         }
-    } else if (PIPELINE_TYPE == 2) {
+    } else if (_PIPELINE_TYPE == 2) {
         /* No escalar, só verifica se tem hazard quando os dois estao comp. */
         if (oneOrTwo == false) {
             for (int i = pipeline.size(); i > 1; i--) {
@@ -267,7 +267,7 @@ void insert_inst_pipeline(Instruction newinst) {
             }
             pipeline2[0] = newinst;
 
-            if (instr >= PIPELINE_SIZE-1){
+            if (instr >= _PIPELINE_SIZE-1){
                 data_hazards_pipeline();
             }
 
@@ -280,8 +280,8 @@ void insert_inst_pipeline(Instruction newinst) {
 
 /* Implementa toda a lógica do pipeline */
 void data_hazards_pipeline() {
-    if (PIPELINE_SIZE == 5) {
-        if (PIPELINE_TYPE == 1) {
+    if (_PIPELINE_SIZE == 5) {
+        if (_PIPELINE_TYPE == 1) {
             /* Pipeline escalar de 5 estágios */
             if (pipeline[MEM5].rd == pipeline[ID5].rs) {
                 /* Um stalls */
@@ -305,7 +305,7 @@ void data_hazards_pipeline() {
                 data_hazards += 1;
             }
 
-        } else if (PIPELINE_TYPE == 2) {
+        } else if (_PIPELINE_TYPE == 2) {
             /* Pipeline Superescalar de 5 estágios */
 
             /* Pipeline 1 */
@@ -397,7 +397,7 @@ void data_hazards_pipeline() {
                 data_hazards += 1;
             }
         }
-    } else if (PIPELINE_SIZE == 7) {
+    } else if (_PIPELINE_SIZE == 7) {
         /* Pipeline escalar de 7 estágios */
         if (pipeline[EX7].rd == pipeline[ID7].rs) {
             /* 3 stalls */
@@ -442,23 +442,23 @@ int twobitprediction = 0;
 /* Funcao chamada quando um branch é executado */
 void branch_taken_pipeline() {
     branches += 1;
-    if (PIPELINE_SIZE == 5) {
-        if (BRANCH_PRED == 0) {
-            /* PIPELINE_SIZE-1 Stalls */
-            stalls += PIPELINE_SIZE-2;
-            c_stalls += PIPELINE_SIZE-2;
+    if (_PIPELINE_SIZE == 5) {
+        if (_BRANCH_PRED == 0) {
+            /* _PIPELINE_SIZE-1 Stalls */
+            stalls += _PIPELINE_SIZE-2;
+            c_stalls += _PIPELINE_SIZE-2;
             control_hazard += 1;
-        } else if (BRANCH_PRED == 1) {
-            /* PIPELINE_SIZE-1 Stalls */
-            stalls += PIPELINE_SIZE-2;
-            c_stalls += PIPELINE_SIZE-2;
+        } else if (_BRANCH_PRED == 1) {
+            /* _PIPELINE_SIZE-1 Stalls */
+            stalls += _PIPELINE_SIZE-2;
+            c_stalls += _PIPELINE_SIZE-2;
             control_hazard += 1;
             i_branches += 1;
-        } else if (BRANCH_PRED == 2) {
+        } else if (_BRANCH_PRED == 2) {
             if (twobitprediction == 0 || twobitprediction == 1) {
-                /* PIPELINE_SIZE-1 Stalls */
-                stalls += PIPELINE_SIZE-2;
-                c_stalls += PIPELINE_SIZE-2;
+                /* _PIPELINE_SIZE-1 Stalls */
+                stalls += _PIPELINE_SIZE-2;
+                c_stalls += _PIPELINE_SIZE-2;
                 control_hazard += 1;
                 i_branches += 1;
             } else {
@@ -470,11 +470,11 @@ void branch_taken_pipeline() {
                 twobitprediction += 1;
             }
         }
-    } else if (PIPELINE_SIZE == 7) {
+    } else if (_PIPELINE_SIZE == 7) {
         /* Não tem branch prediction */
-        /* PIPELINE_SIZE-1 Stalls */
-        stalls += PIPELINE_SIZE-2;
-        c_stalls += PIPELINE_SIZE-2;
+        /* _PIPELINE_SIZE-1 Stalls */
+        stalls += _PIPELINE_SIZE-2;
+        c_stalls += _PIPELINE_SIZE-2;
         control_hazard += 1;
     }
 }
@@ -482,19 +482,19 @@ void branch_taken_pipeline() {
 /* Funcão chamada quando um branch não é executado */
 void branch_not_taken_pipeline() {
     branches += 1;
-    if (PIPELINE_SIZE == 5) {
-        if (BRANCH_PRED == 0) {
-            /* PIPELINE_SIZE-1 Stalls */
-            stalls += PIPELINE_SIZE-2;
-            c_stalls += PIPELINE_SIZE-2;
+    if (_PIPELINE_SIZE == 5) {
+        if (_BRANCH_PRED == 0) {
+            /* _PIPELINE_SIZE-1 Stalls */
+            stalls += _PIPELINE_SIZE-2;
+            c_stalls += _PIPELINE_SIZE-2;
             control_hazard += 1;
-        } else if (BRANCH_PRED == 1) {
+        } else if (_BRANCH_PRED == 1) {
             c_branches += 1;
-        } else  if (BRANCH_PRED == 2) {
+        } else  if (_BRANCH_PRED == 2) {
             if (twobitprediction == 2 || twobitprediction == 3) {
-                /* PIPELINE_SIZE-1 Stalls */
-                stalls += PIPELINE_SIZE-1;
-                c_stalls += PIPELINE_SIZE-1;
+                /* _PIPELINE_SIZE-1 Stalls */
+                stalls += _PIPELINE_SIZE-1;
+                c_stalls += _PIPELINE_SIZE-1;
                 control_hazard += 1;
                 i_branches += 1;
 
@@ -517,15 +517,15 @@ void print_status(){
     int cycles;
     double CPI;
 
-    if (PIPELINE_TYPE == 1) {
-        cycles = stalls + instr + PIPELINE_SIZE - 1;
+    if (_PIPELINE_TYPE == 1) {
+        cycles = stalls + instr + _PIPELINE_SIZE - 1;
     } else {
-        cycles = stalls + (instr/2) + PIPELINE_SIZE - 1;
+        cycles = stalls + (instr/2) + _PIPELINE_SIZE - 1;
     }
 
     CPI = (double) cycles/ (double) instr;
 
-    std::cout << "Pipeline: " << PIPELINE_SIZE << "\tTipo: " << PIPELINE_TYPE << "\tBP: " << BRANCH_PRED << endl;
+    std::cout << "Pipeline: " << _PIPELINE_SIZE << "\tTipo: " << _PIPELINE_TYPE << "\tBP: " << _BRANCH_PRED << endl;
     std::cout << "Cycles:" << cycles << endl;
     std::cout << "Instructions:" << instr << endl;
     std::cout << "Instructions R:" << instr_R << endl;
