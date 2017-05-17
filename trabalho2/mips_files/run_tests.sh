@@ -27,19 +27,14 @@ do
 
 
     cd $BENCH/network/patricia
-    #sudo chmod +x runme_small.sh
-    ./runme_small.sh
-    #$BENCH/network/patricia/runme_large.sh
+    ${SIMULATOR}patricia small.udp > $BASEDIR/patricia_small.out
 
     cd $BENCH/automotive/basicmath
-    #sudo chmod +x runme_small.sh
-    ./runme_small.sh
-    #$BENCH/automotive/basicmath/runme_large.sh
+    ${SIMULATOR}basicmath_small > $BASEDIR/basicmath.out
 
     cd $BENCH/telecomm/FFT
-    #sudo chmod +x runme_small.sh
-    ./runme_small.sh
-    #$BENCH/telecom/FFT/runme_large.sh
+    ${SIMULATOR}fft 4 4096 > $BASEDIR/fft_small.out
+    ${SIMULATOR}fft 4 8192 > $BASEDIR/fft_inv_small.out
 
     cd $BASEDIR
 
