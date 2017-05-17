@@ -25,15 +25,19 @@ do
 
     make
 
+
     cd $BENCH/network/patricia
+    #sudo chmod +x runme_small.sh
     ./runme_small.sh
     #$BENCH/network/patricia/runme_large.sh
 
     cd $BENCH/automotive/basicmath
+    #sudo chmod +x runme_small.sh
     ./runme_small.sh
     #$BENCH/automotive/basicmath/runme_large.sh
 
     cd $BENCH/telecomm/FFT
+    #sudo chmod +x runme_small.sh
     ./runme_small.sh
     #$BENCH/telecom/FFT/runme_large.sh
 
