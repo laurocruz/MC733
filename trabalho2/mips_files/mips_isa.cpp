@@ -436,7 +436,7 @@ void data_hazards_pipeline() {
 /* Se for 0 ou 1 ele não deveria saltar
  * Se for 2 ou 3 ele deveria saltar
  */
-int twobitprediction;
+int twobitprediction = 0;
 
 /* Funcao chamada quando um branch é executado */
 void branch_taken_pipeline() {
@@ -464,6 +464,10 @@ void branch_taken_pipeline() {
                 // Acertou
                 c_branches += 1;
             }
+            /* Atualiza o valor do 2bit */
+            if (twobitprediction >= 0 && twobitprediction < 3){
+                twobitprediction += 1;
+            }
         }
     } else if (PIPELINE_SIZE == 7) {
         /* Não tem branch prediction */
@@ -478,19 +482,31 @@ void branch_taken_pipeline() {
 void branch_not_taken_pipeline() {
     branches += 1;
     if (PIPELINE_SIZE == 5) {
-        if (BRANCH_PRED == 2) {
+        if (BRANCH_PRED == 0) {
+            /* PIPELINE_SIZE-1 Stalls */
+            stalls += PIPELINE_SIZE-2;
+            c_stalls += PIPELINE_SIZE-2;
+            control_hazard += 1;
+        } else if (BRANCH_PRED == 1) {
+            c_branches += 1;
+        } else  if (BRANCH_PRED == 2) {
             if (twobitprediction == 2 || twobitprediction == 3) {
                 /* PIPELINE_SIZE-1 Stalls */
                 stalls += PIPELINE_SIZE-1;
                 c_stalls += PIPELINE_SIZE-1;
                 control_hazard += 1;
                 i_branches += 1;
+
+                twobitprediction -= 1;
             } else {
                 // Acertou
                 c_branches += 1;
             }
-        } else if (BRANCH_PRED == 1) {
-            c_branches += 1;
+
+            /* Atualiza o valor do 2bit */
+            if (twobitprediction > 0 && twobitprediction <= 3){
+                twobitprediction -= 1;
+            }
         }
     }
 }
