@@ -95,6 +95,7 @@ d4cache* IL2;
  * mais info: homepage.cs.uiowa.edu/~ghosh/1-24-06.pdf
  *
  *
+ * Jumps são resolvidos no segundo estãgio
  * ~~~~ Explicações dos pipelines ~~~~
  * ~~ Pipeline de 5 Estágios ~~
  * ~ Escalar
@@ -154,7 +155,7 @@ d4cache* IL2;
 #endif
 
 #ifndef BRANCH_PRED
-    #define BRANCH_PRED   0            // 0 = Sem ; 1 = always not taken ; 2 = 2 bit
+    #define BRANCH_PRED   2            // 0 = Sem ; 1 = always not taken ; 2 = 2 bit
 #endif
 
 /* Define as posições no vetor */
@@ -180,16 +181,19 @@ typedef struct {
     int rs, rt, rd;
 } Instruction;
 
+void initialize_pipeline();
+Instruction createInst(Inst_format type, int rs, int rt, int rd);
 void data_hazards_pipeline();
 void insert_inst_pipeline(Instruction newinst);
 void branch_taken_pipeline();
 void branch_not_taken_pipeline();
+void print_status();
 
 /* Valores que queremos de saída */
-unsigned int cycles;                              // Número de ciclos
-unsigned int instr, instr_R, instr_I, instr_J;    // Número de instruções execu
-unsigned int data_hazards, control_hazard;        // Numero de data hazards
-unsigned int stalls, d_stalls, c_stalls;          // Número total de stalls
+unsigned int instr, instr_R, instr_I, instr_J;    // Número de instruções
+unsigned int data_hazards, control_hazard;        // Numero de hazards
+unsigned int stalls, d_stalls, c_stalls, j_stalls;  // Número de stalls
+unsigned int branches, c_branches, i_branches;
 
 /* Posição 0 - ultima instrução inserida no pipeline
  * Posicao N - Ultima do pipeline
@@ -197,7 +201,6 @@ unsigned int stalls, d_stalls, c_stalls;          // Número total de stalls
 std::vector<Instruction> pipeline(PIPELINE_SIZE), pipeline2(PIPELINE_SIZE);
 
 void initialize_pipeline(){
-    cycles = 0;
     instr = 0;
     instr_R = 0;
     instr_I = 0;
@@ -207,6 +210,10 @@ void initialize_pipeline(){
     stalls = 0;
     d_stalls = 0;
     c_stalls = 0;
+    j_stalls = 0;
+    branches = 0;
+    c_branches = 0;
+    i_branches = 0;
 }
 
 Instruction createInst(Inst_format type, int rs, int rt, int rd){
@@ -230,6 +237,9 @@ void insert_inst_pipeline(Instruction newinst) {
         instr_I += 1;
     } else if (newinst.type == Jtype) {
         instr_J += 1;
+
+        stalls += 2;
+        j_stalls += 2;
     }
 
     /* Adiciona essa instrução no pipeline */
@@ -430,6 +440,7 @@ int twobitprediction;
 
 /* Funcao chamada quando um branch é executado */
 void branch_taken_pipeline() {
+    branches += 1;
     if (PIPELINE_SIZE == 5) {
         if (BRANCH_PRED == 0) {
             /* PIPELINE_SIZE-1 Stalls */
@@ -441,12 +452,17 @@ void branch_taken_pipeline() {
             stalls += PIPELINE_SIZE-2;
             c_stalls += PIPELINE_SIZE-2;
             control_hazard += 1;
+            i_branches += 1;
         } else if (BRANCH_PRED == 2) {
             if (twobitprediction == 0 || twobitprediction == 1) {
                 /* PIPELINE_SIZE-1 Stalls */
-                stalls += PIPELINE_SIZE-1;
-                c_stalls += PIPELINE_SIZE-1;
+                stalls += PIPELINE_SIZE-2;
+                c_stalls += PIPELINE_SIZE-2;
                 control_hazard += 1;
+                i_branches += 1;
+            } else {
+                // Acertou
+                c_branches += 1;
             }
         }
     } else if (PIPELINE_SIZE == 7) {
@@ -460,6 +476,7 @@ void branch_taken_pipeline() {
 
 /* Funcão chamada quando um branch não é executado */
 void branch_not_taken_pipeline() {
+    branches += 1;
     if (PIPELINE_SIZE == 5) {
         if (BRANCH_PRED == 2) {
             if (twobitprediction == 2 || twobitprediction == 3) {
@@ -467,11 +484,47 @@ void branch_not_taken_pipeline() {
                 stalls += PIPELINE_SIZE-1;
                 c_stalls += PIPELINE_SIZE-1;
                 control_hazard += 1;
+                i_branches += 1;
+            } else {
+                // Acertou
+                c_branches += 1;
             }
+        } else if (BRANCH_PRED == 1) {
+            c_branches += 1;
         }
     }
 }
 
+
+void print_status(){
+    int cycles;
+    double CPI;
+
+    if (PIPELINE_TYPE == 1) {
+        cycles = stalls+instr+PIPELINE_SIZE-1;
+    } else {
+        cycles = (stalls+instr)/2 +PIPELINE_SIZE-1;
+    }
+
+    CPI = (double) cycles/ (double) instr;
+
+    std::cout << "Pipeline: " << PIPELINE_SIZE << "\tTipo: " << PIPELINE_TYPE << "\tBP: " << BRANCH_PRED << endl;
+    std::cout << "Cycles:" << cycles << endl;
+    std::cout << "Instructions:" << instr << endl;
+    std::cout << "Instructions R:" << instr_R << endl;
+    std::cout << "Instructions I:" << instr_I << endl;
+    std::cout << "Instructions J:" << instr_J << endl;
+    std::cout << "CPI: " <<  CPI << endl;
+    std::cout << "Data Hazards:" << data_hazards << endl;
+    std::cout << "Control Hazards:" << control_hazard << endl;
+    std::cout << "Stalls:" << stalls << endl;
+    std::cout << "Data Stalls:" << d_stalls << endl;
+    std::cout << "Control Stalls:" << c_stalls << endl;
+    std::cout << "Jump Stalls:" << j_stalls << endl;
+    std::cout << "Branches:" << branches << endl;
+    std::cout << "Correct Branches:" << c_branches << endl;
+    std::cout << "Incorrect Branches:" << i_branches << endl;
+}
 
 // ----------------------- CACHE FUNCTIONS --------------------------------
 // Read operation on the cache
@@ -681,6 +734,7 @@ void ac_behavior(end)
     print_cache_line(ms, fs, "TOTAL:    ");
     std::cout << endl;
 
+    print_status();
 
     dbg_printf("@@@ end behavior @@@\n");
 }
@@ -1329,90 +1383,147 @@ void ac_behavior( jalr )
 //!Instruction beq behavior method.
 void ac_behavior( beq )
 {
+    bool branch_taken = false;
+
     dbg_printf("beq r%d, r%d, %d\n", rt, rs, imm & 0xFFFF);
     if( RB[rs] == RB[rt] ){
 #ifndef NO_NEED_PC_UPDATE
         npc = ac_pc + (imm<<2);
 #endif
         dbg_printf("Taken to %#x\n", ac_pc + (imm<<2));
+        branch_taken = true;
     }
 
     insert_inst_pipeline(createInst(Itype, rs, rt, -3));
+
+    if (branch_taken){
+        branch_taken_pipeline();
+    } else {
+        branch_not_taken_pipeline();
+    }
 };
 
 //!Instruction bne behavior method.
 void ac_behavior( bne )
 {
+    bool branch_taken = false;
+
     dbg_printf("bne r%d, r%d, %d\n", rt, rs, imm & 0xFFFF);
     if( RB[rs] != RB[rt] ){
 #ifndef NO_NEED_PC_UPDATE
         npc = ac_pc + (imm<<2);
 #endif
         dbg_printf("Taken to %#x\n", ac_pc + (imm<<2));
+        branch_taken = true;
     }
 
     insert_inst_pipeline(createInst(Itype, rs, rt, -3));
+
+    if (branch_taken){
+        branch_taken_pipeline();
+    } else {
+        branch_not_taken_pipeline();
+    }
 };
 
 //!Instruction blez behavior method.
 void ac_behavior( blez )
 {
+    bool branch_taken = false;
+
     dbg_printf("blez r%d, %d\n", rs, imm & 0xFFFF);
     if( (RB[rs] == 0 ) || (RB[rs]&0x80000000 ) ){
 #ifndef NO_NEED_PC_UPDATE
         npc = ac_pc + (imm<<2), 1;
 #endif
         dbg_printf("Taken to %#x\n", ac_pc + (imm<<2));
+        branch_taken = true;
     }
 
     insert_inst_pipeline(createInst(Itype, rs, -2, -3));
+
+    if (branch_taken){
+        branch_taken_pipeline();
+    } else {
+        branch_not_taken_pipeline();
+    }
 };
 
 //!Instruction bgtz behavior method.
 void ac_behavior( bgtz )
 {
+    bool branch_taken = false;
+
     dbg_printf("bgtz r%d, %d\n", rs, imm & 0xFFFF);
     if( !(RB[rs] & 0x80000000) && (RB[rs]!=0) ){
 #ifndef NO_NEED_PC_UPDATE
         npc = ac_pc + (imm<<2);
 #endif
         dbg_printf("Taken to %#x\n", ac_pc + (imm<<2));
+        branch_taken = true;
     }
 
     insert_inst_pipeline(createInst(Itype, rs, -2, -3));
+
+
+    if (branch_taken){
+        branch_taken_pipeline();
+    } else {
+        branch_not_taken_pipeline();
+    }
 };
 
 //!Instruction bltz behavior method.
 void ac_behavior( bltz )
 {
+    bool branch_taken = false;
+
     dbg_printf("bltz r%d, %d\n", rs, imm & 0xFFFF);
     if( RB[rs] & 0x80000000 ){
 #ifndef NO_NEED_PC_UPDATE
         npc = ac_pc + (imm<<2);
 #endif
         dbg_printf("Taken to %#x\n", ac_pc + (imm<<2));
+        branch_taken = true;
     }
 
     insert_inst_pipeline(createInst(Itype, rs, -2, -3));
+
+    if (branch_taken){
+        branch_taken_pipeline();
+    } else {
+        branch_not_taken_pipeline();
+    }
 };
 
 //!Instruction bgez behavior method.
 void ac_behavior( bgez )
 {
+    bool branch_taken = false;
+
     dbg_printf("bgez r%d, %d\n", rs, imm & 0xFFFF);
     if( !(RB[rs] & 0x80000000) ){
 #ifndef NO_NEED_PC_UPDATE
         npc = ac_pc + (imm<<2);
 #endif
         dbg_printf("Taken to %#x\n", ac_pc + (imm<<2));
+        branch_taken = true;
     }
 
     insert_inst_pipeline(createInst(Itype, rs, -2, -3));
+
+    if (branch_taken){
+        branch_taken_pipeline();
+    } else {
+        branch_not_taken_pipeline();
+    }
 };
 
 //!Instruction bltzal behavior method.
 void ac_behavior( bltzal )
 {
+    bool branch_taken = false;
+
     dbg_printf("bltzal r%d, %d\n", rs, imm & 0xFFFF);
     RB[Ra] = ac_pc+4; //ac_pc is pc+4, we need pc+8
     if( RB[rs] & 0x80000000 ){
@@ -1420,15 +1531,24 @@ void ac_behavior( bltzal )
         npc = ac_pc + (imm<<2);
 #endif
         dbg_printf("Taken to %#x\n", ac_pc + (imm<<2));
+        branch_taken = true;
     }
     dbg_printf("Return = %#x\n", ac_pc+4);
 
     insert_inst_pipeline(createInst(Itype, rs, -2, Ra));
+
+    if (branch_taken){
+        branch_taken_pipeline();
+    } else {
+        branch_not_taken_pipeline();
+    }
 };
 
 //!Instruction bgezal behavior method.
 void ac_behavior( bgezal )
 {
+    bool branch_taken = false;
+
     dbg_printf("bgezal r%d, %d\n", rs, imm & 0xFFFF);
     RB[Ra] = ac_pc+4; //ac_pc is pc+4, we need pc+8
     if( !(RB[rs] & 0x80000000) ){
@@ -1436,10 +1556,17 @@ void ac_behavior( bgezal )
         npc = ac_pc + (imm<<2);
 #endif
         dbg_printf("Taken to %#x\n", ac_pc + (imm<<2));
+        branch_taken = true;
     }
     dbg_printf("Return = %#x\n", ac_pc+4);
 
     insert_inst_pipeline(createInst(Itype, rs, -2, Ra));
+
+    if (branch_taken){
+        branch_taken_pipeline();
+    } else {
+        branch_not_taken_pipeline();
+    }
 };
 
 //!Instruction sys_call behavior method.
