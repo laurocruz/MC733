@@ -32,7 +32,7 @@ extern "C" {
 }
 
 //If you want debug information for this model, uncomment next line
-#define DEBUG_MODEL
+//#define DEBUG_MODEL
 #include "ac_debug_model.H"
 
 
