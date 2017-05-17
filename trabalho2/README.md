@@ -9,7 +9,7 @@
 ## Introdução
 O desempenho de um processador vai além de números como o seu número de núcleos ou a frequência de seu *clock* - é preciso ter uma arquitetura bem planejada, de forma a lidar bem com as sequências de instruções mais comuns nos diversos programas com os quais ele deve lidar.
 
-Tendo isso em mente, realizamos o benchmark de três programas diferentes, com diferentes configurações de arquitetura do processador. Com isso, calculamos diferentes eventos que nos permitam analisar a eficiência de cada uma dessas configurações.
+Tendo isso em mente, realizamos a simulação do processamento de três benchmarks diferentes, variando as  configurações de forma a criar diversos cenários da arquitetura do processador. Com isso, calculamos diferentes eventos que nos permitiram analisar a eficiência de cada cenário, assim como a influência de cada uma dessas configurações.
 
 ## Benchmarks utilizados
 Foram analisados os benchmarks vistos pelos integrantes do grupo na atividade 3. Foram escolhidos aqueles que tiveram o maior tempo de execução.
@@ -41,9 +41,9 @@ Foram variadas diversas características da arquitetura do processador, de forma
 | 8            | 64 KB         | 256 KB        | 32 B          | 128 B         | 1             |
 
 ### Branch Predictor
-- Sem predictor (sempre atrasa pipeline ao encontrar um branch)
-- Always not taken
-- Two-bit prediction
+- Sem predictor (sempre atrasa pipeline ao encontrar um branch).
+- Always not taken.
+- Two-bit prediction.
 
 ## Eventos medidos
 De forma a analisar os diferentes cenários simulados, foram determinados os seguintes eventos para serem utilizados como base:
