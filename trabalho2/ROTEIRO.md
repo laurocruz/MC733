@@ -8,7 +8,6 @@
 ### - Tamanho do pipeline
 - 5 estágios: escalar e superescalar
 - 7 estágios: escalar
-- 13 estágios: escalar
 
 O simulador do MIPS não oferece uma implementação de pipeline. Sendo assim, teremos que modificar os códigos para contar os ciclos.
 
@@ -23,7 +22,7 @@ Hazards de controle ocorrem quando não tem branch predictor, ou quando este err
 
 ### - Branch predictor (3 configurações distintas)
 - Sem predictor (sempre atrasa pipeline ao encontrar um branch)
-- Always taken
+- Always not taken
 - Two-bit prediction
 
 ### - Cache
@@ -44,11 +43,13 @@ Escolhemos esses três pois foram os que tiveram a execução mais demorada em n
 
 ## Eventos a serem medidos
 - Ciclos
-- Branch misses
+- Número de branches, branches corretos e incorretos.
 - Cache L1/L2 misses
 - Tempo de execução
 - CPI
-- Hazard de dados e controle
+- Quantidade de Hazard de dados e controle
+- Número de Stalls
+- Número de Instruções
 
 ## Configurações a serem testadas
 
@@ -72,15 +73,14 @@ Escolhemos esses três pois foram os que tiveram a execução mais demorada em n
 | 1  | Escalar de 5 estágios      | 1                     | Sem              |
 | 2  | Superescalar de 5 estágios | 1                     | Sem              |
 | 3  | Escalar de 7 estágios      | 1                     | Sem              |
-| 4  | Escalar de 13 estágios     | 1                     | Sem              |
-| 5  | Escalar de 5 estágios      | 2                     | Sem              |
-| 6  | Escalar de 5 estágios      | 3                     | Sem              |
-| 7  | Escalar de 5 estágios      | 4                     | Sem              |
-| 8  | Escalar de 5 estágios      | 5                     | Sem              |
-| 9  | Escalar de 5 estágios      | 6                     | Sem              |
-| 10 | Escalar de 5 estágios      | 7                     | Sem              |
-| 11 | Escalar de 5 estágios      | 8                     | Sem              |
-| 12 | Escalar de 5 estágios      | 1                     | Always Taken     |
-| 13 | Escalar de 5 estágios      | 1                     | Two-Bit          |
-| 14 | Superescalar de 5 estágios | 1                     | Always Taken     |
-| 15 | Superescalar de 5 estágios | 1                     | Two-Bit          |
+| 4  | Escalar de 5 estágios      | 2                     | Sem              |
+| 5  | Escalar de 5 estágios      | 3                     | Sem              |
+| 6  | Escalar de 5 estágios      | 4                     | Sem              |
+| 7  | Escalar de 5 estágios      | 5                     | Sem              |
+| 8  | Escalar de 5 estágios      | 6                     | Sem              |
+| 9  | Escalar de 5 estágios      | 7                     | Sem              |
+| 10 | Escalar de 5 estágios      | 8                     | Sem              |
+| 11 | Escalar de 5 estágios      | 1                     | Always Not Taken |
+| 12 | Escalar de 5 estágios      | 1                     | Two-Bit          |
+| 13 | Superescalar de 5 estágios | 1                     | Always Not Taken |
+| 14 | Superescalar de 5 estágios | 1                     | Two-Bit          |

@@ -12,7 +12,7 @@
 # http://www.lsc.ic.unicamp.br                   
 # ####################################################
 
-
+DEFINES=$(filter-out $@,$(MAKECMDGOALS))
 LIB_DIR := -L$(DINERO_SRC)
 INC_DIR := -I. -I$(DINERO_SRC) `pkg-config --cflags systemc` `pkg-config --cflags archc` 
 
@@ -26,7 +26,7 @@ CC :=   g++
 OPT :=   -O3
 DEBUG :=   -g
 OTHER := -std=c++11  -DAC_GUEST_BIG_ENDIAN  -Wno-deprecated
-CFLAGS := $(DEBUG) $(OPT) $(OTHER)  
+CFLAGS := $(DEBUG) $(OPT) $(OTHER) $(DEFINES)
 
 TARGET := mips
 
