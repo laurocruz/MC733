@@ -1,7 +1,5 @@
 #!/bin/bash
 
-set -e
-
 l1_s=(16 16 16 14 15 16 16 16 16 16 16 16 16 16) 
 l1_bs=(5 5 5 5 5 5 5 4 5 5 5 5 5 5)
 l2_s=(18 18 18 18 18 17 19 18 18 18 18 18 18 18 )
@@ -14,7 +12,10 @@ branch=(0 0 0 0 0 0 0 0 0 0 1 2 1 2)
 
 function realpath { echo $(cd $(dirname $1); pwd)/$(basename $1); }
 
+mkdir -p output
+
 BASEDIR=$(realpath $(dirname "$0"))
+OUTPUT_DIR=$(realpath output)
 
 for (( i=0; i < ${#l1_s[@]}; ++i ))
 do
@@ -25,16 +26,15 @@ do
 
     make
 
-
     cd $BENCH/network/patricia
-    ${SIMULATOR}patricia small.udp > $BASEDIR/patricia_small.out
+    ${SIMULATOR}patricia small.udp > $OUTPUT_DIR/patricia_small$i.out
 
     cd $BENCH/automotive/basicmath
-    ${SIMULATOR}basicmath_small > $BASEDIR/basicmath.out
+    ${SIMULATOR}basicmath_small > $OUTPUT_DIR/basicmath_small$i.out
 
     cd $BENCH/telecomm/FFT
-    ${SIMULATOR}fft 4 4096 > $BASEDIR/fft_small.out
-    ${SIMULATOR}fft 4 8192 > $BASEDIR/fft_inv_small.out
+    ${SIMULATOR}fft 4 4096 > $OUTPUT_DIR/fft_small$i.out
+    ${SIMULATOR}fft 4 8192 > $OUTPUT_DIR/fft_inv_small$i.out
 
     cd $BASEDIR
 
