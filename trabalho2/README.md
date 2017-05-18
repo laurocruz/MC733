@@ -27,17 +27,10 @@ Foram variadas diversas características da arquitetura do processador, de forma
 
 A seguir, apresentamos as características que foram variadas, as configurações utilizadas, bem como uma breve explicação de como o código do `mips_isa.cpp` foi alterado para que os eventos relevantes fossem calculados.
 
-##### Tipo de Pipeline
+##### Pipeline
 Em nosso experimento utilizamos dois tamanhos de pipeline, o de 5 estágios e o de 7 estágios.
 No pipeline de 5 estágios, dividimos a execução de uma intrução em 5 etapas `|IF|ID|EX|MEM|WB` na tentativa de executar cada instrução em um ciclo. Com o pipeline de 5 estágios também implementamos a ideia de ser escalar ou superscalar. Nos processadores escalares existe apenas um único pipeline e as instrução são executadas sequencialmente enquanto que no superescalar de dois níveis existem dois pipelines independentes que executam instruções concorrentemente.
-Já no pipeline de 7 estágios, a execução de uma instrução é dividido em 7 etapas `| IT | IF | ID | EX | MT | MM | WB |` em que a 
-
-- Escalar.
-- Superescalar.
-
-##### Tamanho do Pipeline
-- 5 estágios.
-- 7 estágios.
+Já no pipeline de 7 estágios, a execução de uma instrução é dividido em 7 etapas `| IT | IF | ID | EX | MT | MM | WB |` em que a
 
 ##### Configurações de Cache
 | Configuração | L1 Cache Size | L2 Cache Size | L1 Block Size | L2 Block Size | Associativity |
@@ -80,22 +73,22 @@ A seguir apresentamos uma tabela que identifica as diferentes combinações das 
 
 ### Eventos medidos
 De forma a analisar os diferentes cenários simulados, foram determinados os seguintes eventos para serem utilizados como base:
-- CPI.
-- Número de Ciclos.
-- Tempo de execução.
-- Número de Instruções.
+- CPI (`CPI`).
+- Número de Ciclos (`NC`).
+- Tempo de execução (`T`).
+- Número de Instruções (`NI`).
 - Número de Intruções de cada tipo (R, I, J).
 - Quantidade de Hazards de Dados.
-- Número de Stalls devido a Hazards de Dados.
+- Número de Stalls devido a Hazards de Dados (`SHD`).
 - Quantidade de Hazards de Controle.
-- Número de Stalls devido a Hazards de Controle.
-- Número de Stalls devido a Jumps.
-- Número de Cache Misses na L1.
+- Número de Stalls devido a Hazards de Controle (`SHC`).
+- Número de Stalls devido a Jumps (`SJ`).
+- Número de Cache Misses na L1 (`NCM1`).
 - Porcentagem de Cache Misses na L1.
-- Número de Cache Misses na L2.
+- Número de Cache Misses na L2 (`NCM2`).
 - Porcentagem de Cache Misses na L2.
 - Número de Stalls devido a Cache Misses.
-- Total de Stalls.
+- Total de Stalls (`TS`).
 - Número de Branches.
 - Quantidade de Branch Predictions Corretos.
 - Quantidade de Branch Predictions Incorretos.
@@ -103,12 +96,22 @@ De forma a analisar os diferentes cenários simulados, foram determinados os seg
 Boa parte desses eventos foram obtidos diretamente da simulação feita, porém, alguns outros precisaram ser estimados. Abaixo, listamos esses casos, apresentamos a fórmula utilizada e uma breve explicação dos valores utilizados.
 
 ##### Total de Stalls
+O número total de stalls é a soma do número de stalls devido a hazards de dados com o número de stalls devido a hazards de controle, com o número de stalls devido a jumps e com o número de stalls devido a cache misses. Para este último, estimamos que cache hits não acarretam nenhum stall adicional, que um cache miss na L1 causa 15 stalls e que um cache miss na L2 causa 200 stalls. Assim, a fórmula para o número total de stalls é:
+
+`TS = SHD + SHC + SJ + ((15 · NCM1) + (200 · NCM2))`
 
 ##### Número de Ciclos
+O número de ciclos calculado para pipelines escalares foi o resultado da soma do número de instruções, com o número total de stalls, com o número de estágios do pipeline (`NEP`), subtraído de 1. A fórmula para o número de ciclos é:
+
+`NC = NI + TS + (NEP - 1)`
 
 ##### CPI
+O cálculo do CPI é simplesmente a divisão do número de ciclos pelo número de instruções:
+
+`CPI = NC / NI`
 
 ##### Tempo de Execução
+
 
 
 ### Análise dos Resultados e Conclusão
