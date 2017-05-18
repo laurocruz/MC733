@@ -7,9 +7,9 @@
 
 
 ## Introdução
-O desempenho de um processador vai além de números como o seu número de núcleos ou a frequência de seu *clock* - é preciso ter uma arquitetura bem planejada, de forma a lidar bem com as sequências de instruções mais comuns nos diversos programas com os quais ele deve lidar.
+O desempenho de um processador vai além de estatísticas como o seu número de núcleos ou a frequência de seu *clock* - é fundamental ter uma arquitetura bem planejada, de forma a lidar bem com as sequências de instruções mais comuns nos diversos programas com os quais ele deve lidar.
 
-Tendo isso em mente, realizamos a simulação do processamento de três benchmarks diferentes, variando as  configurações de forma a criar diversos cenários da arquitetura do processador. Com isso, calculamos diferentes eventos que nos permitiram analisar a eficiência de cada cenário, assim como a influência de cada uma dessas configurações.
+Tendo isso em mente, realizamos a simulação do processamento de quatro benchmarks diferentes, variando as  configurações de forma a criar diversos cenários da arquitetura do processador. Com isso, calculamos diferentes eventos que nos permitiram analisar a eficiência de cada cenário, assim como a influência de cada uma dessas configurações na performance do processador.
 
 ## Metodologia
 
@@ -17,20 +17,23 @@ Tendo isso em mente, realizamos a simulação do processamento de três benchmar
 Foram analisados os benchmarks vistos pelos integrantes do grupo na atividade 3. Foram escolhidos aqueles que tiveram o maior tempo de execução.
 - `patricia`
 - `basicmath`
-- `fft`
+- `fft_encode`
+- `fft_decode`
 
 ### Configurações
-Foram variadas diversas características da arquitetura do processador, de forma a se analisar o impacto de cada uma dessas mudanças individualmente. Assim, foram variadas as propriedades abaixo.
+Foram variadas diversas características da arquitetura do processador, de forma a se analisar o impacto de cada uma dessas mudanças individualmente. Para isso, foram feitas mudanças no código do `mips_isa.cpp`, de forma a contabilizar os eventos relevantes para os cenários testados.
 
-#### Tipo de Pipeline
+A seguir, apresentamos as características que foram variadas, as configurações utilizadas, bem como uma breve explicação de como o código do `mips_isa.cpp` foi alterado para que os eventos relevantes fossem calculados.
+
+##### Tipo de Pipeline
 - Escalar.
 - Superescalar.
 
-#### Tamanho do Pipeline
+##### Tamanho do Pipeline
 - 5 estágios.
 - 7 estágios.
 
-#### Configurações de Cache
+##### Configurações de Cache
 | Configuração | L1 Cache Size | L2 Cache Size | L1 Block Size | L2 Block Size | Associativity |
 |--------------|---------------|---------------|---------------|---------------|---------------|
 | 1            | 64 KB         | 256 KB        | 32 B          | 128 B         | 2             |
@@ -42,7 +45,7 @@ Foram variadas diversas características da arquitetura do processador, de forma
 | 7            | 64 KB         | 256 KB        | 32 B          | 64 B          | 2             |
 | 8            | 64 KB         | 256 KB        | 32 B          | 128 B         | 1             |
 
-#### Branch Predictor
+##### Branch Predictor
 - Sem predictor (sempre atrasa pipeline ao encontrar um branch).
 - Always not taken.
 - Two-bit prediction.
@@ -76,16 +79,30 @@ De forma a analisar os diferentes cenários simulados, foram determinados os seg
 - Tempo de execução.
 - Número de Instruções.
 - Número de Intruções de cada tipo (R, I, J).
-- Quantidade de Hazard de Dados.
-- Número de Stalls devido a Hazard de Dados.
-- Quantidade de Hazard de Controle.
-- Número de Stalls devido a Hazard de Controle.
+- Quantidade de Hazards de Dados.
+- Número de Stalls devido a Hazards de Dados.
+- Quantidade de Hazards de Controle.
+- Número de Stalls devido a Hazards de Controle.
 - Número de Stalls devido a Jumps.
+- Número de Cache Misses na L1.
+- Porcentagem de Cache Misses na L1.
+- Número de Cache Misses na L2.
+- Porcentagem de Cache Misses na L2.
+- Número de Stalls devido a Cache Misses.
 - Total de Stalls.
 - Número de Branches.
 - Quantidade de Branch Predictions Corretos.
 - Quantidade de Branch Predictions Incorretos.
-- Porcentagem de Cache Misses na L1.
-- Porcentagem de Cache Misses na L2.
+
+Boa parte desses eventos foram obtidos diretamente da simulação feita, porém, alguns outros precisaram ser estimados. Abaixo, listamos esses casos, apresentamos a fórmula utilizada e uma breve explicação dos valores utilizados.
+
+##### Total de Stalls
+
+##### Número de Ciclos
+
+##### CPI
+
+##### Tempo de Execução
+
 
 ### Análise dos Resultados e Conclusão
