@@ -111,7 +111,9 @@ O cálculo do CPI é simplesmente a divisão do número de ciclos pelo número d
 `CPI = NC / NI`
 
 ##### Tempo de Execução
+Para o cálculo do tempo de execução, primeiramente foi necessário definir a frequência (`F`) do *clock* em um processador MIPS. Após pesquisas feitas pelo grupo, definimos como razoáveis os valores de 150 MHz para um pipeline de 5 estágios e de 200 MHz para um pipeline de 7 estágios. Assim, o tempo de execução será de:
 
+`T = NC / F`
 
 
 ### Análise dos Resultados e Conclusão
