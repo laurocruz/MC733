@@ -1,0 +1,41 @@
+Data L1 Cache: 
+READ:     33923 of 1.74796e+08 --> 0.0194072 %
+WRITE:    52967 of 1.557e+08 --> 0.0340187 %
+READ+PF:  0 of 0 --> 0 %
+WRITE+PF: 0 of 0 --> 0 %
+TOTAL:    86890 of 3.30495e+08 --> 0.0262908 %
+
+Data L2 Cache: 
+READ:     4367 of 33923 --> 12.8733 %
+WRITE:    3502 of 12929 --> 27.0864 %
+READ+PF:  0 of 0 --> 0 %
+WRITE+PF: 0 of 0 --> 0 %
+TOTAL:    7869 of 46852 --> 16.7954 %
+
+
+Instruction L1 Cache: 
+INSTR:    566368 of 1.35881e+09 --> 0.0416811 %
+INSTR+PF: 0 of 0 --> 0 %
+TOTAL:    566368 of 1.35881e+09 --> 0.0416811 %
+
+Instruction L2 Cache: 
+INSTR:    374368 of 566368 --> 66.0998 %
+INSTR+PF: 0 of 0 --> 0 %
+TOTAL:    374368 of 566368 --> 66.0998 %
+
+Pipeline: 5	Tipo: 1	BP: 0
+Cycles:-1853775379
+Instructions:1358813317
+Instructions R:537154054
+Instructions I:760053753
+Instructions J:61605510
+CPI: -1.36426
+Data Hazards:348327097
+Control Hazards:151639479
+Stalls:1082378596
+Data Stalls:504249139
+Control Stalls:454918437
+Jump Stalls:123211020
+Branches:151639479
+Correct Branches:0
+Incorrect Branches:0
