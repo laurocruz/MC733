@@ -27,12 +27,12 @@ Foram variadas diversas características da arquitetura do processador, de forma
 
 A seguir, apresentamos as características que foram variadas, as configurações utilizadas, bem como uma breve explicação de como o código do `mips_isa.cpp` foi alterado para que os eventos relevantes fossem calculados.
 
-##### Pipeline
+#### Pipeline
 Em nosso experimento utilizamos dois tamanhos de pipeline, o de 5 estágios e o de 7 estágios.
 No pipeline de 5 estágios, dividimos a execução de uma intrução em 5 etapas `|IF|ID|EX|MEM|WB` na tentativa de executar cada instrução em um ciclo. Com o pipeline de 5 estágios também implementamos a ideia de ser escalar ou superscalar. Nos processadores escalares existe apenas um único pipeline e as instrução são executadas sequencialmente enquanto que no superescalar de dois níveis existem dois pipelines independentes que executam instruções concorrentemente.
 Já no pipeline de 7 estágios, a execução de uma instrução é dividido em 7 etapas `| IT | IF | ID | EX | MT | MM | WB |` em que a
 
-##### Configurações de Cache
+#### Configurações de Cache
 | Configuração | L1 Cache Size | L2 Cache Size | L1 Block Size | L2 Block Size | Associativity |
 |--------------|---------------|---------------|---------------|---------------|---------------|
 | 1            | 64 KB         | 256 KB        | 32 B          | 128 B         | 2             |
@@ -44,7 +44,7 @@ Já no pipeline de 7 estágios, a execução de uma instrução é dividido em 7
 | 7            | 64 KB         | 256 KB        | 32 B          | 64 B          | 2             |
 | 8            | 64 KB         | 256 KB        | 32 B          | 128 B         | 1             |
 
-##### Branch Predictor
+#### Branch Predictor
 - Sem predictor (sempre atrasa pipeline ao encontrar um branch).
 - Always not taken.
 - Two-bit prediction.
@@ -95,25 +95,46 @@ De forma a analisar os diferentes cenários simulados, foram determinados os seg
 
 Boa parte desses eventos foram obtidos diretamente da simulação feita, porém, alguns outros precisaram ser estimados. Abaixo, listamos esses casos, apresentamos a fórmula utilizada e uma breve explicação dos valores utilizados.
 
-##### Total de Stalls
+#### Total de Stalls
 O número total de stalls é a soma do número de stalls devido a hazards de dados com o número de stalls devido a hazards de controle, com o número de stalls devido a jumps e com o número de stalls devido a cache misses. Para este último, estimamos que cache hits não acarretam nenhum stall adicional, que um cache miss na L1 causa 15 stalls e que um cache miss na L2 causa 200 stalls. Assim, a fórmula para o número total de stalls é:
 
 `TS = SHD + SHC + SJ + ((15 · NCM1) + (200 · NCM2))`
 
-##### Número de Ciclos
+#### Número de Ciclos
 O número de ciclos calculado para pipelines escalares foi o resultado da soma do número de instruções, com o número total de stalls, com o número de estágios do pipeline (`NEP`), subtraído de 1. A fórmula para o número de ciclos é:
 
 `NC = NI + TS + (NEP - 1)`
 
-##### CPI
+#### CPI
 O cálculo do CPI é simplesmente a divisão do número de ciclos pelo número de instruções:
 
 `CPI = NC / NI`
 
-##### Tempo de Execução
+#### Tempo de Execução
 Para o cálculo do tempo de execução, primeiramente foi necessário definir a frequência (`F`) do *clock* em um processador MIPS. Após pesquisas feitas pelo grupo, definimos como razoáveis os valores de 150 MHz para um pipeline de 5 estágios e de 200 MHz para um pipeline de 7 estágios. Assim, o tempo de execução será de:
 
 `T = NC / F`
 
 
-### Análise dos Resultados e Conclusão
+### Análise
+
+#### Escalar x Superescalar
+Com o objetivo de analisar a influência da paralelização das instruções na eficiência do processador, foi feita uma comparação dando ênfase aos cenários 1 e 2, visto que a única diferença entre eles é a de que a primeira é escalar e a segunda, superescalar.
+
+#### Número de Estágios do Pipeline
+De forma a analisar a influência do número de estágios do pipeline na eficiência do processador, foi feita uma comparação dando ênfase aos cenários 1 e 3, visto que eles diferem somente no número de estágios.
+
+#### Cache
+Para as configurações de cache, foram analisados principalmente os cenários 1, 4, 5, 6, 7, 8, 9 e 10, visto que eles variam somente a [configuração de cache](#Configurações de Cache).
+
+#### Branch Predictor
+Por fim, para analisar a influência do branch predictor na eficiência do processador, foi feita uma comparação focada nos cenários 1, 11 e 12, uma vez que eles diferem somente no tipo de branch predictor utilizado.
+
+### Conclusão
+Finalmente, apresentamos uma tabela contendo os resultados mais relevantes obtidos neste experimento:
+
+ADICIONAR TABELA DO JEITO QUE O PROFESSOR PEDIU
+
+A partir desses dados, podemos concluir que
+
+FAZER CONCLUSÃO
