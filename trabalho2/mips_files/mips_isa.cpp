@@ -147,15 +147,15 @@ d4cache* IL2;
  */
 
 #ifndef _PIPELINE_SIZE
-    #define _PIPELINE_SIZE 5            // 5 , 7 ou 13
+    #define _PIPELINE_SIZE 5      // 5 , 7 ou 13
 #endif
 
 #ifndef _PIPELINE_TYPE
-    #define _PIPELINE_TYPE 1            // 1 = Escalar ; 2 = Superescalar
+    #define _PIPELINE_TYPE 1      // 1 = Escalar ; 2 = Superescalar
 #endif
 
 #ifndef _BRANCH_PRED
-    #define _BRANCH_PRED   0            // 0 = Sem ; 1 = always not taken ; 2 = 2 bit
+    #define _BRANCH_PRED   0      // 0 = Sem ; 1 = always not taken ; 2 = 2 bit
 #endif
 
 /* Define as posições no vetor */
@@ -200,7 +200,7 @@ unsigned int branches, c_branches, i_branches;
  */
 std::vector<Instruction> pipeline(_PIPELINE_SIZE), pipeline2(_PIPELINE_SIZE);
 
-void initialize_pipeline(){
+void initialize_pipeline() {
     instr = 0;
     instr_R = 0;
     instr_I = 0;
@@ -216,7 +216,7 @@ void initialize_pipeline(){
     i_branches = 0;
 }
 
-Instruction createInst(Inst_format type, int rs, int rt, int rd){
+Instruction createInst(Inst_format type, int rs, int rt, int rd) {
     Instruction newinst;
     newinst.type = type;
     newinst.rs = rs;
@@ -243,13 +243,13 @@ void insert_inst_pipeline(Instruction newinst) {
     }
 
     /* Adiciona essa instrução no pipeline */
-    if (_PIPELINE_TYPE == 1){
+    if (_PIPELINE_TYPE == 1) {
         for (int i = pipeline.size(); i > 1; i--) {
             pipeline[i-1] = pipeline[i-2];
         }
         pipeline[0] = newinst;
 
-        if (instr >= _PIPELINE_SIZE-1){
+        if (instr >= _PIPELINE_SIZE-1) {
             data_hazards_pipeline();
         }
     } else if (_PIPELINE_TYPE == 2) {
@@ -267,14 +267,13 @@ void insert_inst_pipeline(Instruction newinst) {
             }
             pipeline2[0] = newinst;
 
-            if (instr >= _PIPELINE_SIZE-1){
+            if (instr >= _PIPELINE_SIZE-1) {
                 data_hazards_pipeline();
             }
 
             oneOrTwo = false;
         }
     }
-
 }
 
 
@@ -466,7 +465,7 @@ void branch_taken_pipeline() {
                 c_branches += 1;
             }
             /* Atualiza o valor do 2bit */
-            if (twobitprediction >= 0 && twobitprediction < 3){
+            if (twobitprediction >= 0 && twobitprediction < 3) {
                 twobitprediction += 1;
             }
         }
@@ -505,7 +504,7 @@ void branch_not_taken_pipeline() {
             }
 
             /* Atualiza o valor do 2bit */
-            if (twobitprediction > 0 && twobitprediction <= 3){
+            if (twobitprediction > 0 && twobitprediction <= 3) {
                 twobitprediction -= 1;
             }
         }
@@ -513,7 +512,7 @@ void branch_not_taken_pipeline() {
 }
 
 
-void print_status(){
+void print_status() {
     int cycles;
     double CPI;
 
@@ -523,24 +522,26 @@ void print_status(){
         cycles = stalls + (instr/2) + _PIPELINE_SIZE - 1;
     }
 
-    CPI = (double) cycles/ (double) instr;
+    CPI = static_cast<double> cycles/ static_cast<double> instr;
 
-    std::cout << "Pipeline: " << _PIPELINE_SIZE << "\tTipo: " << _PIPELINE_TYPE << "\tBP: " << _BRANCH_PRED << endl;
-    std::cout << "Cycles:" << cycles << endl;
-    std::cout << "Instructions:" << instr << endl;
-    std::cout << "Instructions R:" << instr_R << endl;
-    std::cout << "Instructions I:" << instr_I << endl;
-    std::cout << "Instructions J:" << instr_J << endl;
+    std::cout   << "Pipeline: " << _PIPELINE_SIZE
+                << "\tTipo: " << _PIPELINE_TYPE << "\tBP: "
+                << _BRANCH_PRED << endl;
+    std::cout << "Cycles: " << cycles << endl;
+    std::cout << "Instructions: " << instr << endl;
+    std::cout << "Instructions R: " << instr_R << endl;
+    std::cout << "Instructions I: " << instr_I << endl;
+    std::cout << "Instructions J: " << instr_J << endl;
     std::cout << "CPI: " <<  CPI << endl;
-    std::cout << "Data Hazards:" << data_hazards << endl;
-    std::cout << "Control Hazards:" << control_hazard << endl;
-    std::cout << "Stalls:" << stalls << endl;
-    std::cout << "Data Stalls:" << d_stalls << endl;
-    std::cout << "Control Stalls:" << c_stalls << endl;
-    std::cout << "Jump Stalls:" << j_stalls << endl;
-    std::cout << "Branches:" << branches << endl;
-    std::cout << "Correct Branches:" << c_branches << endl;
-    std::cout << "Incorrect Branches:" << i_branches << endl;
+    std::cout << "Data Hazards: " << data_hazards << endl;
+    std::cout << "Control Hazards: " << control_hazard << endl;
+    std::cout << "Stalls: " << stalls << endl;
+    std::cout << "Data Stalls: " << d_stalls << endl;
+    std::cout << "Control Stalls: " << c_stalls << endl;
+    std::cout << "Jump Stalls: " << j_stalls << endl;
+    std::cout << "Branches: " << branches << endl;
+    std::cout << "Correct Branches: " << c_branches << endl;
+    std::cout << "Incorrect Branches: " << i_branches << endl;
 }
 
 // ----------------------- CACHE FUNCTIONS --------------------------------
