@@ -1,0 +1,1680 @@
+
+
+basicmath_small 0
+Data L1 Read,519
+Data L1 Total Read,1.33492e+08
+Data L1 Write,482
+Data L1 Total Write,1.08126e+08
+Data L2 Read,238
+Data L2 Total Read,519
+Data L2 Write,0
+Data L2 Total Write,0
+Instruction L1,1.83288e+06
+Instruction L1 Total,1.08976e+09
+Instruction L2,1.00008e+06
+Instruction L2 Total,1.83288e+06
+Cycles,1914499772.0
+Instructions,1089764736.0
+InstructionsR,495040199.0
+InstructionsI,555712150.0
+InstructionsJ,39012387.0
+CPI,1.7568
+DataHazards,257492880.0
+ControlHazards,126051956.0
+Stalls,824735032.0
+DataStalls,368554390.0
+ControlStalls,378155868.0
+JumpStalls,78024774.0
+Branches,126051956.0
+CorrectBranches,0.0
+IncorrectBranches,0.0
+
+
+basicmath_small 1
+Data L1 Read,519
+Data L1 Total Read,1.33492e+08
+Data L1 Write,482
+Data L1 Total Write,1.08126e+08
+Data L2 Read,238
+Data L2 Total Read,519
+Data L2 Write,0
+Data L2 Total Write,0
+Instruction L1,1.83288e+06
+Instruction L1 Total,1.08976e+09
+Instruction L2,1.00008e+06
+Instruction L2 Total,1.83288e+06
+Cycles,1761532346.0
+Instructions,1089764736.0
+InstructionsR,495040199.0
+InstructionsI,555712150.0
+InstructionsJ,39012387.0
+CPI,1.61643
+DataHazards,459969373.0
+ControlHazards,126051956.0
+Stalls,1216649974.0
+DataStalls,760469332.0
+ControlStalls,378155868.0
+JumpStalls,78024774.0
+Branches,126051956.0
+CorrectBranches,0.0
+IncorrectBranches,0.0
+
+
+basicmath_small 2
+Data L1 Read,519
+Data L1 Total Read,1.33492e+08
+Data L1 Write,482
+Data L1 Total Write,1.08126e+08
+Data L2 Read,238
+Data L2 Total Read,519
+Data L2 Write,0
+Data L2 Total Write,0
+Instruction L1,1.83288e+06
+Instruction L1 Total,1.08976e+09
+Instruction L2,1.00008e+06
+Instruction L2 Total,1.83288e+06
+Cycles,-2056005042.0
+Instructions,1089764736.0
+InstructionsR,495040199.0
+InstructionsI,555712150.0
+InstructionsJ,39012387.0
+CPI,-1.88665
+DataHazards,355077644.0
+ControlHazards,58058104.0
+Stalls,1149197512.0
+DataStalls,780882218.0
+ControlStalls,290290520.0
+JumpStalls,78024774.0
+Branches,126051956.0
+CorrectBranches,0.0
+IncorrectBranches,0.0
+
+
+basicmath_small 3
+Data L1 Read,519
+Data L1 Total Read,1.33492e+08
+Data L1 Write,482
+Data L1 Total Write,1.08126e+08
+Data L2 Read,238
+Data L2 Total Read,519
+Data L2 Write,0
+Data L2 Total Write,0
+Instruction L1,7.05901e+07
+Instruction L1 Total,1.08976e+09
+Instruction L2,3.06647e+07
+Instruction L2 Total,7.05901e+07
+Cycles,1914499772.0
+Instructions,1089764736.0
+InstructionsR,495040199.0
+InstructionsI,555712150.0
+InstructionsJ,39012387.0
+CPI,1.7568
+DataHazards,257492880.0
+ControlHazards,126051956.0
+Stalls,824735032.0
+DataStalls,368554390.0
+ControlStalls,378155868.0
+JumpStalls,78024774.0
+Branches,126051956.0
+CorrectBranches,0.0
+IncorrectBranches,0.0
+
+
+basicmath_small 4
+Data L1 Read,519
+Data L1 Total Read,1.33492e+08
+Data L1 Write,482
+Data L1 Total Write,1.08126e+08
+Data L2 Read,238
+Data L2 Total Read,519
+Data L2 Write,0
+Data L2 Total Write,0
+Instruction L1,2.01815e+07
+Instruction L1 Total,1.08976e+09
+Instruction L2,9.58008e+06
+Instruction L2 Total,2.01815e+07
+Cycles,1914499772.0
+Instructions,1089764736.0
+InstructionsR,495040199.0
+InstructionsI,555712150.0
+InstructionsJ,39012387.0
+CPI,1.7568
+DataHazards,257492880.0
+ControlHazards,126051956.0
+Stalls,824735032.0
+DataStalls,368554390.0
+ControlStalls,378155868.0
+JumpStalls,78024774.0
+Branches,126051956.0
+CorrectBranches,0.0
+IncorrectBranches,0.0
+
+
+basicmath_small 5
+Data L1 Read,519
+Data L1 Total Read,1.33492e+08
+Data L1 Write,482
+Data L1 Total Write,1.08126e+08
+Data L2 Read,238
+Data L2 Total Read,519
+Data L2 Write,0
+Data L2 Total Write,0
+Instruction L1,1.83288e+06
+Instruction L1 Total,1.08976e+09
+Instruction L2,1.00008e+06
+Instruction L2 Total,1.83288e+06
+Cycles,1914499772.0
+Instructions,1089764736.0
+InstructionsR,495040199.0
+InstructionsI,555712150.0
+InstructionsJ,39012387.0
+CPI,1.7568
+DataHazards,257492880.0
+ControlHazards,126051956.0
+Stalls,824735032.0
+DataStalls,368554390.0
+ControlStalls,378155868.0
+JumpStalls,78024774.0
+Branches,126051956.0
+CorrectBranches,0.0
+IncorrectBranches,0.0
+
+
+basicmath_small 6
+Data L1 Read,519
+Data L1 Total Read,1.33492e+08
+Data L1 Write,482
+Data L1 Total Write,1.08126e+08
+Data L2 Read,238
+Data L2 Total Read,519
+Data L2 Write,0
+Data L2 Total Write,0
+Instruction L1,1.83288e+06
+Instruction L1 Total,1.08976e+09
+Instruction L2,1.00008e+06
+Instruction L2 Total,1.83288e+06
+Cycles,1914499772.0
+Instructions,1089764736.0
+InstructionsR,495040199.0
+InstructionsI,555712150.0
+InstructionsJ,39012387.0
+CPI,1.7568
+DataHazards,257492880.0
+ControlHazards,126051956.0
+Stalls,824735032.0
+DataStalls,368554390.0
+ControlStalls,378155868.0
+JumpStalls,78024774.0
+Branches,126051956.0
+CorrectBranches,0.0
+IncorrectBranches,0.0
+
+
+basicmath_small 7
+Data L1 Read,519
+Data L1 Total Read,1.33492e+08
+Data L1 Write,482
+Data L1 Total Write,1.08126e+08
+Data L2 Read,238
+Data L2 Total Read,519
+Data L2 Write,0
+Data L2 Total Write,0
+Instruction L1,1.48787e+06
+Instruction L1 Total,1.08976e+09
+Instruction L2,925979
+Instruction L2 Total,1.48787e+06
+Cycles,1914499772.0
+Instructions,1089764736.0
+InstructionsR,495040199.0
+InstructionsI,555712150.0
+InstructionsJ,39012387.0
+CPI,1.7568
+DataHazards,257492880.0
+ControlHazards,126051956.0
+Stalls,824735032.0
+DataStalls,368554390.0
+ControlStalls,378155868.0
+JumpStalls,78024774.0
+Branches,126051956.0
+CorrectBranches,0.0
+IncorrectBranches,0.0
+
+
+basicmath_small 8
+Data L1 Read,519
+Data L1 Total Read,1.33492e+08
+Data L1 Write,482
+Data L1 Total Write,1.08126e+08
+Data L2 Read,341
+Data L2 Total Read,519
+Data L2 Write,0
+Data L2 Total Write,0
+Instruction L1,1.83288e+06
+Instruction L1 Total,1.08976e+09
+Instruction L2,1.3878e+06
+Instruction L2 Total,1.83288e+06
+Cycles,1914499772.0
+Instructions,1089764736.0
+InstructionsR,495040199.0
+InstructionsI,555712150.0
+InstructionsJ,39012387.0
+CPI,1.7568
+DataHazards,257492880.0
+ControlHazards,126051956.0
+Stalls,824735032.0
+DataStalls,368554390.0
+ControlStalls,378155868.0
+JumpStalls,78024774.0
+Branches,126051956.0
+CorrectBranches,0.0
+IncorrectBranches,0.0
+
+
+basicmath_small 9
+Data L1 Read,519
+Data L1 Total Read,1.33492e+08
+Data L1 Write,482
+Data L1 Total Write,1.08126e+08
+Data L2 Read,238
+Data L2 Total Read,519
+Data L2 Write,0
+Data L2 Total Write,0
+Instruction L1,7.54653e+06
+Instruction L1 Total,1.08976e+09
+Instruction L2,4.73104e+06
+Instruction L2 Total,7.54653e+06
+Cycles,1914499772.0
+Instructions,1089764736.0
+InstructionsR,495040199.0
+InstructionsI,555712150.0
+InstructionsJ,39012387.0
+CPI,1.7568
+DataHazards,257492880.0
+ControlHazards,126051956.0
+Stalls,824735032.0
+DataStalls,368554390.0
+ControlStalls,378155868.0
+JumpStalls,78024774.0
+Branches,126051956.0
+CorrectBranches,0.0
+IncorrectBranches,0.0
+
+
+basicmath_small 10
+Data L1 Read,519
+Data L1 Total Read,1.33492e+08
+Data L1 Write,482
+Data L1 Total Write,1.08126e+08
+Data L2 Read,238
+Data L2 Total Read,519
+Data L2 Write,0
+Data L2 Total Write,0
+Instruction L1,1.83288e+06
+Instruction L1 Total,1.08976e+09
+Instruction L2,1.00008e+06
+Instruction L2 Total,1.83288e+06
+Cycles,1710518216.0
+Instructions,1089764736.0
+InstructionsR,495040199.0
+InstructionsI,555712150.0
+InstructionsJ,39012387.0
+CPI,1.56962
+DataHazards,257492880.0
+ControlHazards,58058104.0
+Stalls,620753476.0
+DataStalls,368554390.0
+ControlStalls,174174312.0
+JumpStalls,78024774.0
+Branches,126051956.0
+CorrectBranches,67993852.0
+IncorrectBranches,58058104.0
+
+
+basicmath_small 11
+Data L1 Read,519
+Data L1 Total Read,1.33492e+08
+Data L1 Write,482
+Data L1 Total Write,1.08126e+08
+Data L2 Read,238
+Data L2 Total Read,519
+Data L2 Write,0
+Data L2 Total Write,0
+Instruction L1,1.83288e+06
+Instruction L1 Total,1.08976e+09
+Instruction L2,1.00008e+06
+Instruction L2 Total,1.83288e+06
+Cycles,1680204485.0
+Instructions,1089764736.0
+InstructionsR,495040199.0
+InstructionsI,555712150.0
+InstructionsJ,39012387.0
+CPI,1.5418
+DataHazards,257492880.0
+ControlHazards,44034715.0
+Stalls,590439745.0
+DataStalls,368554390.0
+ControlStalls,143860581.0
+JumpStalls,78024774.0
+Branches,126051956.0
+CorrectBranches,82017241.0
+IncorrectBranches,44034715.0
+
+
+basicmath_small 12
+Data L1 Read,519
+Data L1 Total Read,1.33492e+08
+Data L1 Write,482
+Data L1 Total Write,1.08126e+08
+Data L2 Read,238
+Data L2 Total Read,519
+Data L2 Write,0
+Data L2 Total Write,0
+Instruction L1,1.83288e+06
+Instruction L1 Total,1.08976e+09
+Instruction L2,1.00008e+06
+Instruction L2 Total,1.83288e+06
+Cycles,1557550790.0
+Instructions,1089764736.0
+InstructionsR,495040199.0
+InstructionsI,555712150.0
+InstructionsJ,39012387.0
+CPI,1.42925
+DataHazards,459969373.0
+ControlHazards,58058104.0
+Stalls,1012668418.0
+DataStalls,760469332.0
+ControlStalls,174174312.0
+JumpStalls,78024774.0
+Branches,126051956.0
+CorrectBranches,67993852.0
+IncorrectBranches,58058104.0
+
+
+basicmath_small 13
+Data L1 Read,519
+Data L1 Total Read,1.33492e+08
+Data L1 Write,482
+Data L1 Total Write,1.08126e+08
+Data L2 Read,238
+Data L2 Total Read,519
+Data L2 Write,0
+Data L2 Total Write,0
+Instruction L1,1.83288e+06
+Instruction L1 Total,1.08976e+09
+Instruction L2,1.00008e+06
+Instruction L2 Total,1.83288e+06
+Cycles,1527237059.0
+Instructions,1089764736.0
+InstructionsR,495040199.0
+InstructionsI,555712150.0
+InstructionsJ,39012387.0
+CPI,1.40144
+DataHazards,459969373.0
+ControlHazards,44034715.0
+Stalls,982354687.0
+DataStalls,760469332.0
+ControlStalls,143860581.0
+JumpStalls,78024774.0
+Branches,126051956.0
+CorrectBranches,82017241.0
+IncorrectBranches,44034715.0
+
+
+fft_inv_small 0
+Data L1 Read,34321
+Data L1 Total Read,1.74796e+08
+Data L1 Write,41406
+Data L1 Total Write,1.557e+08
+Data L2 Read,4278
+Data L2 Total Read,34321
+Data L2 Write,3570
+Data L2 Total Write,12000
+Instruction L1,13405
+Instruction L1 Total,1.35881e+09
+Instruction L2,4183
+Instruction L2 Total,13405
+Cycles,-1853775379.0
+Instructions,1358813317.0
+InstructionsR,537154054.0
+InstructionsI,760053753.0
+InstructionsJ,61605510.0
+CPI,-1.36426
+DataHazards,348327097.0
+ControlHazards,151639479.0
+Stalls,1082378596.0
+DataStalls,504249139.0
+ControlStalls,454918437.0
+JumpStalls,123211020.0
+Branches,151639479.0
+CorrectBranches,0.0
+IncorrectBranches,0.0
+
+
+fft_inv_small 1
+Data L1 Read,34321
+Data L1 Total Read,1.74796e+08
+Data L1 Write,41406
+Data L1 Total Write,1.557e+08
+Data L2 Read,4278
+Data L2 Total Read,34321
+Data L2 Write,3570
+Data L2 Total Write,12000
+Instruction L1,13405
+Instruction L1 Total,1.35881e+09
+Instruction L2,4183
+Instruction L2 Total,13405
+Cycles,-2054309915.0
+Instructions,1358813317.0
+InstructionsR,537154054.0
+InstructionsI,760053753.0
+InstructionsJ,61605510.0
+CPI,-1.51184
+DataHazards,596207040.0
+ControlHazards,151639479.0
+Stalls,1561250719.0
+DataStalls,983121262.0
+ControlStalls,454918437.0
+JumpStalls,123211020.0
+Branches,151639479.0
+CorrectBranches,0.0
+IncorrectBranches,0.0
+
+
+fft_inv_small 2
+Data L1 Read,34321
+Data L1 Total Read,1.74796e+08
+Data L1 Write,41406
+Data L1 Total Write,1.557e+08
+Data L2 Read,4278
+Data L2 Total Read,34321
+Data L2 Write,3570
+Data L2 Total Write,12000
+Instruction L1,13405
+Instruction L1 Total,1.35881e+09
+Instruction L2,4183
+Instruction L2 Total,13405
+Cycles,-1497138311.0
+Instructions,1358813317.0
+InstructionsR,537154054.0
+InstructionsI,760053753.0
+InstructionsJ,61605510.0
+CPI,-1.1018
+DataHazards,472806793.0
+ControlHazards,53477346.0
+Stalls,1439015662.0
+DataStalls,1048417912.0
+ControlStalls,267386730.0
+JumpStalls,123211020.0
+Branches,151639479.0
+CorrectBranches,0.0
+IncorrectBranches,0.0
+
+
+fft_inv_small 3
+Data L1 Read,273554
+Data L1 Total Read,1.74796e+08
+Data L1 Write,78014
+Data L1 Total Write,1.557e+08
+Data L2 Read,3138
+Data L2 Total Read,273554
+Data L2 Write,6814
+Data L2 Total Write,86741
+Instruction L1,3.01808e+07
+Instruction L1 Total,1.35881e+09
+Instruction L2,1.44089e+07
+Instruction L2 Total,3.01808e+07
+Cycles,-1853775379.0
+Instructions,1358813317.0
+InstructionsR,537154054.0
+InstructionsI,760053753.0
+InstructionsJ,61605510.0
+CPI,-1.36426
+DataHazards,348327097.0
+ControlHazards,151639479.0
+Stalls,1082378596.0
+DataStalls,504249139.0
+ControlStalls,454918437.0
+JumpStalls,123211020.0
+Branches,151639479.0
+CorrectBranches,0.0
+IncorrectBranches,0.0
+
+
+fft_inv_small 4
+Data L1 Read,257036
+Data L1 Total Read,1.74796e+08
+Data L1 Write,56150
+Data L1 Total Write,1.557e+08
+Data L2 Read,3742
+Data L2 Total Read,257036
+Data L2 Write,6582
+Data L2 Total Write,65699
+Instruction L1,9.28139e+06
+Instruction L1 Total,1.35881e+09
+Instruction L2,3.53848e+06
+Instruction L2 Total,9.28139e+06
+Cycles,-1853775379.0
+Instructions,1358813317.0
+InstructionsR,537154054.0
+InstructionsI,760053753.0
+InstructionsJ,61605510.0
+CPI,-1.36426
+DataHazards,348327097.0
+ControlHazards,151639479.0
+Stalls,1082378596.0
+DataStalls,504249139.0
+ControlStalls,454918437.0
+JumpStalls,123211020.0
+Branches,151639479.0
+CorrectBranches,0.0
+IncorrectBranches,0.0
+
+
+fft_inv_small 5
+Data L1 Read,34321
+Data L1 Total Read,1.74796e+08
+Data L1 Write,41406
+Data L1 Total Write,1.557e+08
+Data L2 Read,4678
+Data L2 Total Read,34321
+Data L2 Write,3587
+Data L2 Total Write,12000
+Instruction L1,13405
+Instruction L1 Total,1.35881e+09
+Instruction L2,4183
+Instruction L2 Total,13405
+Cycles,-1853775379.0
+Instructions,1358813317.0
+InstructionsR,537154054.0
+InstructionsI,760053753.0
+InstructionsJ,61605510.0
+CPI,-1.36426
+DataHazards,348327097.0
+ControlHazards,151639479.0
+Stalls,1082378596.0
+DataStalls,504249139.0
+ControlStalls,454918437.0
+JumpStalls,123211020.0
+Branches,151639479.0
+CorrectBranches,0.0
+IncorrectBranches,0.0
+
+
+fft_inv_small 6
+Data L1 Read,34321
+Data L1 Total Read,1.74796e+08
+Data L1 Write,41406
+Data L1 Total Write,1.557e+08
+Data L2 Read,4259
+Data L2 Total Read,34321
+Data L2 Write,3535
+Data L2 Total Write,12000
+Instruction L1,13405
+Instruction L1 Total,1.35881e+09
+Instruction L2,4183
+Instruction L2 Total,13405
+Cycles,-1853775379.0
+Instructions,1358813317.0
+InstructionsR,537154054.0
+InstructionsI,760053753.0
+InstructionsJ,61605510.0
+CPI,-1.36426
+DataHazards,348327097.0
+ControlHazards,151639479.0
+Stalls,1082378596.0
+DataStalls,504249139.0
+ControlStalls,454918437.0
+JumpStalls,123211020.0
+Branches,151639479.0
+CorrectBranches,0.0
+IncorrectBranches,0.0
+
+
+fft_inv_small 7
+Data L1 Read,31471
+Data L1 Total Read,1.74796e+08
+Data L1 Write,37731
+Data L1 Total Write,1.557e+08
+Data L2 Read,238
+Data L2 Total Read,31471
+Data L2 Write,2806
+Data L2 Total Write,13373
+Instruction L1,13377
+Instruction L1 Total,1.35881e+09
+Instruction L2,4183
+Instruction L2 Total,13377
+Cycles,-1853775379.0
+Instructions,1358813317.0
+InstructionsR,537154054.0
+InstructionsI,760053753.0
+InstructionsJ,61605510.0
+CPI,-1.36426
+DataHazards,348327097.0
+ControlHazards,151639479.0
+Stalls,1082378596.0
+DataStalls,504249139.0
+ControlStalls,454918437.0
+JumpStalls,123211020.0
+Branches,151639479.0
+CorrectBranches,0.0
+IncorrectBranches,0.0
+
+
+fft_inv_small 8
+Data L1 Read,34321
+Data L1 Total Read,1.74796e+08
+Data L1 Write,41406
+Data L1 Total Write,1.557e+08
+Data L2 Read,8570
+Data L2 Total Read,34321
+Data L2 Write,5275
+Data L2 Total Write,12000
+Instruction L1,13405
+Instruction L1 Total,1.35881e+09
+Instruction L2,6721
+Instruction L2 Total,13405
+Cycles,-1853775379.0
+Instructions,1358813317.0
+InstructionsR,537154054.0
+InstructionsI,760053753.0
+InstructionsJ,61605510.0
+CPI,-1.36426
+DataHazards,348327097.0
+ControlHazards,151639479.0
+Stalls,1082378596.0
+DataStalls,504249139.0
+ControlStalls,454918437.0
+JumpStalls,123211020.0
+Branches,151639479.0
+CorrectBranches,0.0
+IncorrectBranches,0.0
+
+
+fft_inv_small 9
+Data L1 Read,33923
+Data L1 Total Read,1.74796e+08
+Data L1 Write,52967
+Data L1 Total Write,1.557e+08
+Data L2 Read,4367
+Data L2 Total Read,33923
+Data L2 Write,3502
+Data L2 Total Write,12929
+Instruction L1,566368
+Instruction L1 Total,1.35881e+09
+Instruction L2,374368
+Instruction L2 Total,566368
+Cycles,-1853775379.0
+Instructions,1358813317.0
+InstructionsR,537154054.0
+InstructionsI,760053753.0
+InstructionsJ,61605510.0
+CPI,-1.36426
+DataHazards,348327097.0
+ControlHazards,151639479.0
+Stalls,1082378596.0
+DataStalls,504249139.0
+ControlStalls,454918437.0
+JumpStalls,123211020.0
+Branches,151639479.0
+CorrectBranches,0.0
+IncorrectBranches,0.0
+
+
+fft_inv_small 10
+Data L1 Read,34321
+Data L1 Total Read,1.74796e+08
+Data L1 Write,41406
+Data L1 Total Write,1.557e+08
+Data L2 Read,4278
+Data L2 Total Read,34321
+Data L2 Write,3570
+Data L2 Total Write,12000
+Instruction L1,13405
+Instruction L1 Total,1.35881e+09
+Instruction L2,4183
+Instruction L2 Total,13405
+Cycles,2146705518.0
+Instructions,1358813317.0
+InstructionsR,537154054.0
+InstructionsI,760053753.0
+InstructionsJ,61605510.0
+CPI,1.57984
+DataHazards,348327097.0
+ControlHazards,53477346.0
+Stalls,787892197.0
+DataStalls,504249139.0
+ControlStalls,160432038.0
+JumpStalls,123211020.0
+Branches,151639479.0
+CorrectBranches,98162133.0
+IncorrectBranches,53477346.0
+
+
+fft_inv_small 11
+Data L1 Read,34321
+Data L1 Total Read,1.74796e+08
+Data L1 Write,41406
+Data L1 Total Write,1.557e+08
+Data L2 Read,4278
+Data L2 Total Read,34321
+Data L2 Write,3570
+Data L2 Total Write,12000
+Instruction L1,13405
+Instruction L1 Total,1.35881e+09
+Instruction L2,4183
+Instruction L2 Total,13405
+Cycles,2147130331.0
+Instructions,1358813317.0
+InstructionsR,537154054.0
+InstructionsI,760053753.0
+InstructionsJ,61605510.0
+CPI,1.58015
+DataHazards,348327097.0
+ControlHazards,49918313.0
+Stalls,788317010.0
+DataStalls,504249139.0
+ControlStalls,160856851.0
+JumpStalls,123211020.0
+Branches,151639479.0
+CorrectBranches,101721166.0
+IncorrectBranches,49918313.0
+
+
+fft_inv_small 12
+Data L1 Read,34321
+Data L1 Total Read,1.74796e+08
+Data L1 Write,41406
+Data L1 Total Write,1.557e+08
+Data L2 Read,4278
+Data L2 Total Read,34321
+Data L2 Write,3570
+Data L2 Total Write,12000
+Instruction L1,13405
+Instruction L1 Total,1.35881e+09
+Instruction L2,4183
+Instruction L2 Total,13405
+Cycles,1946170982.0
+Instructions,1358813317.0
+InstructionsR,537154054.0
+InstructionsI,760053753.0
+InstructionsJ,61605510.0
+CPI,1.43226
+DataHazards,596207040.0
+ControlHazards,53477346.0
+Stalls,1266764320.0
+DataStalls,983121262.0
+ControlStalls,160432038.0
+JumpStalls,123211020.0
+Branches,151639479.0
+CorrectBranches,98162133.0
+IncorrectBranches,53477346.0
+
+
+fft_inv_small 13
+Data L1 Read,34321
+Data L1 Total Read,1.74796e+08
+Data L1 Write,41406
+Data L1 Total Write,1.557e+08
+Data L2 Read,4278
+Data L2 Total Read,34321
+Data L2 Write,3570
+Data L2 Total Write,12000
+Instruction L1,13405
+Instruction L1 Total,1.35881e+09
+Instruction L2,4183
+Instruction L2 Total,13405
+Cycles,1946595795.0
+Instructions,1358813317.0
+InstructionsR,537154054.0
+InstructionsI,760053753.0
+InstructionsJ,61605510.0
+CPI,1.43257
+DataHazards,596207040.0
+ControlHazards,49918313.0
+Stalls,1267189133.0
+DataStalls,983121262.0
+ControlStalls,160856851.0
+JumpStalls,123211020.0
+Branches,151639479.0
+CorrectBranches,101721166.0
+IncorrectBranches,49918313.0
+
+
+fft_small 0
+Data L1 Read,1082
+Data L1 Total Read,6.83317e+07
+Data L1 Write,18112
+Data L1 Total Write,6.15336e+07
+Data L2 Read,507
+Data L2 Total Read,1082
+Data L2 Write,180
+Data L2 Total Write,208
+Instruction L1,11971
+Instruction L1 Total,5.39993e+08
+Instruction L2,3961
+Instruction L2 Total,11971
+Cycles,970055700.0
+Instructions,539993292.0
+InstructionsR,214308458.0
+InstructionsI,301379147.0
+InstructionsJ,24305687.0
+CPI,1.79642
+DataHazards,138137012.0
+ControlHazards,60440259.0
+Stalls,430062404.0
+DataStalls,200130253.0
+ControlStalls,181320777.0
+JumpStalls,48611374.0
+Branches,60440259.0
+CorrectBranches,0.0
+IncorrectBranches,0.0
+
+
+fft_small 1
+Data L1 Read,1082
+Data L1 Total Read,6.83317e+07
+Data L1 Write,18112
+Data L1 Total Write,6.15336e+07
+Data L2 Read,507
+Data L2 Total Read,1082
+Data L2 Write,180
+Data L2 Total Write,208
+Instruction L1,11971
+Instruction L1 Total,5.39993e+08
+Instruction L2,3961
+Instruction L2 Total,11971
+Cycles,890108441.0
+Instructions,539993292.0
+InstructionsR,214308458.0
+InstructionsI,301379147.0
+InstructionsJ,24305687.0
+CPI,1.64837
+DataHazards,237085889.0
+ControlHazards,60440259.0
+Stalls,620111791.0
+DataStalls,390179640.0
+ControlStalls,181320777.0
+JumpStalls,48611374.0
+Branches,60440259.0
+CorrectBranches,0.0
+IncorrectBranches,0.0
+
+
+fft_small 2
+Data L1 Read,1082
+Data L1 Total Read,6.83317e+07
+Data L1 Write,18112
+Data L1 Total Write,6.15336e+07
+Data L2 Read,507
+Data L2 Total Read,1082
+Data L2 Write,180
+Data L2 Total Write,208
+Instruction L1,11971
+Instruction L1 Total,5.39993e+08
+Instruction L2,3961
+Instruction L2 Total,11971
+Cycles,1112169019.0
+Instructions,539993292.0
+InstructionsR,214308458.0
+InstructionsI,301379147.0
+InstructionsJ,24305687.0
+CPI,2.0596
+DataHazards,187686177.0
+ControlHazards,21344619.0
+Stalls,572175721.0
+DataStalls,416841252.0
+ControlStalls,106723095.0
+JumpStalls,48611374.0
+Branches,60440259.0
+CorrectBranches,0.0
+IncorrectBranches,0.0
+
+
+fft_small 3
+Data L1 Read,123904
+Data L1 Total Read,6.83317e+07
+Data L1 Write,34201
+Data L1 Total Write,6.15336e+07
+Data L2 Read,1786
+Data L2 Total Read,123904
+Data L2 Write,3375
+Data L2 Total Write,34760
+Instruction L1,1.38817e+07
+Instruction L1 Total,5.39993e+08
+Instruction L2,6.69315e+06
+Instruction L2 Total,1.38817e+07
+Cycles,970055700.0
+Instructions,539993292.0
+InstructionsR,214308458.0
+InstructionsI,301379147.0
+InstructionsJ,24305687.0
+CPI,1.79642
+DataHazards,138137012.0
+ControlHazards,60440259.0
+Stalls,430062404.0
+DataStalls,200130253.0
+ControlStalls,181320777.0
+JumpStalls,48611374.0
+Branches,60440259.0
+CorrectBranches,0.0
+IncorrectBranches,0.0
+
+
+fft_small 4
+Data L1 Read,21020
+Data L1 Total Read,6.83317e+07
+Data L1 Write,24652
+Data L1 Total Write,6.15336e+07
+Data L2 Read,2221
+Data L2 Total Read,21020
+Data L2 Write,1890
+Data L2 Total Write,8049
+Instruction L1,4.5717e+06
+Instruction L1 Total,5.39993e+08
+Instruction L2,1.72108e+06
+Instruction L2 Total,4.5717e+06
+Cycles,970055700.0
+Instructions,539993292.0
+InstructionsR,214308458.0
+InstructionsI,301379147.0
+InstructionsJ,24305687.0
+CPI,1.79642
+DataHazards,138137012.0
+ControlHazards,60440259.0
+Stalls,430062404.0
+DataStalls,200130253.0
+ControlStalls,181320777.0
+JumpStalls,48611374.0
+Branches,60440259.0
+CorrectBranches,0.0
+IncorrectBranches,0.0
+
+
+fft_small 5
+Data L1 Read,1082
+Data L1 Total Read,6.83317e+07
+Data L1 Write,18112
+Data L1 Total Write,6.15336e+07
+Data L2 Read,526
+Data L2 Total Read,1082
+Data L2 Write,180
+Data L2 Total Write,208
+Instruction L1,11971
+Instruction L1 Total,5.39993e+08
+Instruction L2,3961
+Instruction L2 Total,11971
+Cycles,970055700.0
+Instructions,539993292.0
+InstructionsR,214308458.0
+InstructionsI,301379147.0
+InstructionsJ,24305687.0
+CPI,1.79642
+DataHazards,138137012.0
+ControlHazards,60440259.0
+Stalls,430062404.0
+DataStalls,200130253.0
+ControlStalls,181320777.0
+JumpStalls,48611374.0
+Branches,60440259.0
+CorrectBranches,0.0
+IncorrectBranches,0.0
+
+
+fft_small 6
+Data L1 Read,1082
+Data L1 Total Read,6.83317e+07
+Data L1 Write,18112
+Data L1 Total Write,6.15336e+07
+Data L2 Read,457
+Data L2 Total Read,1082
+Data L2 Write,180
+Data L2 Total Write,208
+Instruction L1,11971
+Instruction L1 Total,5.39993e+08
+Instruction L2,3961
+Instruction L2 Total,11971
+Cycles,970055700.0
+Instructions,539993292.0
+InstructionsR,214308458.0
+InstructionsI,301379147.0
+InstructionsJ,24305687.0
+CPI,1.79642
+DataHazards,138137012.0
+ControlHazards,60440259.0
+Stalls,430062404.0
+DataStalls,200130253.0
+ControlStalls,181320777.0
+JumpStalls,48611374.0
+Branches,60440259.0
+CorrectBranches,0.0
+IncorrectBranches,0.0
+
+
+fft_small 7
+Data L1 Read,1011
+Data L1 Total Read,6.83317e+07
+Data L1 Write,18112
+Data L1 Total Write,6.15336e+07
+Data L2 Read,241
+Data L2 Total Read,1011
+Data L2 Write,134
+Data L2 Total Write,364
+Instruction L1,11943
+Instruction L1 Total,5.39993e+08
+Instruction L2,3961
+Instruction L2 Total,11943
+Cycles,970055700.0
+Instructions,539993292.0
+InstructionsR,214308458.0
+InstructionsI,301379147.0
+InstructionsJ,24305687.0
+CPI,1.79642
+DataHazards,138137012.0
+ControlHazards,60440259.0
+Stalls,430062404.0
+DataStalls,200130253.0
+ControlStalls,181320777.0
+JumpStalls,48611374.0
+Branches,60440259.0
+CorrectBranches,0.0
+IncorrectBranches,0.0
+
+
+fft_small 8
+Data L1 Read,1082
+Data L1 Total Read,6.83317e+07
+Data L1 Write,18112
+Data L1 Total Write,6.15336e+07
+Data L2 Read,734
+Data L2 Total Read,1082
+Data L2 Write,193
+Data L2 Total Write,208
+Instruction L1,11971
+Instruction L1 Total,5.39993e+08
+Instruction L2,6501
+Instruction L2 Total,11971
+Cycles,970055700.0
+Instructions,539993292.0
+InstructionsR,214308458.0
+InstructionsI,301379147.0
+InstructionsJ,24305687.0
+CPI,1.79642
+DataHazards,138137012.0
+ControlHazards,60440259.0
+Stalls,430062404.0
+DataStalls,200130253.0
+ControlStalls,181320777.0
+JumpStalls,48611374.0
+Branches,60440259.0
+CorrectBranches,0.0
+IncorrectBranches,0.0
+
+
+fft_small 9
+Data L1 Read,3274
+Data L1 Total Read,6.83317e+07
+Data L1 Write,23641
+Data L1 Total Write,6.15336e+07
+Data L2 Read,443
+Data L2 Total Read,3274
+Data L2 Write,245
+Data L2 Total Write,1920
+Instruction L1,288961
+Instruction L1 Total,5.39993e+08
+Instruction L2,189495
+Instruction L2 Total,288961
+Cycles,970055700.0
+Instructions,539993292.0
+InstructionsR,214308458.0
+InstructionsI,301379147.0
+InstructionsJ,24305687.0
+CPI,1.79642
+DataHazards,138137012.0
+ControlHazards,60440259.0
+Stalls,430062404.0
+DataStalls,200130253.0
+ControlStalls,181320777.0
+JumpStalls,48611374.0
+Branches,60440259.0
+CorrectBranches,0.0
+IncorrectBranches,0.0
+
+
+fft_small 10
+Data L1 Read,1082
+Data L1 Total Read,6.83317e+07
+Data L1 Write,18112
+Data L1 Total Write,6.15336e+07
+Data L2 Read,507
+Data L2 Total Read,1082
+Data L2 Write,180
+Data L2 Total Write,208
+Instruction L1,11971
+Instruction L1 Total,5.39993e+08
+Instruction L2,3961
+Instruction L2 Total,11971
+Cycles,852768780.0
+Instructions,539993292.0
+InstructionsR,214308458.0
+InstructionsI,301379147.0
+InstructionsJ,24305687.0
+CPI,1.57922
+DataHazards,138137012.0
+ControlHazards,21344619.0
+Stalls,312775484.0
+DataStalls,200130253.0
+ControlStalls,64033857.0
+JumpStalls,48611374.0
+Branches,60440259.0
+CorrectBranches,39095640.0
+IncorrectBranches,21344619.0
+
+
+fft_small 11
+Data L1 Read,1082
+Data L1 Total Read,6.83317e+07
+Data L1 Write,18112
+Data L1 Total Write,6.15336e+07
+Data L2 Read,507
+Data L2 Total Read,1082
+Data L2 Write,180
+Data L2 Total Write,208
+Instruction L1,11971
+Instruction L1 Total,5.39993e+08
+Instruction L2,3961
+Instruction L2 Total,11971
+Cycles,852916447.0
+Instructions,539993292.0
+InstructionsR,214308458.0
+InstructionsI,301379147.0
+InstructionsJ,24305687.0
+CPI,1.57949
+DataHazards,138137012.0
+ControlHazards,19958597.0
+Stalls,312923151.0
+DataStalls,200130253.0
+ControlStalls,64181524.0
+JumpStalls,48611374.0
+Branches,60440259.0
+CorrectBranches,40481662.0
+IncorrectBranches,19958597.0
+
+
+fft_small 12
+Data L1 Read,1082
+Data L1 Total Read,6.83317e+07
+Data L1 Write,18112
+Data L1 Total Write,6.15336e+07
+Data L2 Read,507
+Data L2 Total Read,1082
+Data L2 Write,180
+Data L2 Total Write,208
+Instruction L1,11971
+Instruction L1 Total,5.39993e+08
+Instruction L2,3961
+Instruction L2 Total,11971
+Cycles,772821521.0
+Instructions,539993292.0
+InstructionsR,214308458.0
+InstructionsI,301379147.0
+InstructionsJ,24305687.0
+CPI,1.43117
+DataHazards,237085889.0
+ControlHazards,21344619.0
+Stalls,502824871.0
+DataStalls,390179640.0
+ControlStalls,64033857.0
+JumpStalls,48611374.0
+Branches,60440259.0
+CorrectBranches,39095640.0
+IncorrectBranches,21344619.0
+
+
+fft_small 13
+Data L1 Read,1082
+Data L1 Total Read,6.83317e+07
+Data L1 Write,18112
+Data L1 Total Write,6.15336e+07
+Data L2 Read,507
+Data L2 Total Read,1082
+Data L2 Write,180
+Data L2 Total Write,208
+Instruction L1,11971
+Instruction L1 Total,5.39993e+08
+Instruction L2,3961
+Instruction L2 Total,11971
+Cycles,772969188.0
+Instructions,539993292.0
+InstructionsR,214308458.0
+InstructionsI,301379147.0
+InstructionsJ,24305687.0
+CPI,1.43144
+DataHazards,237085889.0
+ControlHazards,19958597.0
+Stalls,502972538.0
+DataStalls,390179640.0
+ControlStalls,64181524.0
+JumpStalls,48611374.0
+Branches,60440259.0
+CorrectBranches,40481662.0
+IncorrectBranches,19958597.0
+
+
+patricia_small 0
+Data L1 Read,6471
+Data L1 Total Read,3.52368e+07
+Data L1 Write,120517
+Data L1 Total Write,2.59236e+07
+Data L2 Read,3504
+Data L2 Total Read,6471
+Data L2 Write,12302
+Data L2 Total Write,30042
+Instruction L1,2.61527e+06
+Instruction L1 Total,2.25953e+08
+Instruction L2,1.57565e+06
+Instruction L2 Total,2.61527e+06
+Cycles,409042180.0
+Instructions,225953145.0
+InstructionsR,93532618.0
+InstructionsI,123291118.0
+InstructionsJ,9129409.0
+CPI,1.8103
+DataHazards,64991114.0
+ControlHazards,24202474.0
+Stalls,183089031.0
+DataStalls,92222791.0
+ControlStalls,72607422.0
+JumpStalls,18258818.0
+Branches,24202474.0
+CorrectBranches,0.0
+IncorrectBranches,0.0
+
+
+patricia_small 1
+Data L1 Read,6471
+Data L1 Total Read,3.52368e+07
+Data L1 Write,120517
+Data L1 Total Write,2.59236e+07
+Data L2 Read,3504
+Data L2 Total Read,6471
+Data L2 Write,12302
+Data L2 Total Write,30042
+Instruction L1,2.61527e+06
+Instruction L1 Total,2.25953e+08
+Instruction L2,1.57565e+06
+Instruction L2 Total,2.61527e+06
+Cycles,373346062.0
+Instructions,225953145.0
+InstructionsR,93532618.0
+InstructionsI,123291118.0
+InstructionsJ,9129409.0
+CPI,1.65232
+DataHazards,99886080.0
+ControlHazards,24202474.0
+Stalls,260369486.0
+DataStalls,169503246.0
+ControlStalls,72607422.0
+JumpStalls,18258818.0
+Branches,24202474.0
+CorrectBranches,0.0
+IncorrectBranches,0.0
+
+
+patricia_small 2
+Data L1 Read,6471
+Data L1 Total Read,3.52368e+07
+Data L1 Write,120517
+Data L1 Total Write,2.59236e+07
+Data L2 Read,3504
+Data L2 Total Read,6471
+Data L2 Write,12302
+Data L2 Total Write,30042
+Instruction L1,2.61527e+06
+Instruction L1 Total,2.25953e+08
+Instruction L2,1.57565e+06
+Instruction L2 Total,2.61527e+06
+Cycles,484323770.0
+Instructions,225953145.0
+InstructionsR,93532618.0
+InstructionsI,123291118.0
+InstructionsJ,9129409.0
+CPI,2.14347
+DataHazards,79864176.0
+ControlHazards,11570399.0
+Stalls,258370619.0
+DataStalls,182259806.0
+ControlStalls,57851995.0
+JumpStalls,18258818.0
+Branches,24202474.0
+CorrectBranches,0.0
+IncorrectBranches,0.0
+
+
+patricia_small 3
+Data L1 Read,137489
+Data L1 Total Read,3.52368e+07
+Data L1 Write,124229
+Data L1 Total Write,2.59236e+07
+Data L2 Read,5393
+Data L2 Total Read,137489
+Data L2 Write,15055
+Data L2 Total Write,33665
+Instruction L1,4.75016e+07
+Instruction L1 Total,2.25953e+08
+Instruction L2,2.32437e+07
+Instruction L2 Total,4.75016e+07
+Cycles,409042180.0
+Instructions,225953145.0
+InstructionsR,93532618.0
+InstructionsI,123291118.0
+InstructionsJ,9129409.0
+CPI,1.8103
+DataHazards,64991114.0
+ControlHazards,24202474.0
+Stalls,183089031.0
+DataStalls,92222791.0
+ControlStalls,72607422.0
+JumpStalls,18258818.0
+Branches,24202474.0
+CorrectBranches,0.0
+IncorrectBranches,0.0
+
+
+patricia_small 4
+Data L1 Read,16770
+Data L1 Total Read,3.52368e+07
+Data L1 Write,122341
+Data L1 Total Write,2.59236e+07
+Data L2 Read,4813
+Data L2 Total Read,16770
+Data L2 Write,13816
+Data L2 Total Write,32147
+Instruction L1,1.68226e+07
+Instruction L1 Total,2.25953e+08
+Instruction L2,9.99594e+06
+Instruction L2 Total,1.68226e+07
+Cycles,409042180.0
+Instructions,225953145.0
+InstructionsR,93532618.0
+InstructionsI,123291118.0
+InstructionsJ,9129409.0
+CPI,1.8103
+DataHazards,64991114.0
+ControlHazards,24202474.0
+Stalls,183089031.0
+DataStalls,92222791.0
+ControlStalls,72607422.0
+JumpStalls,18258818.0
+Branches,24202474.0
+CorrectBranches,0.0
+IncorrectBranches,0.0
+
+
+patricia_small 5
+Data L1 Read,6471
+Data L1 Total Read,3.52368e+07
+Data L1 Write,120517
+Data L1 Total Write,2.59236e+07
+Data L2 Read,4851
+Data L2 Total Read,6471
+Data L2 Write,12391
+Data L2 Total Write,30042
+Instruction L1,2.61527e+06
+Instruction L1 Total,2.25953e+08
+Instruction L2,1.57565e+06
+Instruction L2 Total,2.61527e+06
+Cycles,409042180.0
+Instructions,225953145.0
+InstructionsR,93532618.0
+InstructionsI,123291118.0
+InstructionsJ,9129409.0
+CPI,1.8103
+DataHazards,64991114.0
+ControlHazards,24202474.0
+Stalls,183089031.0
+DataStalls,92222791.0
+ControlStalls,72607422.0
+JumpStalls,18258818.0
+Branches,24202474.0
+CorrectBranches,0.0
+IncorrectBranches,0.0
+
+
+patricia_small 6
+Data L1 Read,6471
+Data L1 Total Read,3.52368e+07
+Data L1 Write,120517
+Data L1 Total Write,2.59236e+07
+Data L2 Read,2483
+Data L2 Total Read,6471
+Data L2 Write,12280
+Data L2 Total Write,30042
+Instruction L1,2.61527e+06
+Instruction L1 Total,2.25953e+08
+Instruction L2,1.57565e+06
+Instruction L2 Total,2.61527e+06
+Cycles,409042180.0
+Instructions,225953145.0
+InstructionsR,93532618.0
+InstructionsI,123291118.0
+InstructionsJ,9129409.0
+CPI,1.8103
+DataHazards,64991114.0
+ControlHazards,24202474.0
+Stalls,183089031.0
+DataStalls,92222791.0
+ControlStalls,72607422.0
+JumpStalls,18258818.0
+Branches,24202474.0
+CorrectBranches,0.0
+IncorrectBranches,0.0
+
+
+patricia_small 7
+Data L1 Read,6396
+Data L1 Total Read,3.52368e+07
+Data L1 Write,120514
+Data L1 Total Write,2.59236e+07
+Data L2 Read,931
+Data L2 Total Read,6396
+Data L2 Write,16522
+Data L2 Total Write,40110
+Instruction L1,1.87128e+06
+Instruction L1 Total,2.25953e+08
+Instruction L2,1.14467e+06
+Instruction L2 Total,1.87128e+06
+Cycles,409042180.0
+Instructions,225953145.0
+InstructionsR,93532618.0
+InstructionsI,123291118.0
+InstructionsJ,9129409.0
+CPI,1.8103
+DataHazards,64991114.0
+ControlHazards,24202474.0
+Stalls,183089031.0
+DataStalls,92222791.0
+ControlStalls,72607422.0
+JumpStalls,18258818.0
+Branches,24202474.0
+CorrectBranches,0.0
+IncorrectBranches,0.0
+
+
+patricia_small 8
+Data L1 Read,6471
+Data L1 Total Read,3.52368e+07
+Data L1 Write,120517
+Data L1 Total Write,2.59236e+07
+Data L2 Read,3508
+Data L2 Total Read,6471
+Data L2 Write,22338
+Data L2 Total Write,30042
+Instruction L1,2.61527e+06
+Instruction L1 Total,2.25953e+08
+Instruction L2,1.71747e+06
+Instruction L2 Total,2.61527e+06
+Cycles,409042180.0
+Instructions,225953145.0
+InstructionsR,93532618.0
+InstructionsI,123291118.0
+InstructionsJ,9129409.0
+CPI,1.8103
+DataHazards,64991114.0
+ControlHazards,24202474.0
+Stalls,183089031.0
+DataStalls,92222791.0
+ControlStalls,72607422.0
+JumpStalls,18258818.0
+Branches,24202474.0
+CorrectBranches,0.0
+IncorrectBranches,0.0
+
+
+patricia_small 9
+Data L1 Read,21757
+Data L1 Total Read,3.52368e+07
+Data L1 Write,128636
+Data L1 Total Write,2.59236e+07
+Data L2 Read,6714
+Data L2 Total Read,21757
+Data L2 Write,12713
+Data L2 Total Write,32791
+Instruction L1,1.07146e+07
+Instruction L1 Total,2.25953e+08
+Instruction L2,5.72325e+06
+Instruction L2 Total,1.07146e+07
+Cycles,409042180.0
+Instructions,225953145.0
+InstructionsR,93532618.0
+InstructionsI,123291118.0
+InstructionsJ,9129409.0
+CPI,1.8103
+DataHazards,64991114.0
+ControlHazards,24202474.0
+Stalls,183089031.0
+DataStalls,92222791.0
+ControlStalls,72607422.0
+JumpStalls,18258818.0
+Branches,24202474.0
+CorrectBranches,0.0
+IncorrectBranches,0.0
+
+
+patricia_small 10
+Data L1 Read,6471
+Data L1 Total Read,3.52368e+07
+Data L1 Write,120517
+Data L1 Total Write,2.59236e+07
+Data L2 Read,3504
+Data L2 Total Read,6471
+Data L2 Write,12302
+Data L2 Total Write,30042
+Instruction L1,2.61527e+06
+Instruction L1 Total,2.25953e+08
+Instruction L2,1.57565e+06
+Instruction L2 Total,2.61527e+06
+Cycles,371145955.0
+Instructions,225953145.0
+InstructionsR,93532618.0
+InstructionsI,123291118.0
+InstructionsJ,9129409.0
+CPI,1.64258
+DataHazards,64991114.0
+ControlHazards,11570399.0
+Stalls,145192806.0
+DataStalls,92222791.0
+ControlStalls,34711197.0
+JumpStalls,18258818.0
+Branches,24202474.0
+CorrectBranches,12632075.0
+IncorrectBranches,11570399.0
+
+
+patricia_small 11
+Data L1 Read,6471
+Data L1 Total Read,3.52368e+07
+Data L1 Write,120517
+Data L1 Total Write,2.59236e+07
+Data L2 Read,3504
+Data L2 Total Read,6471
+Data L2 Write,12302
+Data L2 Total Write,30042
+Instruction L1,2.61527e+06
+Instruction L1 Total,2.25953e+08
+Instruction L2,1.57565e+06
+Instruction L2 Total,2.61527e+06
+Cycles,367088463.0
+Instructions,225953145.0
+InstructionsR,93532618.0
+InstructionsI,123291118.0
+InstructionsJ,9129409.0
+CPI,1.62462
+DataHazards,64991114.0
+ControlHazards,9288682.0
+Stalls,141135314.0
+DataStalls,92222791.0
+ControlStalls,30653705.0
+JumpStalls,18258818.0
+Branches,24202474.0
+CorrectBranches,14913792.0
+IncorrectBranches,9288682.0
+
+
+patricia_small 12
+Data L1 Read,6471
+Data L1 Total Read,3.52368e+07
+Data L1 Write,120517
+Data L1 Total Write,2.59236e+07
+Data L2 Read,3504
+Data L2 Total Read,6471
+Data L2 Write,12302
+Data L2 Total Write,30042
+Instruction L1,2.61527e+06
+Instruction L1 Total,2.25953e+08
+Instruction L2,1.57565e+06
+Instruction L2 Total,2.61527e+06
+Cycles,335449837.0
+Instructions,225953145.0
+InstructionsR,93532618.0
+InstructionsI,123291118.0
+InstructionsJ,9129409.0
+CPI,1.4846
+DataHazards,99886080.0
+ControlHazards,11570399.0
+Stalls,222473261.0
+DataStalls,169503246.0
+ControlStalls,34711197.0
+JumpStalls,18258818.0
+Branches,24202474.0
+CorrectBranches,12632075.0
+IncorrectBranches,11570399.0
+
+
+patricia_small 13
+Data L1 Read,6471
+Data L1 Total Read,3.52368e+07
+Data L1 Write,120517
+Data L1 Total Write,2.59236e+07
+Data L2 Read,3504
+Data L2 Total Read,6471
+Data L2 Write,12302
+Data L2 Total Write,30042
+Instruction L1,2.61527e+06
+Instruction L1 Total,2.25953e+08
+Instruction L2,1.57565e+06
+Instruction L2 Total,2.61527e+06
+Cycles,331392345.0
+Instructions,225953145.0
+InstructionsR,93532618.0
+InstructionsI,123291118.0
+InstructionsJ,9129409.0
+CPI,1.46664
+DataHazards,99886080.0
+ControlHazards,9288682.0
+Stalls,218415769.0
+DataStalls,169503246.0
+ControlStalls,30653705.0
+JumpStalls,18258818.0
+Branches,24202474.0
+CorrectBranches,14913792.0
+IncorrectBranches,9288682.0
