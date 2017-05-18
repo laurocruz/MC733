@@ -190,10 +190,10 @@ void branch_not_taken_pipeline();
 void print_status();
 
 /* Valores que queremos de saída */
-unsigned int instr, instr_R, instr_I, instr_J;    // Número de instruções
-unsigned int data_hazards, control_hazard;        // Numero de hazards
-unsigned int stalls, d_stalls, c_stalls, j_stalls;  // Número de stalls
-unsigned int branches, c_branches, i_branches;
+unsigned long int instr, instr_R, instr_I, instr_J;    // Número de instruções
+unsigned long int data_hazards, control_hazard;        // Numero de hazards
+unsigned long int stalls, d_stalls, c_stalls, j_stalls;  // Número de stalls
+unsigned long int branches, c_branches, i_branches;
 
 /* Posição 0 - ultima instrução inserida no pipeline
  * Posicao N - Ultima do pipeline
