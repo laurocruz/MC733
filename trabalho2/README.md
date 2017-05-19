@@ -131,7 +131,7 @@ Com isso, pudemos observar que com o aumento do número de estágios, houve um a
 ![NEP x T](img/Charts/NEPxT.png)
 
 #### Cache
-Para as configurações de cache, foram analisados principalmente os cenários 1, 4, 5, 6, 7, 8, 9 e 10, visto que eles variam somente a [configuração de cache](#Configurações de Cache).
+Para as configurações de cache, foram analisados principalmente os cenários 1, 4, 5, 6, 7, 8, 9 e 10, visto que eles variam somente a [configuração de cache](#configurações-de-cache).
 
 #### Branch Predictor
 Por fim, para analisar a influência do branch predictor na eficiência do processador, foi feita uma comparação focada nos cenários 1, 11 e 12, uma vez que eles diferem somente no tipo de branch predictor utilizado.
