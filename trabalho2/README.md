@@ -132,9 +132,9 @@ De forma a analisar a influência do número de estágios do pipeline na eficiê
 
 Com isso, pudemos observar que com o aumento do número de estágios, houve um aumento no número de ciclos, e consequente aumento de CPI. Porém, o tempo de execução sofreu um decréscimo considerável. Abaixo seguem dois gráficos que ilustram essas diferenças:
 
-![NEP x CPI](img/Charts/NEPxCPI.png)
+![NEP x CPI](img/Charts/NEPxCPI.small.png)
 
-![NEP x T](img/Charts/NEPxT.png)
+![NEP x T](img/Charts/NEPxT.small.png)
 
 #### Cache
 Para as configurações de cache, foram analisados principalmente os cenários 1, 4, 5, 6, 7, 8, 9 e 10, visto que eles variam somente a [configuração de cache](#configurações-de-cache).
@@ -143,13 +143,13 @@ Para as configurações de cache, foram analisados principalmente os cenários 1
 Por fim, para analisar a influência do branch predictor na eficiência do processador, foi feita uma comparação focada nos cenários 1, 11 e 12, uma vez que eles diferem somente no tipo de branch predictor utilizado.
 Em termos de tempo e CPI, o Two Bit Predictor se mostrou superior ao Always Not Taken, que, por sua vez, superou o cenário sem Branch Predictor, como mostram os gráficos a seguir:
 
-![BP x CPI](img/Charts/BPxCPI.png)
+![BP x CPI](img/Charts/BPxCPI.small.png)
 
-![BP x T](img/Charts/BPxT.png)
+![BP x T](img/Charts/BPxT.small.png)
 
 Além disso, foram feitas comparações da eficácia do Two Bit Predictor e do Always Not Taken, através da porcentagem de branch predictions corretos (ou seja, o número de branch predictions corretos dividido pelo número total de branches). Mais uma vez, como podemos ver pelo gráfico abaixo, o Two Bit Predictor se mostrou superior.
 
-![BP x PBC](img/Charts/BPxPBC.png)
+![BP x PBC](img/Charts/BPxPBC.small.png)
 
 ### Conclusão
 Finalmente, apresentamos uma tabela contendo os resultados mais relevantes obtidos neste experimento:
