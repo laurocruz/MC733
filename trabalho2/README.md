@@ -33,6 +33,8 @@ No pipeline de 5 estágios, dividimos a execução de uma intrução em 5 etapas
 Já no pipeline de 7 estágios, a execução de uma instrução é dividido em 7 etapas `| IT | IF | ID | EX | MT | MM | WB |` em que a
 
 #### Configurações de Cache
+No trabalho foi simulado 4 caches, L1 e L2 de dados e de instruções. Fizemos simulações para oito variações das configurações de L1 e L2 (tanto de dados quanto de instruções). Abaixo segue a lista das configurações:
+
 | Configuração | L1 Cache Size | L2 Cache Size | L1 Block Size | L2 Block Size | Associativity |
 |--------------|---------------|---------------|---------------|---------------|---------------|
 | 1            | 64 KB         | 256 KB        | 32 B          | 128 B         | 2             |
@@ -43,6 +45,10 @@ Já no pipeline de 7 estágios, a execução de uma instrução é dividido em 7
 | 6            | 64 KB         | 256 KB        | 16 B          | 128 B         | 2             |
 | 7            | 64 KB         | 256 KB        | 32 B          | 64 B          | 2             |
 | 8            | 64 KB         | 256 KB        | 32 B          | 128 B         | 1             |
+
+Para realizar a simulação foi utilizada a API do DineroIV, realizando uma referencia às caches sempre que ocorria uma instrução qualquer (na cache de instruções) e/ou uma instrução de leitura ou escrita (na cache de dados).
+
+Obtivemos ao final a quantidade de fetches e de misses em casa cache, bem como o percentual total de misses, que são os valores que serão usados para avaliar as caches.
 
 #### Branch Predictor
 - Sem predictor (sempre atrasa pipeline ao encontrar um branch).
