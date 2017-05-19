@@ -93,10 +93,10 @@ De forma a analisar os diferentes cenários simulados, foram determinados os seg
 - Quantidade de Branch Predictions Corretos.
 - Quantidade de Branch Predictions Incorretos.
 
-Boa parte desses eventos foram obtidos diretamente da simulação feita, porém, alguns outros precisaram ser estimados. Abaixo, listamos esses casos, apresentamos a fórmula utilizada e uma breve explicação dos valores utilizados.
+Boa parte desses eventos foram obtidos diretamente da simulação feita, porém, alguns outros precisaram ser estimados. Abaixo, listamos esses casos, apresentamos a fórmula utilizada e uma breve explicação da motivação por trás dessas estimativas.
 
 #### Total de Stalls
-O número total de stalls é a soma do número de stalls devido a hazards de dados com o número de stalls devido a hazards de controle, com o número de stalls devido a jumps e com o número de stalls devido a cache misses. Para este último, estimamos que cache hits não acarretam nenhum stall adicional, que um cache miss na L1 causa 15 stalls e que um cache miss na L2 causa 200 stalls. Assim, a fórmula para o número total de stalls é:
+O número total de stalls é a soma do número de stalls devido a hazards de dados com o número de stalls devido a hazards de controle, com o número de stalls devido a jumps e com o número de stalls devido a cache misses. Para este último, estimamos que cache hits não acarretam nenhum stall adicional, que um cache miss na L1 causa por volta de 15 stalls e que um cache miss na L2 causa em torno de 200 stalls. Assim, a fórmula para o número total de stalls é:
 
 `TS = SHD + SHC + SJ + ((15 · NCM1) + (200 · NCM2))`
 
@@ -123,6 +123,12 @@ Com o objetivo de analisar a influência da paralelização das instruções na 
 
 #### Número de Estágios do Pipeline
 De forma a analisar a influência do número de estágios do pipeline na eficiência do processador, foi feita uma comparação dando ênfase aos cenários 1 e 3, visto que eles diferem somente no número de estágios.
+
+Com isso, pudemos observar que com o aumento do número de estágios, houve um aumento no número de ciclos, e consequente aumento de CPI. Porém, o tempo de execução sofreu um decréscimo considerável. Abaixo seguem dois gráficos que ilustram essas diferenças:
+
+![NEP x CPI](img/Charts/NEPxCPI.png)
+
+![NEP x T](img/Charts/NEPxT.png)
 
 #### Cache
 Para as configurações de cache, foram analisados principalmente os cenários 1, 4, 5, 6, 7, 8, 9 e 10, visto que eles variam somente a [configuração de cache](#Configurações de Cache).
