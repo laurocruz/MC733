@@ -86,6 +86,10 @@ A seguir apresentamos uma tabela que identifica as diferentes combinações das 
 | 14 | Superescalar de 5 estágios | 1                     | Two-Bit          |
 
 ## Resultados
+Em seguida, apresentaremos os resultados mais relevantes encontrados pelo grupo, bem como análises referentes às diferentes características da arquitetura do processador.
+
+Caso o leitor tenha interesse, montamos uma planilha com todos os dados coletados pela simulação em [resultados.ods](resultados.ods).
+
 
 ### Eventos medidos
 De forma a analisar os diferentes cenários simulados, foram determinados os seguintes eventos para serem utilizados como base:
