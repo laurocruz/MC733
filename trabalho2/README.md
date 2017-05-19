@@ -61,9 +61,15 @@ Para realizar a simulação foi utilizada a API do DineroIV, realizando uma refe
 Obtivemos ao final a quantidade de fetches e de misses em casa cache, bem como o percentual total de misses, que são os valores que serão usados para comparar as caches.
 
 #### Branch Predictor
-- Sem predictor (sempre atrasa pipeline ao encontrar um branch).
-- Always not taken.
-- Two-bit prediction.
+Uma das causas dos Hazards de Controle são as intruções de branch. Na tentativa de minimizar o número de stalls com essas intruções existem estratégias que tentam prever a ocorrencia ou não de branchs.
+1. Sem predictor
+    Sem a implementação de algum tipo de brench prediction o pipeline gera stalls no `IF` até que o branch tenha se resolvido, dessa maneira, se o branch ocorrer, ou não, sempre gerará o tamanho do pipeline -1 stalls
+2. Always not taken.
+    Nesta abordagem o pipeline sempre considera que o branch não ocorrerá. Se chegar no `WB` e ele não ocorrer, nenhum stall será adicionado, mas se ele ocorrer as instruções que estão no pipeline deverão ser descartadas e assim teremos tamanho do pipeline-1 stalls.
+3. Two-bit prediction.
+    Na aboradem da previsão com dois bits, dois bits são utilizados de maneira a ter uma memória das últimas execuções do branch. Assim, o two-bit prediction possui 2 estados em que cada estado possui 2 representações e dependendo do estado ele poderá funcionar como o not taken ou taken.
+
+![BP x T](img/Hazards/2bitpred.png)
 
 ### Cenários Analisados
 A seguir apresentamos uma tabela que identifica as diferentes combinações das configurações que foram medidas. Estas combinações foram escolhidas de forma a facilitar a análise da influência das mudanças em cada configuração individualmente, além de nos fornecer uma visão geral das vantagens e desvantagens de cada cenário.
