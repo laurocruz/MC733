@@ -167,12 +167,23 @@ Em termos de tempo e CPI, o Two Bit Predictor se mostrou superior ao Always Not 
 
 Além disso, foram feitas comparações da eficácia do Two Bit Predictor e do Always Not Taken, através da porcentagem de branch predictions corretos (ou seja, o número de branch predictions corretos dividido pelo número total de branches). Mais uma vez, como podemos ver pelo gráfico abaixo, o Two Bit Predictor se mostrou superior.
 
--![BP x PBC](img/Charts/BPxPBC.small.png)
+![BP x PBC](img/Charts/BPxPBC.small.png)
 
 ### Conclusão
 Finalmente, apresentamos uma tabela contendo os resultados mais relevantes obtidos neste experimento:
 
-ADICIONAR TABELA DO JEITO QUE O PROFESSOR PEDIU
+|                             | Cenário 1 |            |            |            | Cenário 2 |            |            |            | Cenário 3 |            |            |            | Cenário X |           |            |            | Cenário 11 |            |            |            | Cenário 12 |            |            |            |
+|-----------------------------|-----------|------------|------------|------------|-----------|------------|------------|------------|-----------|------------|------------|------------|-----------|-----------|------------|------------|------------|------------|------------|------------|------------|------------|------------|------------|
+|                             | patricia  | basicmath  | fft_encode | fft_decode | patricia  | basicmath  | fft_encode | fft_decode | patricia  | basicmath  | fft_encode | fft_decode | patricia  | basicmath | fft_encode | fft_decode | patricia   | basicmath  | fft_encode | fft_decode | patricia   | basicmath  | fft_encode | fft_decode |
+| Ciclos                      | 768467250 | 2142071587 | 971452775  | 2444935097 | 732771133 | 1989104161 | 891505516  | 2244400562 | 843748840 | 2466534069 | 1113566094 | 2801572165 |           |           |            |            | 730571025  | 1938090031 | 854165855  | 2150448698 | 726513533  | 1907776300 | 854313522  | 2150873511 |
+| CPI                         | 3.401     | 1.966      | 1.799      | 1.799      | 3.243     | 1.825      | 1.651      | 1.652      | 3.734     | 2.263      | 2.062      | 2.062      |           |           |            |            | 3.233      | 1.778      | 1.582      | 1.583      | 3.215      | 1.751      | 1.582      | 1.583      |
+| Tempo (em segundos)         | 5.12      | 14.28      | 6.48       | 16.30      | 4.89      | 13.26      | 5.94       | 14.96      | 4.22      | 12.33      | 5.57       | 14.01      |           |           |            |            | 4.87       | 12.92      | 5.69       | 14.34      | 4.84       | 12.72      | 5.70       | 14.34      |
+| Total de Stalls             | 542514101 | 1052306847 | 431459479  | 1086121776 | 619794556 | 1444221789 | 621508866  | 1564993899 | 617795689 | 1376769327 | 573572796  | 1442758842 |           |           |            |            | 504617876  | 848325291  | 314172559  | 791635377  | 500560384  | 818011560  | 314320226  | 792060190  |
+|                             |           |            |            |            |           |            |            |            |           |            |            |            |           |           |            |            |            |            |            |            |            |            |            |            |
+| Branch Predictions Corretos | -         | -          | -          | -          | -         | -          | -          | -          | -         | -          | -          | -          | -         | -         | -          | -          | 12632075   | 67993852   | 39095640   | 98162133   | 14913792   | 82017241   | 40481662   | 101721166  |
+| Número de Branches          | -         | -          | -          | -          | -         | -          | -          | -          | -         | -          | -          | -          | -         | -         | -          | -          | 24202474   | 126051956  | 60440259   | 151639479  | 24202474   | 126051956  | 60440259   | 151639479  |
+
+
 
 A partir desses dados, podemos concluir que
 
