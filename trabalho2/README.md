@@ -33,7 +33,7 @@ No pipeline de 5 estágios, dividimos a execução de uma intrução em 5 etapas
 Já no pipeline de 7 estágios, a execução de uma instrução é dividido em 7 etapas `| IT | IF | ID | EX | MT | MM | WB |` em que a
 
 #### Configurações de Cache
-No trabalho foram simuladas 4 caches, L1 e L2 de dados e de instruções. Fizemos simulações para oito variações das configurações de L1 e L2 (tanto de dados quanto de instruções). Abaixo segue a lista das configurações:
+No trabalho foi simulado 4 caches, L1 e L2 de dados e de instruções. Fizemos simulações para oito variações das configurações de L1 e L2 (tanto de dados quanto de instruções). Abaixo segue a lista das configurações:
 
 | Configuração | L1 Cache Size | L2 Cache Size | L1 Block Size | L2 Block Size | Associativity |
 |--------------|---------------|---------------|---------------|---------------|---------------|
@@ -48,7 +48,7 @@ No trabalho foram simuladas 4 caches, L1 e L2 de dados e de instruções. Fizemo
 
 Para realizar a simulação foi utilizada a API do DineroIV, realizando uma referencia às caches de instrução sempre que uma instrução fosse chamada e uma referencia às caches de dado sempre que fosse chamada uma instrução de leitura/escrita.
 
-Obtivemos ao final a quantidade de fetches e de misses em cada cache, bem como o percentual total de misses, que são os valores que serão usados para avaliar as caches.
+Obtivemos ao final a quantidade de fetches e de misses em casa cache, bem como o percentual total de misses, que são os valores que serão usados para comparar as caches.
 
 #### Branch Predictor
 - Sem predictor (sempre atrasa pipeline ao encontrar um branch).
@@ -139,7 +139,7 @@ Com isso, pudemos observar que com o aumento do número de estágios, houve um a
 ![NEP x CPI](img/Charts/NEPxCPI.small.png) ![NEP x T](img/Charts/NEPxT.small.png)
 
 #### Cache
-Para as configurações de cache, foram analisados principalmente os cenários 1, 4, 5, 6, 7, 8, 9 e 10, visto que eles variam somente a [configuração de cache](#configurações-de-cache).
+Para as configurações de cache, foram analisados os cenários 1, 4, 5, 6, 7, 8, 9 e 10, visto que eles variam somente a [configuração de cache](#configurações-de-cache), assim podemos avaliar apenas a influência das configurações da cache nos resultados.
 
 #### Branch Predictor
 Por fim, para analisar a influência do branch predictor na eficiência do processador, foi feita uma comparação focada nos cenários 1, 11 e 12, uma vez que eles diferem somente no tipo de branch predictor utilizado.
@@ -147,9 +147,12 @@ Em termos de tempo e CPI, o Two Bit Predictor se mostrou superior ao Always Not 
 
 ![BP x CPI](img/Charts/BPxCPI.small.png) ![BP x T](img/Charts/BPxT.small.png)
 
-Além disso, foram feitas comparações da eficácia do Two Bit Predictor e do Always Not Taken, através da porcentagem de branch predictions corretos (ou seja, o número de branch predictions corretos dividido pelo número total de branches). Mais uma vez, como podemos ver pelo gráfico abaixo, o Two Bit Predictor se mostrou superior.
+##### Cache de dados
 
-![BP x PBC](img/Charts/BPxPBC.small.png)
+##### Cache de instruções
+
+#### Branch Predictor
+Por fim, para analisar a influência do branch predictor na eficiência do processador, foi feita uma comparação focada nos cenários 1, 11 e 12, uma vez que eles diferem somente no tipo de branch predictor utilizado.
 
 ### Conclusão
 Finalmente, apresentamos uma tabela contendo os resultados mais relevantes obtidos neste experimento:
