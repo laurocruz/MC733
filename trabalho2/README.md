@@ -30,6 +30,7 @@ A seguir, apresentamos as características que foram variadas, as configuraçõe
 #### Pipeline
 Em nosso experimento utilizamos dois tamanhos de pipeline, o de 5 estágios e o de 7 estágios.
 No pipeline de 5 estágios, dividimos a execução de uma intrução em 5 etapas `| IF | ID | EX | MEM | WB |` na tentativa de executar cada instrução em um ciclo. Com o pipeline de 5 estágios também implementamos a ideia de ser escalar ou superscalar. Nos processadores escalares existe apenas um único pipeline e as instrução são executadas sequencialmente enquanto que no superescalar de dois níveis existem dois pipelines independentes que executam instruções concorrentemente (ver imagem abaixo).
+
 ![BP x T](img/Hazards/Pipeline5.small.jpg) ![BP x T](img/Hazards/Pipeline5Super.small.jpg)
 
 No pipeline de 5 estágios ocorrem hazard de dados quando uma instrução no estágio `ID | EX` utiliza algum dado que será calculado ainda, ou seja, existe alguma instrução em `EX | MEM` ou `MEM | WB` cuja saída será sua entrada. Quando acontece isso o pipeline precisa "parar" seu andamento e isso é chamado de stall. Para facilitar a implementação, nosso pipeline não possui fowarding e os dados são retornados ao `ID` no final de `WB`, portanto podemos ter 1 ou 2 stalls dependendo de onde estiver a dependencia.
