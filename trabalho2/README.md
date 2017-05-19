@@ -135,6 +135,15 @@ Para as configurações de cache, foram analisados principalmente os cenários 1
 
 #### Branch Predictor
 Por fim, para analisar a influência do branch predictor na eficiência do processador, foi feita uma comparação focada nos cenários 1, 11 e 12, uma vez que eles diferem somente no tipo de branch predictor utilizado.
+Em termos de tempo e CPI, o Two Bit Predictor se mostrou superior ao Always Not Taken, que, por sua vez, superou o cenário sem Branch Predictor, como mostram os gráficos a seguir:
+
+![BP x CPI](img/Charts/BPxCPI.png)
+
+![BP x T](img/Charts/BPxT.png)
+
+Além disso, foram feitas comparações da eficácia do Two Bit Predictor e do Always Not Taken, através da porcentagem de branch predictions corretos (ou seja, o número de branch predictions corretos dividido pelo número total de branches). Mais uma vez, como podemos ver pelo gráfico abaixo, o Two Bit Predictor se mostrou superior.
+
+![BP x PBC](img/Charts/BPxPBC.png)
 
 ### Conclusão
 Finalmente, apresentamos uma tabela contendo os resultados mais relevantes obtidos neste experimento:
