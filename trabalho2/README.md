@@ -36,9 +36,9 @@ No pipeline de 5 estágios, dividimos a execução de uma intrução em 5 etapas
 No pipeline de 5 estágios ocorrem hazard de dados quando uma instrução no estágio `ID | EX` utiliza algum dado que será calculado ainda, ou seja, existe alguma instrução em `EX | MEM` ou `MEM | WB` cuja saída será sua entrada. Quando acontece isso o pipeline precisa "parar" seu andamento e isso é chamado de stall. Para facilitar a implementação, nosso pipeline não possui fowarding e os dados são retornados ao `ID` no final de `WB`, portanto podemos ter 1 ou 2 stalls dependendo de onde estiver a dependencia.
 Os hazards de controle acontecem quando exite alguma interrupção do pipeline por conta do funcionamento de alguma instrução como branch e jump. Para as intruções de jump podemos verificar o seu endereço no `EX` e portanto precisamos de 2 stalls para o salto. Já para as intruções de branch podemos [implementar maneiras diferentes](#branch-predictor) afim de obter um melhores resultados.
 
-![BP x T](img/Hazards/HazardDadosPipeline5.small.jpg)
+![BP x T](img/Hazards/HazardDadosPipeline5.small.jpg) ![BP x T](img/Hazards/HazardControlePipeline5.small.jpg)
 
-Já no pipeline de 7 estágios, a execução de uma instrução é dividido em 7 etapas `| IT | IF | ID | EX | MT | MM | WB |` em que a etapa `IF` do pipeline 5 foi dividida em duas etapas: a `IT` e `IF` e a etapa `MEM` do de 5 foi dividida em `MT` e `MM`. Assim como no pipeline de 5 estágios, consideramos que as intruções são concluidas no `WB` e, análogamente ao de 5, podemos ter 1, 2 e 3 stalls para hazard de dados. Para hazard de controle, para a intrução de jump temos 3 stalls. 
+Já no pipeline de 7 estágios, a execução de uma instrução é dividido em 7 etapas `| IT | IF | ID | EX | MT | MM | WB |` em que a etapa `IF` do pipeline 5 foi dividida em duas etapas: a `IT` e `IF` e a etapa `MEM` do de 5 foi dividida em `MT` e `MM`. Assim como no pipeline de 5 estágios, consideramos que as intruções são concluidas no `WB` e, análogamente ao de 5, podemos ter 1, 2 e 3 stalls para hazard de dados. Para hazard de controle, para a intrução de jump temos 3 stalls.
 
 ![BP x T](img/Hazards/Pipeline7.small.jpg)
 
