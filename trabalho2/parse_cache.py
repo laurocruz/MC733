@@ -7,7 +7,8 @@ names = ["basicmath_small", "fft_small", "fft_inv_small", "patricia_small"]
 
 # programs
 for filename in names:
-    out = open("cache_csv/" + str(filename) + ".csv", 'w')
+    out_p = open("cache_csv/percentage/" + str(filename) + ".csv", 'w')
+    out_n = open("cache_csv/num/" + str(filename) + ".csv", 'w')
 
     # cenarios
     for j in range(11):
@@ -15,11 +16,16 @@ for filename in names:
         if (j == 0 or (j >= 3 and j <= 9)):
             with open ("output/" + str(filename)+ str(j) +".txt", 'r') as fp:
                 for i, line in enumerate(fp):
-                    # L1 Data
                     if i in (1,2,5,8,9,12,16):
-                        per = line.split()[-2]
-                        out.write(per + ',')
-                    # L2 Inst
+                        line = line.split()
+                        per = line[-2]
+                        n = line[1]
+                        out_p.write(per + ',')
+                        out_n.write(n + ',')
+
                     elif i == 21:
-                        per = line.split()[-2]
-                        out.write(per + "\n")
+                        line = line.split()
+                        per = line[-2]
+                        n = line[1]
+                        out_p.write(per + '\n')
+                        out_n.write(n + '\n')

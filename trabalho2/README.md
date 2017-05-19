@@ -48,7 +48,7 @@ No trabalho foi simulado 4 caches, L1 e L2 de dados e de instruções. Fizemos s
 
 Para realizar a simulação foi utilizada a API do DineroIV, realizando uma referencia às caches de instrução sempre que uma instrução fosse chamada e uma referencia às caches de dado sempre que fosse chamada uma instrução de leitura/escrita.
 
-Obtivemos ao final a quantidade de fetches e de misses em casa cache, bem como o percentual total de misses, que são os valores que serão usados para comparar as caches.
+Obtivemos ao final a quantidade de fetches e de misses em casa cache, bem como o percentual total de misses.
 
 #### Branch Predictor
 - Sem predictor (sempre atrasa pipeline ao encontrar um branch).
@@ -139,9 +139,58 @@ Com isso, pudemos observar que com o aumento do número de estágios, houve um a
 #### Cache
 Para as configurações de cache, foram analisados os cenários 1, 4, 5, 6, 7, 8, 9 e 10, visto que eles variam somente a [configuração de cache](#configurações-de-cache), assim podemos avaliar apenas a influência das configurações da cache nos resultados.
 
+Obtivemos assim a quantidade de misses e a taxa em relação a quantidade de fetches para cada uma das oito configurações das caches para os três programas avaliados.
+
+O principal fator a ser levado em consideração na análise da cache serpa a quantidade bruta de misses, pois um o tempo de um miss na cache é muito maior que o tempo de um fetch bem sucedido. Sabendo disso, a quantidade de misses nós dará informações mais condizentes com o esperado, como veremos abaixo.
+
+
+Poderemos ver abaixo que a taxa de misses e a proporção da quantidade de misses de cada configurações entre programas `fft_encode` (fft) e `fft_decode` (fft_inv) são muito semelhantes. Isso era esperado, uma vez que os dois programas são muito semelhantes, pois um é apenas a função inversa do outro.
+
+Sendo assim, a presença de ambos não causa muito efeito na avaliação, sendo assim, não levaremos em conta os valores do `decode` e daqui para frente o `fft` será uma mencão ao `fft_encode`.
+
 ##### Cache de dados
 
+![data_cache_raw](img/Cache/all_cache_data.png)
+
+Começando a análise por L1, podemos primeiramente focar nossa atenção nas configurações 1, 2 e 3, já que em ambas apenas o tamanho de L1 é alterado (64KB, 16KB e 32K, respectivamente).
+
+É possível facilmente verificar no gráfico da quantidade de misses a diferença nos tamanhos, uma vez que a menor cache (2) apresenta a maior quantidade de misses e a maior cache (1) apresenta a menor quantidade de misses, como se era esperado.
+
+Aqui temos também um exemplo de como a análise apenas pelas taxas de de miss nos levaria para um caminho errado. No gráfico das porcentagens, temos as taxas de miss para L1 praticamente constantes e todos e a taxa de miss a menor em todos os programas para a configuração 2. Isso se dá pois como a cache de 2 é a menor, a L2 é acessada mais vezes, de forma que a quantiade de misses diminui quanto mais ela é acessada.
+
+Assim, usando apenas as taxas, diriamos que a configuração 2 é a melhor, mas acontece que a sua quantidade de misses é mais alta que a das outras configurações, sendo assim pior.
+
+Mas isso não significa que as taxas são inúteis, poderemos usá-las para desempatar configurações com quantidade de misses muito próximas.
+
+
+Analisando o tamanho do bloco em L1, podemos verificar os cenários 6 e 7, que alteram apenas o tamanho dos blocos (16 e 32 bits respectivamente). Quando à quantidade de misses não há tanto efeito na mundança, mas podemos verificar uma pequena diminuição do cenário 6 para o 7. A taxa de misses de L1 não tem variação significativa.
+
+
+Quanto a associatividade de L1, usando os cenários 7 e 8 (2 e 1 respectivamente) podemos verificar um pequeno crescimento na quantidade de misses de 7 para 8. Como esperado, associatividade 2 tem resultados melhores do que 1.
+
+
+
+Em L2, podemos verificar pequenas variações na quantidade de misses, isso claro se deve ao fato de que a cache é acessada com uma frequência bem menor. Mas também por isso, podemos ver variações grandes nas taxas de misses, já que poucos misses fazem uma diferença grande quando se tem poucos fetches.
+
+Utilizando as taxas de misses (de L2) como desempate como foi dito anteriormente, temos as configurações 1, 4, 5, 6 e 7 com quantidade de misses muito próximas em todos os programas. Entre elas, as que possuem menores taxas de misses são a 5 e a 6.
+
+Seria esperável que 5 fosse melhor do que 6, já que tem a cache L2 com o dobro do tamanho da cache de 6. Isso pode ser verdade, já que, por exemplo, a quantidade de misses em L2 de 6 é um pouco maior do que 5, e a escala do gráfico está grande (e um miss em L2 é caro). Mas com os dados que temos, essas são boas canditadas a melhores cache para dados.
+
+Mesmo com a diferença entre 5 e 6 mencionadas acima, os valores são condizentes, uma vez que ambas possuem associatividade 2, possuem o tamanho de L1 testado (64 KB), e na L2 possuem os dois maiores tamanhos testados (512K e 256K) e o maior tamanho de bloco (128b).
+
 ##### Cache de instruções
+
+![DATA CACHE](img/Cache/all_cache_instruction.png)
+
+Todas as avaliações feitas para a quantidade de misses na L1 da cache de dados pode ser aplicada para as caches L1 e L2 de instrução nos gráficos acima.
+
+As principais diferenças entre as caches de instrução e dados podem ser verificadas nas taxas de misses. Diferentemente das caches de dados, aqui temos variações significativas nas taxas de L1, principalmente nas configurações 2 e 3, com os menores tamanhos de L1.
+
+Em contrapartida, temos a configuração 7 mantendo o posto de maior taxa de misses de L2.
+
+A análise de melhor cache pode ser feita com as mesmas configurações dos dados (1,4,5,6,7). Aqui temos as configurações 1 e 5 competindo entre as melhores, apesar de 6 continuar muito próxima.
+
+Novamente, como era esperado, configurações de associatividade 2, maiores tamanhos de L1 (64K), os dois maiores tamanhos de L2 (256K e 512K) e com maiores tamanhos de bloco (32b em L1 e 128b em L2) apresentam os melhores resultados.
 
 #### Branch Predictor
 Por fim, para analisar a influência do branch predictor na eficiência do processador, foi feita uma comparação focada nos cenários 1, 11 e 12, uma vez que eles diferem somente no tipo de branch predictor utilizado.
