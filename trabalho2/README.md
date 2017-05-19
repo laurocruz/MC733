@@ -195,7 +195,7 @@ Quanto a associatividade de L1, usando os cenários 7 e 8 (2 e 1 respectivamente
 
 Em L2, podemos verificar pequenas variações na quantidade de misses, isso claro se deve ao fato de que a cache é acessada com uma frequência bem menor. Mas também por isso, podemos ver variações grandes nas taxas de misses, já que poucos misses fazem uma diferença grande quando se tem poucos fetches.
 
-Utilizando as taxas de misses (de L2) como desempate como foi dito anteriormente, temos as configurações 1, 4, 5, 6 e 7 com quantidade de misses muito próximas em todos os programas. Entre elas, as que possuem menores taxas de misses são a 5 e a 6.
+Utilizando as taxas de misses (de L2) como desempate como foi dito anteriormente, temos as configurações 1, 4, 5, 6 e 7 com quantidade de misses muito próximas em todos os programas. Entre elas, as que possuem menores taxas de misses são a 5 e 6, dos cenários 7 e 8 (1 também está muito próxima).
 
 Seria esperável que 5 fosse melhor do que 6, já que tem a cache L2 com o dobro do tamanho da cache de 6. Isso pode ser verdade, já que, por exemplo, a quantidade de misses em L2 de 6 é um pouco maior do que 5, e a escala do gráfico está grande (e um miss em L2 é caro). Mas com os dados que temos, essas são boas canditadas a melhores cache para dados.
 
@@ -211,7 +211,7 @@ As principais diferenças entre as caches de instrução e dados podem ser verif
 
 Em contrapartida, temos a configuração 7 mantendo o posto de maior taxa de misses de L2.
 
-A análise de melhor cache pode ser feita com as mesmas configurações dos dados (1,4,5,6,7). Aqui temos as configurações 1 e 5 competindo entre as melhores, apesar de 6 continuar muito próxima.
+A análise de melhor cache pode ser feita com as mesmas configurações dos dados (1,4,5,6,7). Aqui temos as configurações 1 e 5 competindo entre as melhores (cenários 1 e 7), apesar de 6 continuar muito próxima.
 
 Novamente, como era esperado, configurações de associatividade 2, maiores tamanhos de L1 (64K), os dois maiores tamanhos de L2 (256K e 512K) e com maiores tamanhos de bloco (32b em L1 e 128b em L2) apresentam os melhores resultados.
 
@@ -228,21 +228,38 @@ Além disso, foram feitas comparações da eficácia do Two Bit Predictor e do A
 ### Conclusão
 Finalmente, apresentamos uma tabela contendo os resultados mais relevantes obtidos neste experimento:
 
-|                             | Cenário 1 |            |            |            | Cenário 2 |            |            |            | Cenário 3 |            |            |            | Cenário X |           |            |            | Cenário 11 |            |            |            | Cenário 12 |            |            |            |
-|-----------------------------|-----------|------------|------------|------------|-----------|------------|------------|------------|-----------|------------|------------|------------|-----------|-----------|------------|------------|------------|------------|------------|------------|------------|------------|------------|------------|
-|                             | patricia  | basicmath  | fft_encode | fft_decode | patricia  | basicmath  | fft_encode | fft_decode | patricia  | basicmath  | fft_encode | fft_decode | patricia  | basicmath | fft_encode | fft_decode | patricia   | basicmath  | fft_encode | fft_decode | patricia   | basicmath  | fft_encode | fft_decode |
-| Ciclos                      | 768467250 | 2142071587 | 971452775  | 2444935097 | 732771133 | 1989104161 | 891505516  | 2244400562 | 843748840 | 2466534069 | 1113566094 | 2801572165 |           |           |            |            | 730571025  | 1938090031 | 854165855  | 2150448698 | 726513533  | 1907776300 | 854313522  | 2150873511 |
-| CPI                         | 3.401     | 1.966      | 1.799      | 1.799      | 3.243     | 1.825      | 1.651      | 1.652      | 3.734     | 2.263      | 2.062      | 2.062      |           |           |            |            | 3.233      | 1.778      | 1.582      | 1.583      | 3.215      | 1.751      | 1.582      | 1.583      |
-| Tempo (em segundos)         | 5.12      | 14.28      | 6.48       | 16.30      | 4.89      | 13.26      | 5.94       | 14.96      | 4.22      | 12.33      | 5.57       | 14.01      |           |           |            |            | 4.87       | 12.92      | 5.69       | 14.34      | 4.84       | 12.72      | 5.70       | 14.34      |
-| Total de Stalls             | 542514101 | 1052306847 | 431459479  | 1086121776 | 619794556 | 1444221789 | 621508866  | 1564993899 | 617795689 | 1376769327 | 573572796  | 1442758842 |           |           |            |            | 504617876  | 848325291  | 314172559  | 791635377  | 500560384  | 818011560  | 314320226  | 792060190  |
-|                             |           |            |            |            |           |            |            |            |           |            |            |            |           |           |            |            |            |            |            |            |            |            |            |            |
-| Branch Predictions Corretos | -         | -          | -          | -          | -         | -          | -          | -          | -         | -          | -          | -          | -         | -         | -          | -          | 12632075   | 67993852   | 39095640   | 98162133   | 14913792   | 82017241   | 40481662   | 101721166  |
-| Número de Branches          | -         | -          | -          | -          | -         | -          | -          | -          | -         | -          | -          | -          | -         | -         | -          | -          | 24202474   | 126051956  | 60440259   | 151639479  | 24202474   | 126051956  | 60440259   | 151639479  |
-
+| Cenário |  Programa  |   Ciclos   |  CPI  | Tempo  (s) |   Stalls   | Data L1 Misses (R+W) | Data L2 Misses (R+W) | Branch Prediction Corretos | Número de Branches |
+|:-------:|:----------:|:----------:|:-----:|:----------:|:----------:|:--------------------:|:--------------------:|:--------------------------:|:------------------:|
+|    1    |  patricia  |  768467250 | 3.401 |    5.12    |  542514101 |        126988        |         15806        |              -             |          -         |
+|         |  basicmath | 2142071587 | 1.966 |    14.28   | 1052306847 |         1001         |          238         |              -             |          -         |
+|         | fft_encode |  971452775 | 1.799 |    6.48    |  431459479 |         19194        |          687         |              -             |          -         |
+|         | fft_decode | 2444935097 | 1.799 |    16.30   | 1086121776 |         75727        |         7848         |              -             |          -         |
+|    2    |  patricia  |  732771133 | 3.243 |    4.89    |  619794556 |        126988        |         15806        |              -             |          -         |
+|         |  basicmath | 1989104161 | 1.825 |    13.26   | 1444221789 |         1001         |          238         |              -             |          -         |
+|         | fft_encode |  891505516 | 1.651 |    5.94    |  621508866 |         19194        |          687         |              -             |          -         |
+|         | fft_decode | 2244400562 | 1.652 |    14.96   | 1564993899 |         75727        |         7848         |              -             |          -         |
+|    3    |  patricia  |  843748840 | 3.734 |    4.22    |  617795689 |        126988        |         15806        |              -             |          -         |
+|         |  basicmath | 2466534069 | 2.263 |    12.33   | 1376769327 |         1001         |          238         |              -             |          -         |
+|         | fft_encode | 1113566094 | 2.062 |    5.57    |  573572796 |         19194        |          687         |              -             |          -         |
+|         | fft_decode | 2801572165 | 2.062 |    14.01   | 1442758842 |         75727        |         7848         |              -             |          -         |
+|    7    |  patricia  |  768258650 |  3.4  |    5.12    |  542305501 |        126988        |         14763        |              -             |          -         |
+|         |  basicmath | 2142071587 | 1.966 |    14.28   | 1052306847 |         1001         |          238         |              -             |          -         |
+|         | fft_encode |  971442775 | 1.799 |    6.48    |  431449479 |         19194        |          687         |              -             |          -         |
+|         | fft_decode | 2444924297 | 1.799 |    16.30   | 1086110976 |         75727        |         7794         |              -             |                    |
+|    11   |  patricia  |  730571025 | 3.233 |    4.87    |  504617876 |        126988        |         15806        |          12632075          |      24202474      |
+|         |  basicmath | 1938090031 | 1.778 |    12.92   |  848325291 |         1001         |          238         |          67993852          |      126051956     |
+|         | fft_encode |  854165855 | 1.582 |    5.69    |  314172559 |         19194        |          687         |          39095640          |      60440259      |
+|         | fft_decode | 2150448698 | 1.583 |    14.34   |  791635377 |         75727        |         7848         |          98162133          |      151639479     |
+|    12   |  patricia  |  726513533 | 3.215 |    4.84    |  500560384 |        126988        |         15806        |          14913792          |      24202474      |
+|         |  basicmath | 1907776300 | 1.751 |    12.72   |  818011560 |         1001         |          238         |          82017241          |      126051956     |
+|         | fft_encode |  854313522 | 1.582 |    5.70    |  314320226 |         19194        |          687         |          40481662          |      60440259      |
+|         | fft_decode | 2150873511 | 1.583 |    14.34   |  792060190 |         75727        |         7848         |          101721166         |      151639479     |
 
 
 A partir desses dados, podemos concluir que:
  - Processadores superescalares chegam a ser 10% mais rápidos aos escalares.
  - Quanto ao número de estágios, se a frequência do clock fosse a mesma, processadores de 5 estágios seriam superiores aos de 7 estágios. Porém, levando em conta a diferença na frequência do clock gerada devido ao aumento do número de estágios, os processadores de 7 estágios apresentaram tempos até 20% melhores que os de 5 estágios.
- - FAZER CONCLUSÃO SOBRE AS CACHES.
+ - Caches L1 pequenas geram mais misses que caches maiores, mas levam a **taxas** de misses menores em L2.
+ - Caches maiores, de maior associatividade se mostraram as melhores escolhas para utilizar na máquina. A melhor cache, com tamanho L1 de 64K e L4 de 512K, apresentou aproximadamente 78.46 % menos misses em L1 e 21.14 % em L2 do que a pior cache, com tamanho L1 de 16K e tamanho L2 de 256K.
+ - Variações pequenas do tamanho do bloco da cache não causam grandes variações na quantidade de misses da cache.
  - Por fim, quanto aos branch predictors, o Two Bit Predictor se mostrou a melhor escolha, tanto no que diz respeito aos tempos de execução quanto à porcentagem de acertos de branches. Em relação ao Always Not Taken, ele apresentou uma taxa de acertos até 10% superior.
