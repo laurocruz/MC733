@@ -126,15 +126,17 @@ Para o cálculo do tempo de execução, primeiramente foi necessário definir a 
 
 #### Escalar x Superescalar
 Com o objetivo de analisar a influência da paralelização das instruções na eficiência do processador, foi feita uma comparação dando ênfase aos cenários 1 e 2, visto que a única diferença entre eles é a de que a primeira é escalar e a segunda, superescalar.
+Como podemos ver nos gráficos abaixo, a configurção superescalar consegue um CPI menor quando comparado escalar (lembramos que quanto menor o CPI, melhor) já que consegue executar o pipeline em paralelo (2x mais instruções), e com isso o tempo diminui.
+No entanto, é interessante notar que na configuração superescalar exitem maiores probabilidades de ocorrerem hazard de dados do que na escalar e isso pode ser visto no gráfico do númeor de stalls em que em todas as execuções os números de stalls no pipeline foram maiores que no escalar. Apesar disso, a dupla execução do pipeline ainda compensou os hazards.
+
+![TP x CPI](img/Charts/TPxCPI.small.png) ![NEP x T](img/Charts/TPxT.small.png) ![NEP x T](img/Charts/TPxStalls.small.png)
 
 #### Número de Estágios do Pipeline
 De forma a analisar a influência do número de estágios do pipeline na eficiência do processador, foi feita uma comparação dando ênfase aos cenários 1 e 3, visto que eles diferem somente no número de estágios.
 
 Com isso, pudemos observar que com o aumento do número de estágios, houve um aumento no número de ciclos, e consequente aumento de CPI. Porém, o tempo de execução sofreu um decréscimo considerável. Abaixo seguem dois gráficos que ilustram essas diferenças:
 
-![NEP x CPI](img/Charts/NEPxCPI.small.png)
-
-![NEP x T](img/Charts/NEPxT.small.png)
+![NEP x CPI](img/Charts/NEPxCPI.small.png) ![NEP x T](img/Charts/NEPxT.small.png)
 
 #### Cache
 Para as configurações de cache, foram analisados principalmente os cenários 1, 4, 5, 6, 7, 8, 9 e 10, visto que eles variam somente a [configuração de cache](#configurações-de-cache).
@@ -143,9 +145,7 @@ Para as configurações de cache, foram analisados principalmente os cenários 1
 Por fim, para analisar a influência do branch predictor na eficiência do processador, foi feita uma comparação focada nos cenários 1, 11 e 12, uma vez que eles diferem somente no tipo de branch predictor utilizado.
 Em termos de tempo e CPI, o Two Bit Predictor se mostrou superior ao Always Not Taken, que, por sua vez, superou o cenário sem Branch Predictor, como mostram os gráficos a seguir:
 
-![BP x CPI](img/Charts/BPxCPI.small.png)
-
-![BP x T](img/Charts/BPxT.small.png)
+![BP x CPI](img/Charts/BPxCPI.small.png) ![BP x T](img/Charts/BPxT.small.png)
 
 Além disso, foram feitas comparações da eficácia do Two Bit Predictor e do Always Not Taken, através da porcentagem de branch predictions corretos (ou seja, o número de branch predictions corretos dividido pelo número total de branches). Mais uma vez, como podemos ver pelo gráfico abaixo, o Two Bit Predictor se mostrou superior.
 
