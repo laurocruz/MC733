@@ -46,7 +46,7 @@ No trabalho foi simulado 4 caches, L1 e L2 de dados e de instruções. Fizemos s
 | 7            | 64 KB         | 256 KB        | 32 B          | 64 B          | 2             |
 | 8            | 64 KB         | 256 KB        | 32 B          | 128 B         | 1             |
 
-Para realizar a simulação foi utilizada a API do DineroIV, realizando uma referencia às caches sempre que ocorria uma instrução qualquer (na cache de instruções) e/ou uma instrução de leitura ou escrita (na cache de dados).
+Para realizar a simulação foi utilizada a API do DineroIV, realizando uma referencia às caches de instrução sempre que uma instrução fosse chamada e uma referencia às caches de dado sempre que fosse chamada uma instrução de leitura/escrita.
 
 Obtivemos ao final a quantidade de fetches e de misses em casa cache, bem como o percentual total de misses, que são os valores que serão usados para avaliar as caches.
 
