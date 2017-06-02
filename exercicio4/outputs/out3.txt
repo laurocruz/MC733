@@ -1,0 +1,23 @@
+
+        SystemC 2.3.1-Accellera --- May 12 2017 19:29:19
+        Copyright (c) 1996-2014 by all Contributors,
+        ALL RIGHTS RESERVED
+sw/hello_world.mips
+ArchC: Reading ELF application file: sw/hello_world.mips
+
+ArchC: -------------------- Starting Simulation --------------------
+
+Initial read: lock = 0
+Second read: lock = 1
+Write 0
+After write: lock = 0
+After previous read: lock = 1
+
+ArchC: -------------------- Simulation Finished --------------------
+
+Info: /OSCI/SystemC: Simulation stopped by user.
+ArchC: Simulation statistics
+    Times: 1.26 user, 0.08 system, 0.00 real
+    Number of instructions executed: 11503
+    Simulation speed: 9.13 K instr/s
+
