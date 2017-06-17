@@ -43,7 +43,7 @@ ac_tlm_rsp_status ac_tlm_peripheral::writem( const uint32_t &a , const uint32_t 
         return SUCCESS;
     }
     
-    cout << "Peripheral ERROR: Address value\n" << endl;
+    cout << "Peripheral write ERROR: Address value\n" << endl;
     return ERROR;
 }
 
@@ -63,6 +63,6 @@ ac_tlm_rsp_status ac_tlm_peripheral::readm( const uint32_t &a , uint32_t &d )
         //cout << "addr: " << std::hex << a << ", data: " << d << endl;
         return SUCCESS;
     }
-    cout << "Peripheral ERROR: Address value\n" << endl;
+    cout << "Peripheral read ERROR: Address value\n" << endl;
     return ERROR;
 }
