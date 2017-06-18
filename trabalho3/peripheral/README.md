@@ -18,29 +18,36 @@ Esse deve ser o conteudo do sw original
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
+#include <string.h>
 
-volatile int *na = (int *) 600000004U;
-volatile int *nb = (int *) 600000008U;
+typedef union {
+    uint32_t i;
+    float f;
+} Reading;
 
-volatile int *nanbsum = (int *) 600000020U;
+volatile Reading *na = (Reading *) 600000004U;
+volatile Reading *nb = (Reading *) 600000008U;
+
+volatile Reading *nanbsum = (Reading *) 600000020U;
 
 float sum_float(float a, float b){
-    float sum;
+    float help;
     /* Pass the bits and not autocast it into int */
-    *na = *((uint32_t*) &a);
-    *nb = *((uint32_t*) &b);
-
+    (*na).i = *((uint32_t*) &a);
+    (*nb).i = *((uint32_t*) &b);
 
     /* Here trying to get the value from *nanbsum */
-    sum = *nanbsum;
     // para mim o correto seria - mas nao esta funcina
-    // sum = *((float*) &(*nanbsum));
-    
-    printf("1: %x %x\n", sum, &(*nanbsum));
-    printf("2: %x %x\n", sum, *nanbsum);
 
-    printf("Em hex: %x Em float: %f\n", sum, sum);
-    return sum;
+    help = *(float*)&*nanbsum;
+
+    // O print disso aqui fica:
+    // 1: 40bccccc 40bccccc 0 -0.000000
+    // Sendo que 40bccccc é o 5.9 que é o resultado do float...
+    // Mas eu nao consigo fazer ele "entrar" em uma variável do tipo float :(
+    printf("1: %x %x %x %f\n", *nanbsum, *(float*)&(*nanbsum), help, help);
+
+    return *((float*) &nanbsum);
 }
 
 int main(int argc, char *argv[]){
