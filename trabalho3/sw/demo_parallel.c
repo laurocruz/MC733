@@ -44,11 +44,21 @@ volatile uint8_t kf = 0;
 
 
 // ----------------- Program variables -------------------- //
-const int nfft = 65536;
-//const int nfft = 1048576;
+#ifdef _NFFT_12
+const int nfft = 4096;
+#else
+const int nfft = 1024;
+#endif
+
 const int ndims = 1;
 const int isinverse = 0;
-const int numffts = 1;
+
+#ifdef _NUM_100
+const int numffts = 100;
+#elif _NUM_1000
+const int numffts = 1000;
+#endif
+
 int nbytes;
 
 kiss_fft_cpx * buf; 
@@ -63,6 +73,7 @@ int main(int argc, char ** argv) {
     acquireLock(&proc_lock);
     proc = ++processors;
     releaseLock(&proc_lock);
+    //fprintf(stderr,"E");
 
     if (proc == 1) {
         nbytes = sizeof(kiss_fft_cpx) * nfft;
@@ -75,13 +86,12 @@ int main(int argc, char ** argv) {
         set = 1;
     }
 
+    //fprintf(stderr,"%d",proc);
     while (set == 0);
 
     // Processamento principal
-    for (i = 0; i < numffts; ++i) {
+    for (i = 0; i < numffts; ++i)
         kiss_fft(st, buf, bufout, proc);
-
-    }
 
     acquireLock(&set_lock);
     fft++;

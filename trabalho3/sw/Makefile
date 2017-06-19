@@ -4,7 +4,7 @@
 
 #changed as this option was given in path
 CC = mips-newlib-elf-gcc
-CFLAGS = -msoft-float -specs=archc
+CFLAGS = -msoft-float -specs=archc -D_NFFT_12 -D_NUM_100
 LDFLAGS = -lm
 
 TARGET = hello_world.mips

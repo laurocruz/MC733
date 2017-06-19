@@ -4,10 +4,22 @@
 #include "kiss_fft_serial.c"
 
 int main(int argc, char ** argv) {
-    const int nfft = 65536;
+
+#ifdef _NFFT_12
+    const int nfft = 4096;
+#else
+    const int nfft = 1024;
+#endif
+
     const int ndims = 1;
     const int isinverse = 0;
-    const int numffts = 1;
+
+#ifdef _NUM_100
+    const int numffts = 100;
+#elif _NUM_1000
+    const int numffts = 1000;
+#endif
+
     int nbytes;
     int i;
     kiss_fft_cpx * buf; 

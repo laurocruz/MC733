@@ -250,10 +250,12 @@ void kf_work(
     const int m=*factors++; /* stage's fft length/p */
     const kiss_fft_cpx * Fout_end = Fout + p*m;
 
+
     // use openmp extensions at the 
     // top-level (not recursive)
     if (fstride==1 && p<=5)
     {
+        //fprintf(stderr,"X");
         int k;
 
         // execute the p different work units in different threads
