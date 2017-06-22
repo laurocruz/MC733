@@ -10,7 +10,7 @@ Para fazer operações com float o funcionamento é o seguinte:
      - Subtração: `600000030U`
      - Multiplicação: `600000040U`
      - Divisão: `600000050U`
-Um exemplo de uso está abaixo: (Não está funcionando a parte pegar o valor calculado acessado e converter para float... - se conseguir...)
+Um exemplo de uso está abaixo
 
 ##### hello_world.c
 Esse deve ser o conteudo do sw original
@@ -18,44 +18,88 @@ Esse deve ser o conteudo do sw original
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
-#include <string.h>
+#include <stdint.h>
 
 typedef union {
     uint32_t i;
     float f;
 } Reading;
 
-volatile Reading *na = (Reading *) 600000004U;
-volatile Reading *nb = (Reading *) 600000008U;
+volatile Reading *float_a = (Reading *) 600000004U;
+volatile Reading *float_b = (Reading *) 600000008U;
 
-volatile Reading *nanbsum = (Reading *) 600000020U;
+volatile Reading *sum_fl = (Reading *) 600000020U;
+volatile Reading *sub_fl = (Reading *) 600000030U;
+volatile Reading *mul_fl = (Reading *) 600000040U;
+volatile Reading *div_fl = (Reading *) 600000050U;
+volatile Reading *sin_fl = (Reading *) 600000110U;
+volatile Reading *cos_fl = (Reading *) 600000120U;
 
-float sum_float(float a, float b){
-    float help;
+void sum_float(float a, float b, float* sum){
     /* Pass the bits and not autocast it into int */
-    (*na).i = *((uint32_t*) &a);
-    (*nb).i = *((uint32_t*) &b);
+    (*float_a).i = *((uint32_t*) &a);
+    (*float_b).i = *((uint32_t*) &b);
 
-    /* Here trying to get the value from *nanbsum */
-    // para mim o correto seria - mas nao esta funcina
+    *sum = sum_fl->f;
+}
 
-    help = *(float*)&*nanbsum;
+void sub_float(float a, float b, float* sub){
+    /* Pass the bits and not autocast it into int */
+    (*float_a).i = *((uint32_t*) &a);
+    (*float_b).i = *((uint32_t*) &b);
 
-    // O print disso aqui fica:
-    // 1: 40bccccc 40bccccc 0 -0.000000
-    // Sendo que 40bccccc é o 5.9 que é o resultado do float...
-    // Mas eu nao consigo fazer ele "entrar" em uma variável do tipo float :(
-    printf("1: %x %x %x %f\n", *nanbsum, *(float*)&(*nanbsum), help, help);
+    *sub = sub_fl->f;
+}
 
-    return *((float*) &nanbsum);
+void mul_float(float a, float b, float* mul){
+    /* Pass the bits and not autocast it into int */
+    (*float_a).i = *((uint32_t*) &a);
+    (*float_b).i = *((uint32_t*) &b);
+
+    *mul = mul_fl->f;
+}
+
+void div_float(float a, float b, float* div_){
+    /* Pass the bits and not autocast it into int */
+    (*float_a).i = *((uint32_t*) &a);
+    (*float_b).i = *((uint32_t*) &b);
+
+    *div_ = div_fl->f;
+}
+
+void sin_float(float a, float* sin_){
+    /* Pass the bits and not autocast it into int */
+    (*float_a).i = *((uint32_t*) &a);
+
+    *sin_ = sin_fl->f;
+}
+
+void cos_float(float a, float* cos_){
+    /* Pass the bits and not autocast it into int */
+    (*float_a).i = *((uint32_t*) &a);
+
+    *cos_ = cos_fl->f;
 }
 
 int main(int argc, char *argv[]){
-  int i;
+    int i;
+    float sum, sub, mul, divi, sen, cose;
 
-  printf("Sum: %f", sum_float(3.1, 2.8));
+    sum_float(3.1, 2.8, &sum);
+    sub_float(3.1, 3.0, &sub);
+    mul_float(2.0, 2.5, &mul);
+    div_float(7.75, 2.25, &divi);
+    sin_float(3.1415, &sen);
+    cos_float(3.1415, &cose);
 
-  exit(0); // To avoid cross-compiler exit routine
-  return 0; // Never executed, just for compatibility
+    printf("Sum: %d\n", (int) (sum*1000));
+    printf("Sub: %d\n", (int) (sub*1000));
+    printf("Mul: %d\n", (int) (mul*1000));
+    printf("Div: %d\n", (int) (divi*1000));
+    printf("Sec: %d\n", (int) (sen*1000));
+    printf("Cos: %d\n", (int) (cose*1000));
+
+    exit(0); // To avoid cross-compiler exit routine
+    return 0; // Never executed, just for compatibility
 }
 ```

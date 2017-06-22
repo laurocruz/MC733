@@ -12,3 +12,4 @@ ln -s ../sw ./sw
 cd peripheral/
 rm -rf peripheral.cpp
 ln -s ../../peripheral/peripheral.cpp ./
+ln -s ../../peripheral/p_def.h ./
