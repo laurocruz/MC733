@@ -13,6 +13,7 @@
 #include "p_def.h"
 
 volatile float first_value = 1, second_value = 1;
+volatile uint32_t int_mem;
 
 /// Constructor
 ac_tlm_peripheral::ac_tlm_peripheral( sc_module_name module_name , int k ) :
@@ -38,6 +39,13 @@ ac_tlm_rsp_status ac_tlm_peripheral::writem( const uint32_t &a , const uint32_t 
 {
     Reading number;
 
+    if (a == MEM_SIZE+1) {
+        int_mem = (uint32_t) d;
+        //cout << "writem:" << endl;
+        //cout << "addr: " << std::hex << a << ", data: " << d << endl;
+        return SUCCESS;
+    }
+
     if (a == N_A) {
         number.i =  ntohl(d);
         first_value = number.f;
@@ -62,6 +70,15 @@ ac_tlm_rsp_status ac_tlm_peripheral::writem( const uint32_t &a , const uint32_t 
 ac_tlm_rsp_status ac_tlm_peripheral::readm( const uint32_t &a , uint32_t &d )
 {
     Reading number;
+
+    if (a == MEM_SIZE+1) {
+        *((uint32_t *) &d) = int_mem;
+        // writing 1 to the value (the peripheral messes up the value)
+        int_mem = 0x01000000;
+        //cout << "readm:" << endl;
+        //cout << "addr: " << std::hex << a << ", data: " << d << endl;
+        return SUCCESS;
+    }
 
     if (a == SOMA) {
         number.f = first_value + second_value;
