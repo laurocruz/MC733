@@ -31,8 +31,8 @@ inline void acquireLock(volatile uint8_t * l) {
     RELEASE_GLOBAL_LOCK();
 }
 
-inline void releaseLock(volatile uint8_t * l) { 
-    *l = 0; 
+inline void releaseLock(volatile uint8_t * l) {
+    *l = 0;
 }
 
 volatile int processors = 0;
@@ -45,7 +45,7 @@ volatile uint8_t kf = 0;
 
 // ----------------- Program variables -------------------- //
 #ifdef _NFFT_12
-const int nfft = 4096;
+const int nfft = 1024;
 #else
 const int nfft = 1024;
 #endif
@@ -54,14 +54,14 @@ const int ndims = 1;
 const int isinverse = 0;
 
 #ifdef _NUM_100
-const int numffts = 100;
+const int numffts = 50;
 #elif _NUM_1000
-const int numffts = 1000;
+const int numffts = 50;
 #endif
 
 int nbytes;
 
-kiss_fft_cpx * buf; 
+kiss_fft_cpx * buf;
 kiss_fft_cpx * bufout;
 kiss_fft_cfg st;
 
@@ -80,7 +80,7 @@ int main(int argc, char ** argv) {
 
         buf = (kiss_fft_cpx *) malloc(nbytes);
         bufout = (kiss_fft_cpx *) calloc(1, nbytes);
-    
+
         st = kiss_fft_alloc(nfft, isinverse, NULL, NULL);
 
         set = 1;
@@ -117,4 +117,3 @@ int main(int argc, char ** argv) {
 
     return 0;
 }
-
