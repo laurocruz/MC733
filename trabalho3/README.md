@@ -18,7 +18,7 @@ O `FFT` apresenta características que nos permite tirar proveito do paralelismo
 Com o `FFT`, iremos utilizar dois tipos de aceleradores:
 - **Acelerador 1:** operações de ponto flutuante.
 - **Acelerador 2:** operações trigonométricas, tais como o cálculo de seno e cosseno.
-Ambos os aceleradores se encontram no arquivo [peripheral.cpp](/peripheral/peripheral.cpp).
+Ambos os aceleradores se encontram no arquivo [peripheral.cpp](peripheral/peripheral.cpp).
 
 ## Metodologia
 Nesta seção, apresentaremos as estratégias traçadas pelo grupo para a execução das simulações, de forma a obtermos resultados que tornem a análise final o mais precisa possível com relação ao impacto do paralelismo (obtido através do uso de múltiplos processadores) e dos aceleradores, com relação a execução do software em suas condições originais.
