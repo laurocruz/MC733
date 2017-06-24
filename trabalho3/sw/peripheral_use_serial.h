@@ -8,15 +8,15 @@ typedef union {
     float f;
 } Reading;
 
-volatile Reading *float_a = (Reading *) 1992294400U;
-volatile Reading *float_b = (Reading *) 1992294404U;
+volatile Reading *float_a = (Reading *) 1992294100U;
+volatile Reading *float_b = (Reading *) 1992294200U;
 
-volatile Reading *sum_fl = (Reading *) 1992294408U;
-volatile Reading *sub_fl = (Reading *) 1992294412U;
-volatile Reading *mul_fl = (Reading *) 1992294416U;
-volatile Reading *div_fl = (Reading *) 1992294420U;
-volatile Reading *sin_fl = (Reading *) 1992294424U;
-volatile Reading *cos_fl = (Reading *) 1992294428U;
+volatile Reading *sum_fl = (Reading *)  1992294300U;
+volatile Reading *sub_fl = (Reading *)  1992294400U;
+volatile Reading *mul_fl = (Reading *)  1992294500U;
+volatile Reading *div_fl = (Reading *)  1992294600U;
+volatile Reading *sin_fl = (Reading *)  1992294700U;
+volatile Reading *cos_fl = (Reading *)  1992294800U;
 
 
 float sum_float(float a, float b){

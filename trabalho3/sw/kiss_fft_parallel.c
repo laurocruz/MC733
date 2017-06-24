@@ -19,7 +19,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
  */
 
 /* This is for peripheral usage */
-#include "peripheral_use.h"
+#include "peripheral_use_parallel.h"
 
 #define _PER
 
@@ -33,7 +33,8 @@ static void kf_bfly2(
         kiss_fft_cpx * Fout,
         const size_t fstride,
         const kiss_fft_cfg st,
-        int m
+        int m,
+        int proc
         )
 {
     kiss_fft_cpx * Fout2;
@@ -49,9 +50,14 @@ static void kf_bfly2(
         C_MUL (t,  *Fout2 , *tw1);
 
         tw1 += fstride;
-
+#ifndef _PER
+        C_SUB_P( *Fout2 ,  *Fout , t , proc);
+        C_ADDTO_P( *Fout ,  t, proc );
+#else
         C_SUB( *Fout2 ,  *Fout , t );
         C_ADDTO( *Fout ,  t );
+#endif
+
         ++Fout2;
         ++Fout;
     }while (--m);
@@ -61,7 +67,8 @@ static void kf_bfly4(
         kiss_fft_cpx * Fout,
         const size_t fstride,
         const kiss_fft_cfg st,
-        const size_t m
+        const size_t m,
+        int proc
         )
 {
     kiss_fft_cpx *tw1,*tw2,*tw3;
@@ -80,11 +87,20 @@ static void kf_bfly4(
         C_MUL(scratch[1],Fout[m2] , *tw2 );
         C_MUL(scratch[2],Fout[m3] , *tw3 );
 
+#ifndef _PER
+        C_SUB_P( scratch[5] , *Fout, scratch[1] , proc);
+        C_ADDTO_P(*Fout, scratch[1], proc);
+        C_ADD_P( scratch[3] , scratch[0] , scratch[2] , proc);
+        C_SUB_P( scratch[4] , scratch[0] , scratch[2] , proc);
+        C_SUB_P( Fout[m2], *Fout, scratch[3] , proc);
+#else
         C_SUB( scratch[5] , *Fout, scratch[1] );
         C_ADDTO(*Fout, scratch[1]);
         C_ADD( scratch[3] , scratch[0] , scratch[2] );
         C_SUB( scratch[4] , scratch[0] , scratch[2] );
         C_SUB( Fout[m2], *Fout, scratch[3] );
+#endif
+
 
         tw1 += fstride;
         tw2 += fstride*2;
@@ -94,10 +110,10 @@ static void kf_bfly4(
 
         if(st->inverse) {
 #ifdef _PER
-            Fout[m].r = sub_float(scratch[5].r, scratch[4].i);
-            Fout[m].i = sum_float(scratch[5].i, scratch[4].r);
-            Fout[m3].r = sum_float(scratch[5].r, scratch[4].i);
-            Fout[m3].i = sub_float(scratch[5].i, scratch[4].r);
+            Fout[m].r = sub_float(scratch[5].r, scratch[4].i, proc);
+            Fout[m].i = sum_float(scratch[5].i, scratch[4].r, proc);
+            Fout[m3].r = sum_float(scratch[5].r, scratch[4].i, proc);
+            Fout[m3].i = sub_float(scratch[5].i, scratch[4].r, proc);
 #else
             Fout[m].r = scratch[5].r - scratch[4].i;
             Fout[m].i = scratch[5].i + scratch[4].r;
@@ -106,10 +122,10 @@ static void kf_bfly4(
 #endif
         }else{
 #ifdef _PER
-            Fout[m].r = sum_float(scratch[5].r, scratch[4].i);
-            Fout[m].i = sub_float(scratch[5].i, scratch[4].r);
-            Fout[m3].r = sub_float(scratch[5].r, scratch[4].i);
-            Fout[m3].i = sum_float(scratch[5].i, scratch[4].r);
+            Fout[m].r = sum_float(scratch[5].r, scratch[4].i, proc);
+            Fout[m].i = sub_float(scratch[5].i, scratch[4].r, proc);
+            Fout[m3].r = sub_float(scratch[5].r, scratch[4].i, proc);
+            Fout[m3].i = sum_float(scratch[5].i, scratch[4].r, proc);
 #else
             Fout[m].r = scratch[5].r + scratch[4].i;
             Fout[m].i = scratch[5].i - scratch[4].r;
@@ -125,7 +141,8 @@ static void kf_bfly3(
          kiss_fft_cpx * Fout,
          const size_t fstride,
          const kiss_fft_cfg st,
-         size_t m
+         size_t m,
+         int proc
          )
 {
      size_t k=m;
@@ -151,8 +168,8 @@ static void kf_bfly3(
 
 #ifdef _PER
 
-        Fout[m].r = sub_float(Fout->r, HALF_OF(scratch[3].r));
-        Fout[m].i = sub_float(Fout->i, HALF_OF(scratch[3].i));
+        Fout[m].r = sub_float(Fout->r, HALF_OF(scratch[3].r), proc);
+        Fout[m].i = sub_float(Fout->i, HALF_OF(scratch[3].i), proc);
 #else
 
         Fout[m].r = Fout->r - HALF_OF(scratch[3].r);
@@ -164,11 +181,11 @@ static void kf_bfly3(
         C_ADDTO(*Fout,scratch[3]);
 
 #ifdef _PER
-        Fout[m2].r = sum_float(Fout[m].r, scratch[0].i);
-        Fout[m2].i = sub_float(Fout[m].i, scratch[0].r);
+        Fout[m2].r = sum_float(Fout[m].r, scratch[0].i, proc);
+        Fout[m2].i = sub_float(Fout[m].i, scratch[0].r, proc);
 
-        Fout[m].r = sum_float(Fout[m].r, scratch[0].i);
-        Fout[m].i = sub_float(Fout[m].i, scratch[0].r);
+        Fout[m].r = sum_float(Fout[m].r, scratch[0].i, proc);
+        Fout[m].i = sub_float(Fout[m].i, scratch[0].r, proc);
 #else
         Fout[m2].r = Fout[m].r + scratch[0].i;
         Fout[m2].i = Fout[m].i - scratch[0].r;
@@ -184,7 +201,8 @@ static void kf_bfly5(
         kiss_fft_cpx * Fout,
         const size_t fstride,
         const kiss_fft_cfg st,
-        int m
+        int m,
+        int proc
         )
 {
     kiss_fft_cpx *Fout0,*Fout1,*Fout2,*Fout3,*Fout4;
@@ -212,23 +230,30 @@ static void kf_bfly5(
         C_MUL(scratch[3] ,*Fout3, tw[3*u*fstride]);
         C_MUL(scratch[4] ,*Fout4, tw[4*u*fstride]);
 
+
+
+#ifdef _PER
+        C_ADD_P( scratch[7],scratch[1],scratch[4], proc);
+        C_SUB_P( scratch[10],scratch[1],scratch[4], proc);
+        C_ADD_P( scratch[8],scratch[2],scratch[3], proc);
+        C_SUB_P( scratch[9],scratch[2],scratch[3], proc);
+
+        Fout0->r = sum_float(scratch[7].r, scratch[8].r, proc);
+        Fout0->i = sum_float(scratch[7].i, scratch[8].i, proc);
+
+        scratch[5].r = sum_float(scratch[0].r, S_MUL(scratch[7].r,ya.r), proc);
+        scratch[5].r = sum_float(scratch[5].r, S_MUL(scratch[8].r,yb.r), proc);
+        scratch[5].i = sum_float(scratch[0].i, S_MUL(scratch[7].r,ya.r), proc);
+        scratch[5].i = sum_float(scratch[5].i, S_MUL(scratch[8].i,yb.r), proc);
+
+        scratch[6].r = sum_float(S_MUL(scratch[10].i,ya.i), S_MUL(scratch[9].i,yb.i), proc);
+        scratch[6].i = sub_float(-S_MUL(scratch[10].r,ya.i), S_MUL(scratch[9].r,yb.i), proc);
+#else
         C_ADD( scratch[7],scratch[1],scratch[4]);
         C_SUB( scratch[10],scratch[1],scratch[4]);
         C_ADD( scratch[8],scratch[2],scratch[3]);
         C_SUB( scratch[9],scratch[2],scratch[3]);
 
-#ifdef _PER
-        Fout0->r = sum_float(scratch[7].r, scratch[8].r);
-        Fout0->i = sum_float(scratch[7].i, scratch[8].i);
-
-        scratch[5].r = sum_float(scratch[0].r, S_MUL(scratch[7].r,ya.r));
-        scratch[5].r = sum_float(scratch[5].r, S_MUL(scratch[8].r,yb.r));
-        scratch[5].i = sum_float(scratch[0].i, S_MUL(scratch[7].r,ya.r));
-        scratch[5].i = sum_float(scratch[5].i, S_MUL(scratch[8].i,yb.r));
-
-        scratch[6].r = sum_float(S_MUL(scratch[10].i,ya.i), S_MUL(scratch[9].i,yb.i));
-        scratch[6].i = sub_float(-S_MUL(scratch[10].r,ya.i), S_MUL(scratch[9].r,yb.i));
-#else
         Fout0->r += scratch[7].r + scratch[8].r;
         Fout0->i += scratch[7].i + scratch[8].i;
 
@@ -243,23 +268,26 @@ static void kf_bfly5(
         C_ADD(*Fout4,scratch[5],scratch[6]);
 
 #ifdef _PER
-        scratch[11].r = sum_float(scratch[0].r, S_MUL(scratch[7].r,yb.r));
-        scratch[11].r = sum_float(scratch[11].r, S_MUL(scratch[8].r,ya.r));
-        scratch[11].i = sum_float(scratch[0].i, S_MUL(scratch[7].i,yb.r));
-        scratch[11].i = sum_float(scratch[11].i, S_MUL(scratch[8].i,ya.r));
+        scratch[11].r = sum_float(scratch[0].r, S_MUL(scratch[7].r,yb.r), proc);
+        scratch[11].r = sum_float(scratch[11].r, S_MUL(scratch[8].r,ya.r), proc);
+        scratch[11].i = sum_float(scratch[0].i, S_MUL(scratch[7].i,yb.r), proc);
+        scratch[11].i = sum_float(scratch[11].i, S_MUL(scratch[8].i,ya.r), proc);
 
-        scratch[12].r = sum_float(-S_MUL(scratch[10].i,yb.i), S_MUL(scratch[9].i,ya.i));
-        scratch[12].i = sub_float(S_MUL(scratch[10].r,yb.i), S_MUL(scratch[9].r,ya.i));
+        scratch[12].r = sum_float(-S_MUL(scratch[10].i,yb.i), S_MUL(scratch[9].i,ya.i), proc);
+        scratch[12].i = sub_float(S_MUL(scratch[10].r,yb.i), S_MUL(scratch[9].r,ya.i), proc);
+
+        C_ADD_P(*Fout2,scratch[11],scratch[12], proc);
+        C_SUB_P(*Fout3,scratch[11],scratch[12], proc);
 #else
         scratch[11].r = scratch[0].r + S_MUL(scratch[7].r,yb.r) + S_MUL(scratch[8].r,ya.r);
         scratch[11].i = scratch[0].i + S_MUL(scratch[7].i,yb.r) + S_MUL(scratch[8].i,ya.r);
 
         scratch[12].r = - S_MUL(scratch[10].i,yb.i) + S_MUL(scratch[9].i,ya.i);
         scratch[12].i = S_MUL(scratch[10].r,yb.i) - S_MUL(scratch[9].r,ya.i);
-#endif
 
         C_ADD(*Fout2,scratch[11],scratch[12]);
         C_SUB(*Fout3,scratch[11],scratch[12]);
+#endif
 
         ++Fout0;++Fout1;++Fout2;++Fout3;++Fout4;
     }
@@ -342,10 +370,10 @@ void kf_work(
 
         if (proc == 1) {
             switch (p) {
-                case 2: kf_bfly2(Fout,fstride,st,m); break;
-                case 3: kf_bfly3(Fout,fstride,st,m); break;
-                case 4: kf_bfly4(Fout,fstride,st,m); break;
-                case 5: kf_bfly5(Fout,fstride,st,m); break;
+                case 2: kf_bfly2(Fout,fstride,st,m,proc); break;
+                case 3: kf_bfly3(Fout,fstride,st,m,proc); break;
+                case 4: kf_bfly4(Fout,fstride,st,m,proc); break;
+                case 5: kf_bfly5(Fout,fstride,st,m,proc); break;
                 default: kf_bfly_generic(Fout,fstride,st,m,p); break;
             }
             kf = 0;
@@ -376,10 +404,10 @@ void kf_work(
 
     // recombine the p smaller DFTs
     switch (p) {
-        case 2: kf_bfly2(Fout,fstride,st,m); break;
-        case 3: kf_bfly3(Fout,fstride,st,m); break;
-        case 4: kf_bfly4(Fout,fstride,st,m); break;
-        case 5: kf_bfly5(Fout,fstride,st,m); break;
+        case 2: kf_bfly2(Fout,fstride,st,m, proc); break;
+        case 3: kf_bfly3(Fout,fstride,st,m, proc); break;
+        case 4: kf_bfly4(Fout,fstride,st,m, proc); break;
+        case 5: kf_bfly5(Fout,fstride,st,m, proc); break;
         default: kf_bfly_generic(Fout,fstride,st,m,p); break;
     }
 }

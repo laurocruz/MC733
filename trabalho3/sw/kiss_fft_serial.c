@@ -19,7 +19,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
  */
 
 /* This is for peripheral usage */
-#include "peripheral_use.h"
+#include "peripheral_use_serial.h"
 
 #define _PER
 
