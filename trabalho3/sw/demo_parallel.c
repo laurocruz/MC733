@@ -49,7 +49,7 @@ volatile uint8_t factor = 0;
 
 // ----------------- Program variables -------------------- //
 #ifdef _NFFT_12
-const int nfft = 4096;
+const int nfft = 65536;
 #else
 const int nfft = 1024;
 #endif
@@ -58,7 +58,7 @@ const int ndims = 1;
 const int isinverse = 0;
 
 #ifdef _NUM_100
-const int numffts = 100;
+const int numffts = 10;
 #elif _NUM_1000
 const int numffts = 50;
 #endif
