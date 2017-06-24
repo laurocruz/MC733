@@ -4,14 +4,14 @@
 
 #define MEM_SIZE 536870912U
 
-#define N_A     1992294400U
-#define N_B     1992294404U
-#define SOMA    1992294408U
-#define SUB     1992294412U
-#define MULT    1992294416U
-#define DIV     1992294420U
-#define SEN     1992294424U
-#define COS     1992294428U
+#define N_A     1992294100U
+#define N_B     1992294200U
+#define SUM     1992294300U
+#define SUB     1992294400U
+#define MUL     1992294500U
+#define DIV     1992294600U
+#define SEN     1992294700U
+#define COS     1992294800U
 
 /* This union help to convert int to float whithout casting it */
 typedef union {

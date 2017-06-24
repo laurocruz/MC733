@@ -12,7 +12,9 @@
 #include "peripheral.h"
 #include "p_def.h"
 
-volatile float first_value = 1, second_value = 1;
+volatile float proc1_a_value, proc2_a_value, proc3_a_value, proc4_a_value;
+volatile float proc1_b_value, proc2_b_value, proc3_b_value, proc4_b_value;
+
 volatile uint32_t int_mem;
 
 /// Constructor
@@ -41,20 +43,39 @@ ac_tlm_rsp_status ac_tlm_peripheral::writem( const uint32_t &a , const uint32_t 
 
     if (a == MEM_SIZE+1) {
         int_mem = (uint32_t) d;
-        //cout << "writem:" << endl;
-        //cout << "addr: " << std::hex << a << ", data: " << d << endl;
         return SUCCESS;
     }
 
+    /* Valor a para cada processador */
     if (a == N_A) {
         number.i =  ntohl(d);
-        first_value = number.f;
-        //return SUCCESS;
-    } else if (a == N_B) {
+        proc1_a_value = number.f;
+    } else if (a == N_A + 4) {
         number.i = ntohl(d);
-        second_value = number.f;
-        //return SUCCESS;
-    } else {
+        proc2_a_value = number.f;
+    } else if (a == N_A + 8) {
+        number.i = ntohl(d);
+        proc3_a_value = number.f;
+    } else if (a == N_A + 12) {
+        number.i = ntohl(d);
+        proc4_a_value = number.f;
+    }
+
+    /* Valor b para cada processador */
+    else if (a == N_B) {
+        number.i = ntohl(d);
+        proc1_b_value = number.f;
+    } else if (a == N_B + 4) {
+        number.i = ntohl(d);
+        proc2_b_value = number.f;
+    } else if (a == N_B + 8) {
+        number.i = ntohl(d);
+        proc3_b_value = number.f;
+    } else if (a == N_B + 12) {
+        number.i = ntohl(d);
+        proc4_b_value = number.f;
+    }
+    else {
         return ERROR;
     }
 
@@ -71,35 +92,102 @@ ac_tlm_rsp_status ac_tlm_peripheral::readm( const uint32_t &a , uint32_t &d )
 {
     Reading number;
 
+    /* Lock Periphel */
     if (a == MEM_SIZE+1) {
         *((uint32_t *) &d) = int_mem;
-        // writing 1 to the value (the peripheral messes up the value)
         int_mem = 0x01000000;
-        //cout << "readm:" << endl;
-        //cout << "addr: " << std::hex << a << ", data: " << d << endl;
+
         return SUCCESS;
     }
 
-    if (a == SOMA) {
-        number.f = first_value + second_value;
+    /* Soma */
+    if (a == SUM) {
+        number.f = proc1_a_value + proc1_b_value;
         *((uint32_t *) &d) = htonl(number.i);
-    } else if (a == SUB) {
-        number.f = first_value - second_value;
+    } else if (a == SUM + 4) {
+        number.f = proc2_a_value + proc2_b_value;
         *((uint32_t *) &d) = htonl(number.i);
-    } else if (a == MULT) {
-        number.f = first_value * second_value;
+    } else if (a == SUM + 8) {
+        number.f = proc3_a_value + proc3_b_value;
         *((uint32_t *) &d) = htonl(number.i);
-    } else if (a == DIV) {
-        number.f = first_value / second_value;
+    } else if (a == SUM + 12) {
+        number.f = proc4_a_value + proc4_b_value;
         *((uint32_t *) &d) = htonl(number.i);
-    } else if (a == SEN) {
-        number.f = (float) sin(first_value);
-        printf("%f\n",number.f);
+    }
+    /* Subtração */
+    else if (a == SUB) {
+        number.f = proc1_a_value - proc1_b_value;
         *((uint32_t *) &d) = htonl(number.i);
-    } else if (a == COS) {
-        number.f = (float) cos(first_value);
-        printf("%f\n",number.f);
+    } else if (a == SUB + 4) {
+        number.f = proc2_a_value - proc2_b_value;
         *((uint32_t *) &d) = htonl(number.i);
+    } else if (a == SUB + 8) {
+        number.f = proc3_a_value - proc3_b_value;
+        *((uint32_t *) &d) = htonl(number.i);
+    } else if (a == SUB + 12) {
+        number.f = proc4_a_value - proc4_b_value;
+        *((uint32_t *) &d) = htonl(number.i);
+    }
+    /* Multiplicação */
+    else if (a == MUL) {
+        number.f = proc1_a_value * proc1_b_value;
+        *((uint32_t *) &d) = htonl(number.i);
+    } else if (a == MUL + 4) {
+        number.f = proc2_a_value * proc2_b_value;
+        *((uint32_t *) &d) = htonl(number.i);
+    } else if (a == MUL + 8) {
+        number.f = proc3_a_value * proc3_b_value;
+        *((uint32_t *) &d) = htonl(number.i);
+    } else if (a == MUL + 12) {
+        number.f = proc4_a_value * proc4_b_value;
+        *((uint32_t *) &d) = htonl(number.i);
+    }
+    /* Divisão */
+    else if (a == DIV) {
+        number.f = proc1_a_value / proc1_b_value;
+        *((uint32_t *) &d) = htonl(number.i);
+    } else if (a == DIV + 4) {
+        number.f = proc2_a_value / proc2_b_value;
+        *((uint32_t *) &d) = htonl(number.i);
+    } else if (a == DIV + 8) {
+        number.f = proc3_a_value / proc3_b_value;
+        *((uint32_t *) &d) = htonl(number.i);
+    } else if (a == DIV + 12) {
+        number.f = proc4_a_value / proc4_b_value;
+        *((uint32_t *) &d) = htonl(number.i);
+    }
+    /* Seno */
+    else if (a == SEN) {
+        number.f = (float) sin(proc1_a_value);
+        *((uint32_t *) &d) = htonl(number.i);
+    } else if (a == SEN + 4) {
+        number.f = (float) sin(proc2_a_value);
+        *((uint32_t *) &d) = htonl(number.i);
+    } else if (a == SEN + 8) {
+        number.f = (float) sin(proc3_a_value);
+        *((uint32_t *) &d) = htonl(number.i);
+    } else if (a == SEN + 12) {
+        number.f = (float) sin(proc4_a_value);
+        *((uint32_t *) &d) = htonl(number.i);
+    }
+
+    /* Coseno */
+    else if (a == COS) {
+        number.f = (float) cos(proc1_a_value);
+        *((uint32_t *) &d) = htonl(number.i);
+    } else if (a == COS + 4) {
+        number.f = (float) cos(proc2_a_value);
+        *((uint32_t *) &d) = htonl(number.i);
+    } else if (a == COS + 8) {
+        number.f = (float) cos(proc3_a_value);
+        *((uint32_t *) &d) = htonl(number.i);
+    } else if (a == COS + 12) {
+        number.f = (float) cos(proc4_a_value);
+        *((uint32_t *) &d) = htonl(number.i);
+    }
+
+    else {
+        return ERROR;
     }
 
     return SUCCESS;
