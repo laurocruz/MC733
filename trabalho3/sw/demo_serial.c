@@ -22,7 +22,7 @@ int main(int argc, char ** argv) {
 
     int nbytes;
     int i;
-    kiss_fft_cpx * buf; 
+    kiss_fft_cpx * buf;
     kiss_fft_cpx * bufout;
     kiss_fft_cfg st;
 
@@ -50,4 +50,3 @@ int main(int argc, char ** argv) {
 
     return 0;
 }
-

@@ -62,6 +62,7 @@ struct kiss_fft_state{
 
 
 #   define smul(a,b) ( (SAMPPROD)(a)*(b) )
+#   define smul_p(a,b,p) ( (SAMPPROD) mul_float((a), (b), p))
 #   define sround( x )  (kiss_fft_scalar)( ( (x) + (1<<(FRACBITS-1)) ) >> FRACBITS )
 
 #   define S_MUL(a,b) sround( smul(a,b) )
@@ -81,6 +82,23 @@ struct kiss_fft_state{
     do{ (c).r =  sround( smul( (c).r , s ) ) ;\
         (c).i =  sround( smul( (c).i , s ) ) ; }while(0)
 
+/* Peripheral use */
+
+#   define C_MUL_P(m,a,b,p) \
+      do{ (m).r = sround( smul_p((a).r,(b).r, p) - smul_p((a).i,(b).i),p ); \
+          (m).i = sround( smul_p((a).r,(b).i,p) + smul_p((a).i,(b).r),p ); }while(0)
+
+#   define DIVSCALAR_P(x,k,p) \
+	(x) = sround( smul_p(  x, SAMP_MAX/k, p ) )
+
+#   define C_FIXDIV_P(c,div,p) \
+	do {    DIVSCALAR_P( (c).r , div, p);  \
+		DIVSCALAR_P( (c).i  , div, p); }while (0)
+
+#   define C_MULBYSCALAR_P( c, s, p) \
+    do{ (c).r =  sround( smul_p( (c).r , s, p ) ) ;\
+        (c).i =  sround( smul_p( (c).i , s, p ) ) ; }while(0)
+
 #else  /* not FIXED_POINT*/
 
 #   define S_MUL(a,b) ( (a)*(b) )
@@ -91,7 +109,19 @@ struct kiss_fft_state{
 #   define C_MULBYSCALAR( c, s ) \
     do{ (c).r *= (s);\
         (c).i *= (s); }while(0)
+
+/* Peripheral use */
+#   define S_MUL_P(a,b,p) ( mul_float((a), (b), p) )
+#define C_MUL_P(m,a,b,p) \
+    do{ (m).r = sub_float(mul_float((a).r,(b).r, p), mul_float((a).i,(b).i,p), p);\
+        (m).i = sum_float(mul_float((a).r,(b).i, p), mul_float((a).i,(b).r,p), p); }while(0)
+#   define C_FIXDIV_P(c,div,p) /* NOOP */
+#   define C_MULBYSCALAR_P( c, s, p ) \
+    do{ (c).r *= mul_float((c).r, (s), p);\
+        (c).i *= mul_float((c).i, (s), p); }while(0)
 #endif
+
+
 
 #ifndef CHECK_OVERFLOW_OP
 #  define CHECK_OVERFLOW_OP(a,op,b) /* noop */
@@ -178,16 +208,16 @@ struct kiss_fft_state{
 	    CHECK_OVERFLOW_OP((a).i,-,(b).i)\
 	    (res).r= sub_float((a).r,(b).r, p);  (res).i=sub_float((a).i, (b).i, p); \
     }while(0)
-#define C_ADDTO_P( res , a)\
+#define C_ADDTO_P( res , a, p)\
     do { \
 	    CHECK_OVERFLOW_OP((res).r,+,(a).r)\
 	    CHECK_OVERFLOW_OP((res).i,+,(a).i)\
-	    (res).r = sum_float((res).r,(a).r) ;  (res).i = sum_float((a).i, (res).i p);\
+	    (res).r = sum_float((res).r,(a).r, p) ;  (res).i = sum_float((a).i, (res).i, p);\
     }while(0)
 
-#define C_SUBFROM_P( res , a)\
+#define C_SUBFROM_P( res , a, p)\
     do {\
 	    CHECK_OVERFLOW_OP((res).r,-,(a).r)\
 	    CHECK_OVERFLOW_OP((res).i,-,(a).i)\
-	    (res).r = sub_float((res).r,(a).r) ;  (res).i = sub_float((a).i, (res).i p);\
+	    (res).r = sub_float((res).r,(a).r, p) ;  (res).i = sub_float((a).i, (res).i, p);\
     }while(0)

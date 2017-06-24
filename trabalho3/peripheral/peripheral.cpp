@@ -12,8 +12,8 @@
 #include "peripheral.h"
 #include "p_def.h"
 
-volatile float proc1_a_value, proc2_a_value, proc3_a_value, proc4_a_value;
-volatile float proc1_b_value, proc2_b_value, proc3_b_value, proc4_b_value;
+volatile float proc1_a_value, proc2_a_value, proc3_a_value, proc4_a_value, proc5_a_value;
+volatile float proc1_b_value, proc2_b_value, proc3_b_value, proc4_b_value, proc5_b_value;
 
 volatile uint32_t int_mem;
 
@@ -59,6 +59,9 @@ ac_tlm_rsp_status ac_tlm_peripheral::writem( const uint32_t &a , const uint32_t 
     } else if (a == N_A + 12) {
         number.i = ntohl(d);
         proc4_a_value = number.f;
+    } else if (a == N_A + 16) {
+        number.i = ntohl(d);
+        proc5_a_value = number.f;
     }
 
     /* Valor b para cada processador */
@@ -74,6 +77,9 @@ ac_tlm_rsp_status ac_tlm_peripheral::writem( const uint32_t &a , const uint32_t 
     } else if (a == N_B + 12) {
         number.i = ntohl(d);
         proc4_b_value = number.f;
+    } else if (a == N_B + 16) {
+        number.i = ntohl(d);
+        proc5_b_value = number.f;
     }
     else {
         return ERROR;
@@ -113,6 +119,9 @@ ac_tlm_rsp_status ac_tlm_peripheral::readm( const uint32_t &a , uint32_t &d )
     } else if (a == SUM + 12) {
         number.f = proc4_a_value + proc4_b_value;
         *((uint32_t *) &d) = htonl(number.i);
+    } else if (a == SUM + 16) {
+        number.f = proc5_a_value + proc5_b_value;
+        *((uint32_t *) &d) = htonl(number.i);
     }
     /* Subtração */
     else if (a == SUB) {
@@ -126,6 +135,9 @@ ac_tlm_rsp_status ac_tlm_peripheral::readm( const uint32_t &a , uint32_t &d )
         *((uint32_t *) &d) = htonl(number.i);
     } else if (a == SUB + 12) {
         number.f = proc4_a_value - proc4_b_value;
+        *((uint32_t *) &d) = htonl(number.i);
+    } else if (a == SUB + 16) {
+        number.f = proc5_a_value - proc5_b_value;
         *((uint32_t *) &d) = htonl(number.i);
     }
     /* Multiplicação */
@@ -141,6 +153,9 @@ ac_tlm_rsp_status ac_tlm_peripheral::readm( const uint32_t &a , uint32_t &d )
     } else if (a == MUL + 12) {
         number.f = proc4_a_value * proc4_b_value;
         *((uint32_t *) &d) = htonl(number.i);
+    } else if (a == MUL + 16) {
+        number.f = proc5_a_value * proc5_b_value;
+        *((uint32_t *) &d) = htonl(number.i);
     }
     /* Divisão */
     else if (a == DIV) {
@@ -154,6 +169,9 @@ ac_tlm_rsp_status ac_tlm_peripheral::readm( const uint32_t &a , uint32_t &d )
         *((uint32_t *) &d) = htonl(number.i);
     } else if (a == DIV + 12) {
         number.f = proc4_a_value / proc4_b_value;
+        *((uint32_t *) &d) = htonl(number.i);
+    } else if (a == DIV + 16) {
+        number.f = proc5_a_value / proc5_b_value;
         *((uint32_t *) &d) = htonl(number.i);
     }
     /* Seno */
@@ -169,6 +187,9 @@ ac_tlm_rsp_status ac_tlm_peripheral::readm( const uint32_t &a , uint32_t &d )
     } else if (a == SEN + 12) {
         number.f = (float) sin(proc4_a_value);
         *((uint32_t *) &d) = htonl(number.i);
+    } else if (a == SEN + 16) {
+        number.f = (float) sin(proc5_a_value);
+        *((uint32_t *) &d) = htonl(number.i);
     }
 
     /* Coseno */
@@ -183,6 +204,9 @@ ac_tlm_rsp_status ac_tlm_peripheral::readm( const uint32_t &a , uint32_t &d )
         *((uint32_t *) &d) = htonl(number.i);
     } else if (a == COS + 12) {
         number.f = (float) cos(proc4_a_value);
+        *((uint32_t *) &d) = htonl(number.i);
+    } else if (a == COS + 16) {
+        number.f = (float) cos(proc5_a_value);
         *((uint32_t *) &d) = htonl(number.i);
     }
 
