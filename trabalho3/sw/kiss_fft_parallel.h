@@ -78,7 +78,7 @@ typedef struct kiss_fft_state* kiss_fft_cfg;
  *      buffer size in *lenmem.
  * */
 
-kiss_fft_cfg kiss_fft_alloc(int nfft,int inverse_fft,void * mem,size_t * lenmem); 
+kiss_fft_cfg kiss_fft_alloc(int nfft,int inverse_fft,void * mem,size_t * lenmem, uint8_t proc); 
 
 /*
  * kiss_fft(cfg,in_out_buf)

@@ -14,6 +14,7 @@ volatile uint32_t * lock = (uint32_t *) LOCK_ADDR;
 volatile uint8_t set_lock = 0;
 volatile uint8_t proc_lock = 0;
 volatile uint8_t kf_lock = 0;
+volatile uint8_t alloc_lock = 0;
 
 #define ACQUIRE_GLOBAL_LOCK() while(*lock)
 #define RELEASE_GLOBAL_LOCK() *lock = 0
@@ -39,13 +40,16 @@ volatile int processors = 0;
 volatile uint8_t set = 0;
 volatile uint8_t fft = 0;
 volatile uint8_t kf = 0;
+volatile uint8_t start_alloc = 0;
+volatile uint8_t alloc = 0;
+volatile uint8_t factor = 0;
 
 #include "kiss_fft_parallel.c"
 
 
 // ----------------- Program variables -------------------- //
 #ifdef _NFFT_12
-const int nfft = 1024;
+const int nfft = 4096;
 #else
 const int nfft = 1024;
 #endif
@@ -54,7 +58,7 @@ const int ndims = 1;
 const int isinverse = 0;
 
 #ifdef _NUM_100
-const int numffts = 50;
+const int numffts = 100;
 #elif _NUM_1000
 const int numffts = 50;
 #endif
@@ -63,7 +67,8 @@ int nbytes;
 
 kiss_fft_cpx * buf;
 kiss_fft_cpx * bufout;
-kiss_fft_cfg st;
+kiss_fft_cfg main_st;
+size_t st_memsize;
 
 
 int main(int argc, char ** argv) {
@@ -81,17 +86,26 @@ int main(int argc, char ** argv) {
         buf = (kiss_fft_cpx *) malloc(nbytes);
         bufout = (kiss_fft_cpx *) calloc(1, nbytes);
 
-        st = kiss_fft_alloc(nfft, isinverse, NULL, NULL);
+        st_memsize = sizeof(struct kiss_fft_state)
+            + sizeof(kiss_fft_cpx)*(nfft-1); /* twiddle factors*/
 
+        main_st = ( kiss_fft_cfg)KISS_FFT_MALLOC( st_memsize );
         set = 1;
     }
 
-    //fprintf(stderr,"%d",proc);
     while (set == 0);
+
+    kiss_fft_alloc(nfft, isinverse, main_st, &st_memsize, proc);
+
+    acquireLock(&alloc_lock);
+    alloc++;
+    releaseLock(&alloc_lock);
+
+    while(alloc != processors);
 
     // Processamento principal
     for (i = 0; i < numffts; ++i)
-        kiss_fft(st, buf, bufout, proc);
+        kiss_fft(main_st, buf, bufout, proc);
 
     acquireLock(&set_lock);
     fft++;
@@ -100,7 +114,7 @@ int main(int argc, char ** argv) {
     while (fft != processors);
 
     if (proc == 1) {
-        free(st);
+        free(main_st);
 
         fprintf(stderr, "KISS\tnfft=");
         fprintf(stderr, "%d,", nfft);

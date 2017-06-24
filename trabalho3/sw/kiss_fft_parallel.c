@@ -447,34 +447,43 @@ void kf_factor(int n,int * facbuf)
  * The return value is a contiguous block of memory, allocated with malloc.  As such,
  * It can be freed with free(), rather than a kiss_fft-specific function.
  * */
-kiss_fft_cfg kiss_fft_alloc(int nfft,int inverse_fft,void * mem,size_t * lenmem )
+kiss_fft_cfg kiss_fft_alloc(int nfft,int inverse_fft,void * mem,size_t * lenmem , uint8_t proc)
 {
-    kiss_fft_cfg st=NULL;
-    size_t memneeded = sizeof(struct kiss_fft_state)
-        + sizeof(kiss_fft_cpx)*(nfft-1); /* twiddle factors*/
+    kiss_fft_cfg st = (kiss_fft_cfg)mem;
 
-    if ( lenmem==NULL ) {
-        st = ( kiss_fft_cfg)KISS_FFT_MALLOC( memneeded );
-    }else{
-        if (mem != NULL && *lenmem >= memneeded)
-            st = (kiss_fft_cfg)mem;
-        *lenmem = memneeded;
-    }
-    if (st) {
-        int i;
+    if (proc == 1) {
+
         st->nfft=nfft;
         st->inverse = inverse_fft;
 
-        for (i=0;i<nfft;++i) {
-            const double pi=3.141592653589793238462643383279502884197169399375105820974944;
-            double phase = -2*pi*i / nfft;
-            if (st->inverse)
-                phase *= -1;
-            kf_cexp(st->twiddles+i, phase );
-        }
-
-        kf_factor(nfft,st->factors);
+        start_alloc = 1;
     }
+
+    while (start_alloc == 0);
+
+    int i;
+    int start = (proc-1)*(nfft/processors);
+    int end; 
+
+    if (proc == processors)
+        end = nfft;
+    else end = proc*(nfft/processors);
+
+    for (i=start;i<end;++i) {
+        const double pi=3.141592653589793238462643383279502884197169399375105820974944;
+        double phase = -2*pi*i / nfft;
+        if (st->inverse)
+            phase *= -1;
+        kf_cexp(st->twiddles+i, phase );
+    }
+
+    if (proc == 1) {
+        kf_factor(nfft,st->factors);
+        factor = 1;
+    }
+
+    while (factor == 0);
+
     return st;
 }
 
