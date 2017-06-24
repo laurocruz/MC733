@@ -21,7 +21,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 /* This is for peripheral usage */
 #include "peripheral_use_parallel.h"
 
-#define _PER
+//
 
 #ifdef _PER
 #define USE_PER 1
@@ -47,13 +47,18 @@ static void kf_bfly2(
     do{
         C_FIXDIV(*Fout,2); C_FIXDIV(*Fout2,2);
 
-        C_MUL (t,  *Fout2 , *tw1);
+
+#ifdef _PER
+        C_MUL_P (t,  *Fout2 , *tw1, proc);
 
         tw1 += fstride;
-#ifndef _PER
         C_SUB_P( *Fout2 ,  *Fout , t , proc);
         C_ADDTO_P( *Fout ,  t, proc );
 #else
+        C_MUL (t,  *Fout2 , *tw1);
+
+        tw1 += fstride;
+
         C_SUB( *Fout2 ,  *Fout , t );
         C_ADDTO( *Fout ,  t );
 #endif
@@ -83,17 +88,21 @@ static void kf_bfly4(
     do {
         C_FIXDIV(*Fout,4); C_FIXDIV(Fout[m],4); C_FIXDIV(Fout[m2],4); C_FIXDIV(Fout[m3],4);
 
-        C_MUL(scratch[0],Fout[m] , *tw1 );
-        C_MUL(scratch[1],Fout[m2] , *tw2 );
-        C_MUL(scratch[2],Fout[m3] , *tw3 );
+#ifdef _PER
+        C_MUL_P(scratch[0],Fout[m] , *tw1, proc);
+        C_MUL_P(scratch[1],Fout[m2] , *tw2, proc);
+        C_MUL_P(scratch[2],Fout[m3] , *tw3, proc);
 
-#ifndef _PER
         C_SUB_P( scratch[5] , *Fout, scratch[1] , proc);
         C_ADDTO_P(*Fout, scratch[1], proc);
         C_ADD_P( scratch[3] , scratch[0] , scratch[2] , proc);
         C_SUB_P( scratch[4] , scratch[0] , scratch[2] , proc);
         C_SUB_P( Fout[m2], *Fout, scratch[3] , proc);
 #else
+        C_MUL(scratch[0],Fout[m] , *tw1 );
+        C_MUL(scratch[1],Fout[m2] , *tw2 );
+        C_MUL(scratch[2],Fout[m3] , *tw3 );
+
         C_SUB( scratch[5] , *Fout, scratch[1] );
         C_ADDTO(*Fout, scratch[1]);
         C_ADD( scratch[3] , scratch[0] , scratch[2] );
@@ -155,38 +164,56 @@ static void kf_bfly3(
      tw1=tw2=st->twiddles;
 
      do{
-         C_FIXDIV(*Fout,3); C_FIXDIV(Fout[m],3); C_FIXDIV(Fout[m2],3);
-
-         C_MUL(scratch[1],Fout[m] , *tw1);
-         C_MUL(scratch[2],Fout[m2] , *tw2);
-
-         C_ADD(scratch[3],scratch[1],scratch[2]);
-         C_SUB(scratch[0],scratch[1],scratch[2]);
-
-         tw1 += fstride;
-         tw2 += fstride*2;
-
 #ifdef _PER
+        C_FIXDIV_P(*Fout,3, proc);
+        C_FIXDIV_P(Fout[m],3, proc);
+        C_FIXDIV_P(Fout[m2],3, proc);
+
+        C_MUL_P(scratch[1],Fout[m] , *tw1, proc);
+        C_MUL_P(scratch[2],Fout[m2] , *tw2, proc);
+
+        C_ADD_P(scratch[3],scratch[1],scratch[2], proc);
+        C_SUB_P(scratch[0],scratch[1],scratch[2], proc);
+
+        tw1 += fstride;
+        tw2 += fstride*2;
 
         Fout[m].r = sub_float(Fout->r, HALF_OF(scratch[3].r), proc);
         Fout[m].i = sub_float(Fout->i, HALF_OF(scratch[3].i), proc);
 #else
+        C_FIXDIV(*Fout,3);
+        C_FIXDIV(Fout[m],3);
+        C_FIXDIV(Fout[m2],3);
+
+        C_MUL(scratch[1],Fout[m] , *tw1);
+        C_MUL(scratch[2],Fout[m2] , *tw2);
+
+        C_ADD(scratch[3],scratch[1],scratch[2]);
+        C_SUB(scratch[0],scratch[1],scratch[2]);
+
+        tw1 += fstride;
+        tw2 += fstride*2;
 
         Fout[m].r = Fout->r - HALF_OF(scratch[3].r);
         Fout[m].i = Fout->i - HALF_OF(scratch[3].i);
 #endif
 
-        C_MULBYSCALAR( scratch[0] , epi3.i );
-
-        C_ADDTO(*Fout,scratch[3]);
 
 #ifdef _PER
+        C_MULBYSCALAR_P( scratch[0] , epi3.i, proc);
+
+        C_ADDTO_P(*Fout,scratch[3], proc);
+
         Fout[m2].r = sum_float(Fout[m].r, scratch[0].i, proc);
         Fout[m2].i = sub_float(Fout[m].i, scratch[0].r, proc);
 
         Fout[m].r = sum_float(Fout[m].r, scratch[0].i, proc);
         Fout[m].i = sub_float(Fout[m].i, scratch[0].r, proc);
 #else
+        C_MULBYSCALAR( scratch[0] , epi3.i );
+
+        C_ADDTO(*Fout,scratch[3]);
+
         Fout[m2].r = Fout[m].r + scratch[0].i;
         Fout[m2].i = Fout[m].i - scratch[0].r;
 
@@ -222,17 +249,20 @@ static void kf_bfly5(
 
     tw=st->twiddles;
     for ( u=0; u<m; ++u ) {
-        C_FIXDIV( *Fout0,5); C_FIXDIV( *Fout1,5); C_FIXDIV( *Fout2,5); C_FIXDIV( *Fout3,5); C_FIXDIV( *Fout4,5);
+#ifdef _PER
+        C_FIXDIV_P( *Fout0,5,proc);
+        C_FIXDIV_P( *Fout1,5,proc);
+        C_FIXDIV_P( *Fout2,5,proc);
+        C_FIXDIV_P( *Fout3,5,proc);
+        C_FIXDIV_P( *Fout4,5,proc);
+
         scratch[0] = *Fout0;
 
-        C_MUL(scratch[1] ,*Fout1, tw[u*fstride]);
-        C_MUL(scratch[2] ,*Fout2, tw[2*u*fstride]);
-        C_MUL(scratch[3] ,*Fout3, tw[3*u*fstride]);
-        C_MUL(scratch[4] ,*Fout4, tw[4*u*fstride]);
+        C_MUL_P(scratch[1] ,*Fout1, tw[u*fstride], proc);
+        C_MUL_P(scratch[2] ,*Fout2, tw[2*u*fstride], proc);
+        C_MUL_P(scratch[3] ,*Fout3, tw[3*u*fstride], proc);
+        C_MUL_P(scratch[4] ,*Fout4, tw[4*u*fstride], proc);
 
-
-
-#ifdef _PER
         C_ADD_P( scratch[7],scratch[1],scratch[4], proc);
         C_SUB_P( scratch[10],scratch[1],scratch[4], proc);
         C_ADD_P( scratch[8],scratch[2],scratch[3], proc);
@@ -249,6 +279,19 @@ static void kf_bfly5(
         scratch[6].r = sum_float(S_MUL(scratch[10].i,ya.i), S_MUL(scratch[9].i,yb.i), proc);
         scratch[6].i = sub_float(-S_MUL(scratch[10].r,ya.i), S_MUL(scratch[9].r,yb.i), proc);
 #else
+        C_FIXDIV( *Fout0,5);
+        C_FIXDIV( *Fout1,5);
+        C_FIXDIV( *Fout2,5);
+        C_FIXDIV( *Fout3,5);
+        C_FIXDIV( *Fout4,5);
+
+        scratch[0] = *Fout0;
+
+        C_MUL(scratch[1] ,*Fout1, tw[u*fstride]);
+        C_MUL(scratch[2] ,*Fout2, tw[2*u*fstride]);
+        C_MUL(scratch[3] ,*Fout3, tw[3*u*fstride]);
+        C_MUL(scratch[4] ,*Fout4, tw[4*u*fstride]);
+
         C_ADD( scratch[7],scratch[1],scratch[4]);
         C_SUB( scratch[10],scratch[1],scratch[4]);
         C_ADD( scratch[8],scratch[2],scratch[3]);

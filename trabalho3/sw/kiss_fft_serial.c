@@ -21,8 +21,6 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 /* This is for peripheral usage */
 #include "peripheral_use_serial.h"
 
-#define _PER
-
 #ifdef _PER
 #define USE_PER 1
 #else
