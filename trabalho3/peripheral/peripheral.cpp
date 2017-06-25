@@ -12,8 +12,12 @@
 #include "peripheral.h"
 #include "p_def.h"
 
-volatile float proc1_a_value, proc2_a_value, proc3_a_value, proc4_a_value, proc5_a_value;
-volatile float proc1_b_value, proc2_b_value, proc3_b_value, proc4_b_value, proc5_b_value;
+#define N_PROC 9
+
+volatile float proc_a[N_PROC], proc_b[N_PROC];
+
+//volatile float proc1_a_value, proc2_a_value, proc3_a_value, proc4_a_value, proc5_a_value;
+//volatile float proc1_b_value, proc2_b_value, proc3_b_value, proc4_b_value, proc5_b_value;
 
 volatile uint32_t int_mem;
 
@@ -47,45 +51,18 @@ ac_tlm_rsp_status ac_tlm_peripheral::writem( const uint32_t &a , const uint32_t 
     }
 
     /* Valor a para cada processador */
-    if (a == N_A) {
+    if (a >= N_A && a < N_B) {
         number.i =  ntohl(d);
-        proc1_a_value = number.f;
-    } else if (a == N_A + 4) {
-        number.i = ntohl(d);
-        proc2_a_value = number.f;
-    } else if (a == N_A + 8) {
-        number.i = ntohl(d);
-        proc3_a_value = number.f;
-    } else if (a == N_A + 12) {
-        number.i = ntohl(d);
-        proc4_a_value = number.f;
-    } else if (a == N_A + 16) {
-        number.i = ntohl(d);
-        proc5_a_value = number.f;
-    }
-
-    /* Valor b para cada processador */
-    else if (a == N_B) {
-        number.i = ntohl(d);
-        proc1_b_value = number.f;
-    } else if (a == N_B + 4) {
-        number.i = ntohl(d);
-        proc2_b_value = number.f;
-    } else if (a == N_B + 8) {
-        number.i = ntohl(d);
-        proc3_b_value = number.f;
-    } else if (a == N_B + 12) {
-        number.i = ntohl(d);
-        proc4_b_value = number.f;
-    } else if (a == N_B + 16) {
-        number.i = ntohl(d);
-        proc5_b_value = number.f;
-    }
-    else {
+        proc_a[(a-N_A)/4] = number.f;
+    } else if (a >= N_B && a < SUM){
+        number.i =  ntohl(d);
+        proc_b[(a-N_B)/4] = number.f;
+    } else {
         return ERROR;
     }
 
     return SUCCESS;
+
 }
 
 /** Internal Read
@@ -106,111 +83,24 @@ ac_tlm_rsp_status ac_tlm_peripheral::readm( const uint32_t &a , uint32_t &d )
         return SUCCESS;
     }
 
-    /* Soma */
-    if (a == SUM) {
-        number.f = proc1_a_value + proc1_b_value;
+    if (a >= SUM && a < SUB) {
+        number.f = proc_a[(a-SUM)/4] + proc_b[(a-SUM)/4];
         *((uint32_t *) &d) = htonl(number.i);
-    } else if (a == SUM + 4) {
-        number.f = proc2_a_value + proc2_b_value;
+    } else if (a >= SUB && a < MUL) {
+        number.f = proc_a[(a-SUB)/4] - proc_b[(a-SUB)/4];
         *((uint32_t *) &d) = htonl(number.i);
-    } else if (a == SUM + 8) {
-        number.f = proc3_a_value + proc3_b_value;
+    } else if (a >= MUL && a < DIV) {
+        number.f = proc_a[(a-MUL)/4] * proc_b[(a-MUL)/4];
         *((uint32_t *) &d) = htonl(number.i);
-    } else if (a == SUM + 12) {
-        number.f = proc4_a_value + proc4_b_value;
+    } else if (a >= DIV && a < SEN) {
+        number.f = proc_a[(a-DIV)/4] / proc_b[(a-DIV)/4];
         *((uint32_t *) &d) = htonl(number.i);
-    } else if (a == SUM + 16) {
-        number.f = proc5_a_value + proc5_b_value;
+    } else if (a >= SEN && a < COS) {
+        number.f = sin  (proc_a[(a-SEN)/4]);
         *((uint32_t *) &d) = htonl(number.i);
-    }
-    /* Subtração */
-    else if (a == SUB) {
-        number.f = proc1_a_value - proc1_b_value;
-        *((uint32_t *) &d) = htonl(number.i);
-    } else if (a == SUB + 4) {
-        number.f = proc2_a_value - proc2_b_value;
-        *((uint32_t *) &d) = htonl(number.i);
-    } else if (a == SUB + 8) {
-        number.f = proc3_a_value - proc3_b_value;
-        *((uint32_t *) &d) = htonl(number.i);
-    } else if (a == SUB + 12) {
-        number.f = proc4_a_value - proc4_b_value;
-        *((uint32_t *) &d) = htonl(number.i);
-    } else if (a == SUB + 16) {
-        number.f = proc5_a_value - proc5_b_value;
-        *((uint32_t *) &d) = htonl(number.i);
-    }
-    /* Multiplicação */
-    else if (a == MUL) {
-        number.f = proc1_a_value * proc1_b_value;
-        *((uint32_t *) &d) = htonl(number.i);
-    } else if (a == MUL + 4) {
-        number.f = proc2_a_value * proc2_b_value;
-        *((uint32_t *) &d) = htonl(number.i);
-    } else if (a == MUL + 8) {
-        number.f = proc3_a_value * proc3_b_value;
-        *((uint32_t *) &d) = htonl(number.i);
-    } else if (a == MUL + 12) {
-        number.f = proc4_a_value * proc4_b_value;
-        *((uint32_t *) &d) = htonl(number.i);
-    } else if (a == MUL + 16) {
-        number.f = proc5_a_value * proc5_b_value;
-        *((uint32_t *) &d) = htonl(number.i);
-    }
-    /* Divisão */
-    else if (a == DIV) {
-        number.f = proc1_a_value / proc1_b_value;
-        *((uint32_t *) &d) = htonl(number.i);
-    } else if (a == DIV + 4) {
-        number.f = proc2_a_value / proc2_b_value;
-        *((uint32_t *) &d) = htonl(number.i);
-    } else if (a == DIV + 8) {
-        number.f = proc3_a_value / proc3_b_value;
-        *((uint32_t *) &d) = htonl(number.i);
-    } else if (a == DIV + 12) {
-        number.f = proc4_a_value / proc4_b_value;
-        *((uint32_t *) &d) = htonl(number.i);
-    } else if (a == DIV + 16) {
-        number.f = proc5_a_value / proc5_b_value;
-        *((uint32_t *) &d) = htonl(number.i);
-    }
-    /* Seno */
-    else if (a == SEN) {
-        number.f = (float) sin(proc1_a_value);
-        *((uint32_t *) &d) = htonl(number.i);
-    } else if (a == SEN + 4) {
-        number.f = (float) sin(proc2_a_value);
-        *((uint32_t *) &d) = htonl(number.i);
-    } else if (a == SEN + 8) {
-        number.f = (float) sin(proc3_a_value);
-        *((uint32_t *) &d) = htonl(number.i);
-    } else if (a == SEN + 12) {
-        number.f = (float) sin(proc4_a_value);
-        *((uint32_t *) &d) = htonl(number.i);
-    } else if (a == SEN + 16) {
-        number.f = (float) sin(proc5_a_value);
-        *((uint32_t *) &d) = htonl(number.i);
-    }
-
-    /* Coseno */
-    else if (a == COS) {
-        number.f = (float) cos(proc1_a_value);
-        *((uint32_t *) &d) = htonl(number.i);
-    } else if (a == COS + 4) {
-        number.f = (float) cos(proc2_a_value);
-        *((uint32_t *) &d) = htonl(number.i);
-    } else if (a == COS + 8) {
-        number.f = (float) cos(proc3_a_value);
-        *((uint32_t *) &d) = htonl(number.i);
-    } else if (a == COS + 12) {
-        number.f = (float) cos(proc4_a_value);
-        *((uint32_t *) &d) = htonl(number.i);
-    } else if (a == COS + 16) {
-        number.f = (float) cos(proc5_a_value);
-        *((uint32_t *) &d) = htonl(number.i);
-    }
-
-    else {
+    } else if (a >= COS && a < END) {
+        number.f = cos(proc_a[(a-COS)/4]);
+    } else {
         return ERROR;
     }
 

@@ -12,6 +12,7 @@
 #define DIV     1992294600U
 #define SEN     1992294700U
 #define COS     1992294800U
+#define END     1992294900U
 
 /* This union help to convert int to float whithout casting it */
 typedef union {
