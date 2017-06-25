@@ -12,12 +12,9 @@
 #include "peripheral.h"
 #include "p_def.h"
 
-#define N_PROC 9
+#define N_MAX_PROC 9
 
-volatile float proc_a[N_PROC], proc_b[N_PROC];
-
-//volatile float proc1_a_value, proc2_a_value, proc3_a_value, proc4_a_value, proc5_a_value;
-//volatile float proc1_b_value, proc2_b_value, proc3_b_value, proc4_b_value, proc5_b_value;
+volatile float proc_a[N_MAX_PROC], proc_b[N_MAX_PROC];
 
 volatile uint32_t int_mem;
 
