@@ -5,20 +5,12 @@
 
 int main(int argc, char ** argv) {
 
-#ifdef _NFFT_12
     const int nfft = 65536;
-#else
-    const int nfft = 1024;
-#endif
 
     const int ndims = 1;
     const int isinverse = 0;
 
-#ifdef _NUM_100
     const int numffts = 10;
-#elif _NUM_1000
-    const int numffts = 1000;
-#endif
 
     int nbytes;
     int i;
@@ -45,8 +37,6 @@ int main(int argc, char ** argv) {
     fprintf(stderr, "\tnumffts=%d\n", numffts);
 
     free(buf); free(bufout);
-
-    printf("FOI\n");
 
     return 0;
 }

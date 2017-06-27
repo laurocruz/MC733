@@ -1,0 +1,564 @@
+PROCESSORS = 1
+
+SEM PERIFERICO:
+
+/home/ubuntu/mips-tlm
+ => Making mips ...
+ar: creating libmips.a
+ => Making memory ...
+ar: creating libmemory.a
+ => Making bus ...
+ar: creating libbus.a
+ => Making peripheral ...
+ar: creating libperipheral.a
+ => Making sw ...
+ => Making platform ...
+
+        SystemC 2.3.1-Accellera --- Jun 14 2017 14:07:19
+        Copyright (c) 1996-2014 by all Contributors,
+        ALL RIGHTS RESERVED
+sw/hello_world.mips
+ArchC: Reading ELF application file: sw/hello_world.mips
+
+ArchC: -------------------- Starting Simulation --------------------
+
+KISS	nfft=65536,	numffts=10
+
+ArchC: -------------------- Simulation Finished --------------------
+
+Info: /OSCI/SystemC: Simulation stopped by user.
+ArchC: Simulation statistics
+    Times: 168.88 user, 0.03 system, 167.72 real
+    Number of instructions executed: 5936801562
+    Simulation speed: 35153.96 K instr/s
+
+ => Making mips ...
+ => Making memory ...
+ => Making bus ...
+ => Making peripheral ...
+ => Making sw ...
+ => Making platform ...
+
+COM PERIFERICO:
+
+/home/ubuntu/mips-tlm
+ => Making mips ...
+ar: creating libmips.a
+ => Making memory ...
+ar: creating libmemory.a
+ => Making bus ...
+ar: creating libbus.a
+ => Making peripheral ...
+ar: creating libperipheral.a
+ => Making sw ...
+ => Making platform ...
+
+        SystemC 2.3.1-Accellera --- Jun 14 2017 14:07:19
+        Copyright (c) 1996-2014 by all Contributors,
+        ALL RIGHTS RESERVED
+sw/hello_world.mips
+ArchC: Reading ELF application file: sw/hello_world.mips
+
+ArchC: -------------------- Starting Simulation --------------------
+
+KISS	nfft=65536,	numffts=10
+
+ArchC: -------------------- Simulation Finished --------------------
+
+Info: /OSCI/SystemC: Simulation stopped by user.
+ArchC: Simulation statistics
+    Times: 159.07 user, 0.05 system, 157.93 real
+    Number of instructions executed: 5540964122
+    Simulation speed: 34833.50 K instr/s
+
+ => Making mips ...
+ => Making memory ...
+ => Making bus ...
+ => Making peripheral ...
+ => Making sw ...
+ => Making platform ...
+
+
+
+PROCESSORS = 2
+
+SEM PERIFERICO:
+
+/home/ubuntu/mips-tlm
+ => Making mips ...
+ar: creating libmips.a
+ => Making memory ...
+ar: creating libmemory.a
+ => Making bus ...
+ar: creating libbus.a
+ => Making peripheral ...
+ar: creating libperipheral.a
+ => Making sw ...
+ => Making platform ...
+
+        SystemC 2.3.1-Accellera --- Jun 14 2017 14:07:19
+        Copyright (c) 1996-2014 by all Contributors,
+        ALL RIGHTS RESERVED
+sw/hello_world.mips
+ArchC: Reading ELF application file: sw/hello_world.mips
+
+ArchC: -------------------- Starting Simulation --------------------
+
+sw/hello_world.mips
+ArchC: Reading ELF application file: sw/hello_world.mips
+
+ArchC: -------------------- Starting Simulation --------------------
+
+KISS	nfft=65536,	numffts=10
+
+ArchC: -------------------- Simulation Finished --------------------
+
+ArchC: -------------------- Simulation Finished --------------------
+
+Info: /OSCI/SystemC: Simulation stopped by user.
+ArchC: Simulation statistics
+    Times: 179.06 user, 0.02 system, 177.90 real
+    Number of instructions executed: 3320740726
+    Simulation speed: 18545.41 K instr/s
+ArchC: Simulation statistics
+    Times: 179.06 user, 0.02 system, 177.89 real
+    Number of instructions executed: 3427036285
+    Simulation speed: 19139.04 K instr/s
+
+ => Making mips ...
+ => Making memory ...
+ => Making bus ...
+ => Making peripheral ...
+ => Making sw ...
+ => Making platform ...
+COM PERIFERICO:
+
+/home/ubuntu/mips-tlm
+ => Making mips ...
+ar: creating libmips.a
+ => Making memory ...
+ar: creating libmemory.a
+ => Making bus ...
+ar: creating libbus.a
+ => Making peripheral ...
+ar: creating libperipheral.a
+ => Making sw ...
+ => Making platform ...
+
+        SystemC 2.3.1-Accellera --- Jun 14 2017 14:07:19
+        Copyright (c) 1996-2014 by all Contributors,
+        ALL RIGHTS RESERVED
+sw/hello_world.mips
+ArchC: Reading ELF application file: sw/hello_world.mips
+
+ArchC: -------------------- Starting Simulation --------------------
+
+sw/hello_world.mips
+ArchC: Reading ELF application file: sw/hello_world.mips
+
+ArchC: -------------------- Starting Simulation --------------------
+
+KISS	nfft=65536,	numffts=10
+
+ArchC: -------------------- Simulation Finished --------------------
+
+ArchC: -------------------- Simulation Finished --------------------
+
+Info: /OSCI/SystemC: Simulation stopped by user.
+ArchC: Simulation statistics
+    Times: 127.33 user, 0.04 system, 126.18 real
+    Number of instructions executed: 1931949110
+    Simulation speed: 15172.77 K instr/s
+ArchC: Simulation statistics
+    Times: 127.33 user, 0.04 system, 126.18 real
+    Number of instructions executed: 2065769045
+    Simulation speed: 16223.74 K instr/s
+
+ => Making mips ...
+ => Making memory ...
+ => Making bus ...
+ => Making peripheral ...
+ => Making sw ...
+ => Making platform ...
+
+
+
+PROCESSORS = 4
+
+SEM PERIFERICO:
+
+/home/ubuntu/mips-tlm
+ => Making mips ...
+ar: creating libmips.a
+ => Making memory ...
+ar: creating libmemory.a
+ => Making bus ...
+ar: creating libbus.a
+ => Making peripheral ...
+ar: creating libperipheral.a
+ => Making sw ...
+ => Making platform ...
+
+        SystemC 2.3.1-Accellera --- Jun 14 2017 14:07:19
+        Copyright (c) 1996-2014 by all Contributors,
+        ALL RIGHTS RESERVED
+sw/hello_world.mips
+ArchC: Reading ELF application file: sw/hello_world.mips
+
+ArchC: -------------------- Starting Simulation --------------------
+
+sw/hello_world.mips
+ArchC: Reading ELF application file: sw/hello_world.mips
+
+ArchC: -------------------- Starting Simulation --------------------
+
+sw/hello_world.mips
+ArchC: Reading ELF application file: sw/hello_world.mips
+
+ArchC: -------------------- Starting Simulation --------------------
+
+sw/hello_world.mips
+ArchC: Reading ELF application file: sw/hello_world.mips
+
+ArchC: -------------------- Starting Simulation --------------------
+
+KISS	nfft=65536,	numffts=10
+
+ArchC: -------------------- Simulation Finished --------------------
+
+ArchC: -------------------- Simulation Finished --------------------
+
+ArchC: -------------------- Simulation Finished --------------------
+
+ArchC: -------------------- Simulation Finished --------------------
+
+Info: /OSCI/SystemC: Simulation stopped by user.
+ArchC: Simulation statistics
+    Times: 203.63 user, 0.04 system, 202.49 real
+    Number of instructions executed: 1961614242
+    Simulation speed: 9633.23 K instr/s
+ArchC: Simulation statistics
+    Times: 203.63 user, 0.04 system, 202.49 real
+    Number of instructions executed: 2066096954
+    Simulation speed: 10146.33 K instr/s
+ArchC: Simulation statistics
+    Times: 203.63 user, 0.04 system, 202.49 real
+    Number of instructions executed: 2066052999
+    Simulation speed: 10146.11 K instr/s
+ArchC: Simulation statistics
+    Times: 203.63 user, 0.04 system, 202.49 real
+    Number of instructions executed: 2064242244
+    Simulation speed: 10137.22 K instr/s
+
+ => Making mips ...
+ => Making memory ...
+ => Making bus ...
+ => Making peripheral ...
+ => Making sw ...
+ => Making platform ...
+COM PERIFERICO:
+
+/home/ubuntu/mips-tlm
+ => Making mips ...
+ar: creating libmips.a
+ => Making memory ...
+ar: creating libmemory.a
+ => Making bus ...
+ar: creating libbus.a
+ => Making peripheral ...
+ar: creating libperipheral.a
+ => Making sw ...
+ => Making platform ...
+
+        SystemC 2.3.1-Accellera --- Jun 14 2017 14:07:19
+        Copyright (c) 1996-2014 by all Contributors,
+        ALL RIGHTS RESERVED
+sw/hello_world.mips
+ArchC: Reading ELF application file: sw/hello_world.mips
+
+ArchC: -------------------- Starting Simulation --------------------
+
+sw/hello_world.mips
+ArchC: Reading ELF application file: sw/hello_world.mips
+
+ArchC: -------------------- Starting Simulation --------------------
+
+sw/hello_world.mips
+ArchC: Reading ELF application file: sw/hello_world.mips
+
+ArchC: -------------------- Starting Simulation --------------------
+
+sw/hello_world.mips
+ArchC: Reading ELF application file: sw/hello_world.mips
+
+ArchC: -------------------- Starting Simulation --------------------
+
+KISS	nfft=65536,	numffts=10
+
+ArchC: -------------------- Simulation Finished --------------------
+
+ArchC: -------------------- Simulation Finished --------------------
+
+ArchC: -------------------- Simulation Finished --------------------
+
+ArchC: -------------------- Simulation Finished --------------------
+
+Info: /OSCI/SystemC: Simulation stopped by user.
+ArchC: Simulation statistics
+    Times: 141.18 user, 0.03 system, 140.02 real
+    Number of instructions executed: 1112472749
+    Simulation speed: 7879.82 K instr/s
+ArchC: Simulation statistics
+    Times: 141.18 user, 0.03 system, 140.02 real
+    Number of instructions executed: 1244478114
+    Simulation speed: 8814.83 K instr/s
+ArchC: Simulation statistics
+    Times: 141.18 user, 0.03 system, 140.02 real
+    Number of instructions executed: 1244436954
+    Simulation speed: 8814.54 K instr/s
+ArchC: Simulation statistics
+    Times: 141.18 user, 0.03 system, 140.02 real
+    Number of instructions executed: 1242625222
+    Simulation speed: 8801.71 K instr/s
+
+ => Making mips ...
+ => Making memory ...
+ => Making bus ...
+ => Making peripheral ...
+ => Making sw ...
+ => Making platform ...
+
+
+
+PROCESSORS = 8
+
+SEM PERIFERICO:
+
+/home/ubuntu/mips-tlm
+ => Making mips ...
+ar: creating libmips.a
+ => Making memory ...
+ar: creating libmemory.a
+ => Making bus ...
+ar: creating libbus.a
+ => Making peripheral ...
+ar: creating libperipheral.a
+ => Making sw ...
+ => Making platform ...
+
+        SystemC 2.3.1-Accellera --- Jun 14 2017 14:07:19
+        Copyright (c) 1996-2014 by all Contributors,
+        ALL RIGHTS RESERVED
+sw/hello_world.mips
+ArchC: Reading ELF application file: sw/hello_world.mips
+
+ArchC: -------------------- Starting Simulation --------------------
+
+sw/hello_world.mips
+ArchC: Reading ELF application file: sw/hello_world.mips
+
+ArchC: -------------------- Starting Simulation --------------------
+
+sw/hello_world.mips
+ArchC: Reading ELF application file: sw/hello_world.mips
+
+ArchC: -------------------- Starting Simulation --------------------
+
+sw/hello_world.mips
+ArchC: Reading ELF application file: sw/hello_world.mips
+
+ArchC: -------------------- Starting Simulation --------------------
+
+sw/hello_world.mips
+ArchC: Reading ELF application file: sw/hello_world.mips
+
+ArchC: -------------------- Starting Simulation --------------------
+
+sw/hello_world.mips
+ArchC: Reading ELF application file: sw/hello_world.mips
+
+ArchC: -------------------- Starting Simulation --------------------
+
+sw/hello_world.mips
+ArchC: Reading ELF application file: sw/hello_world.mips
+
+ArchC: -------------------- Starting Simulation --------------------
+
+sw/hello_world.mips
+ArchC: Reading ELF application file: sw/hello_world.mips
+
+ArchC: -------------------- Starting Simulation --------------------
+
+KISS	nfft=65536,	numffts=10
+
+ArchC: -------------------- Simulation Finished --------------------
+
+ArchC: -------------------- Simulation Finished --------------------
+
+ArchC: -------------------- Simulation Finished --------------------
+
+ArchC: -------------------- Simulation Finished --------------------
+
+ArchC: -------------------- Simulation Finished --------------------
+
+ArchC: -------------------- Simulation Finished --------------------
+
+ArchC: -------------------- Simulation Finished --------------------
+
+ArchC: -------------------- Simulation Finished --------------------
+
+Info: /OSCI/SystemC: Simulation stopped by user.
+ArchC: Simulation statistics
+    Times: 336.40 user, 0.04 system, 335.27 real
+    Number of instructions executed: 1812301619
+    Simulation speed: 5387.34 K instr/s
+ArchC: Simulation statistics
+    Times: 336.40 user, 0.04 system, 335.27 real
+    Number of instructions executed: 1913330217
+    Simulation speed: 5687.66 K instr/s
+ArchC: Simulation statistics
+    Times: 336.40 user, 0.04 system, 335.27 real
+    Number of instructions executed: 1761381045
+    Simulation speed: 5235.97 K instr/s
+ArchC: Simulation statistics
+    Times: 336.40 user, 0.04 system, 335.27 real
+    Number of instructions executed: 1761309723
+    Simulation speed: 5235.76 K instr/s
+ArchC: Simulation statistics
+    Times: 336.40 user, 0.04 system, 335.27 real
+    Number of instructions executed: 1761332250
+    Simulation speed: 5235.83 K instr/s
+ArchC: Simulation statistics
+    Times: 336.40 user, 0.04 system, 335.26 real
+    Number of instructions executed: 1915184800
+    Simulation speed: 5693.18 K instr/s
+ArchC: Simulation statistics
+    Times: 336.40 user, 0.04 system, 335.26 real
+    Number of instructions executed: 1761315310
+    Simulation speed: 5235.78 K instr/s
+ArchC: Simulation statistics
+    Times: 336.40 user, 0.04 system, 335.26 real
+    Number of instructions executed: 1913587867
+    Simulation speed: 5688.43 K instr/s
+
+ => Making mips ...
+ => Making memory ...
+ => Making bus ...
+ => Making peripheral ...
+ => Making sw ...
+ => Making platform ...
+COM PERIFERICO:
+
+/home/ubuntu/mips-tlm
+ => Making mips ...
+ar: creating libmips.a
+ => Making memory ...
+ar: creating libmemory.a
+ => Making bus ...
+ar: creating libbus.a
+ => Making peripheral ...
+ar: creating libperipheral.a
+ => Making sw ...
+ => Making platform ...
+
+        SystemC 2.3.1-Accellera --- Jun 14 2017 14:07:19
+        Copyright (c) 1996-2014 by all Contributors,
+        ALL RIGHTS RESERVED
+sw/hello_world.mips
+ArchC: Reading ELF application file: sw/hello_world.mips
+
+ArchC: -------------------- Starting Simulation --------------------
+
+sw/hello_world.mips
+ArchC: Reading ELF application file: sw/hello_world.mips
+
+ArchC: -------------------- Starting Simulation --------------------
+
+sw/hello_world.mips
+ArchC: Reading ELF application file: sw/hello_world.mips
+
+ArchC: -------------------- Starting Simulation --------------------
+
+sw/hello_world.mips
+ArchC: Reading ELF application file: sw/hello_world.mips
+
+ArchC: -------------------- Starting Simulation --------------------
+
+sw/hello_world.mips
+ArchC: Reading ELF application file: sw/hello_world.mips
+
+ArchC: -------------------- Starting Simulation --------------------
+
+sw/hello_world.mips
+ArchC: Reading ELF application file: sw/hello_world.mips
+
+ArchC: -------------------- Starting Simulation --------------------
+
+sw/hello_world.mips
+ArchC: Reading ELF application file: sw/hello_world.mips
+
+ArchC: -------------------- Starting Simulation --------------------
+
+sw/hello_world.mips
+ArchC: Reading ELF application file: sw/hello_world.mips
+
+ArchC: -------------------- Starting Simulation --------------------
+
+KISS	nfft=65536,	numffts=10
+
+ArchC: -------------------- Simulation Finished --------------------
+
+ArchC: -------------------- Simulation Finished --------------------
+
+ArchC: -------------------- Simulation Finished --------------------
+
+ArchC: -------------------- Simulation Finished --------------------
+
+ArchC: -------------------- Simulation Finished --------------------
+
+ArchC: -------------------- Simulation Finished --------------------
+
+ArchC: -------------------- Simulation Finished --------------------
+
+ArchC: -------------------- Simulation Finished --------------------
+
+Info: /OSCI/SystemC: Simulation stopped by user.
+ArchC: Simulation statistics
+    Times: 222.16 user, 0.04 system, 221.03 real
+    Number of instructions executed: 963156947
+    Simulation speed: 4335.42 K instr/s
+ArchC: Simulation statistics
+    Times: 222.16 user, 0.04 system, 221.02 real
+    Number of instructions executed: 1091711402
+    Simulation speed: 4914.08 K instr/s
+ArchC: Simulation statistics
+    Times: 222.16 user, 0.04 system, 221.02 real
+    Number of instructions executed: 1121971008
+    Simulation speed: 5050.28 K instr/s
+ArchC: Simulation statistics
+    Times: 222.16 user, 0.04 system, 221.02 real
+    Number of instructions executed: 1121900715
+    Simulation speed: 5049.97 K instr/s
+ArchC: Simulation statistics
+    Times: 222.16 user, 0.04 system, 221.02 real
+    Number of instructions executed: 1121923724
+    Simulation speed: 5050.07 K instr/s
+ArchC: Simulation statistics
+    Times: 222.16 user, 0.04 system, 221.02 real
+    Number of instructions executed: 1093567787
+    Simulation speed: 4922.43 K instr/s
+ArchC: Simulation statistics
+    Times: 222.16 user, 0.04 system, 221.02 real
+    Number of instructions executed: 1121905039
+    Simulation speed: 5049.99 K instr/s
+ArchC: Simulation statistics
+    Times: 222.16 user, 0.04 system, 221.02 real
+    Number of instructions executed: 1091969317
+    Simulation speed: 4915.24 K instr/s
+
+ => Making mips ...
+ => Making memory ...
+ => Making bus ...
+ => Making peripheral ...
+ => Making sw ...
+ => Making platform ...
