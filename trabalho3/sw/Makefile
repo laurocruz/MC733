@@ -10,7 +10,7 @@ LDFLAGS = -lm
 TARGET = hello_world.mips
 INC_DIR := -I.
 
-SRCS := demo_parallel.c
+SRCS := demo_serial.c
 OBJS := $(SRCS:.c=.o)
 
 #------------------------------------------------------
