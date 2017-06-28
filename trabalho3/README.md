@@ -136,6 +136,8 @@ Ainda conseguimos obtem um pequeno ganho pois, como explicamos antes, a função
 
 Assim, pela forma como o `KissFFT` foi implementado, ele não apresenta uma escalabilidade muito boa para multicores, já que acima de, no máximo, 5 processadores, o ganho será minúsculo, pois ele virá inteiro da função de `alloc`.
 
+### Periféricos
+
 ## Conclusão
 
 - O `KissFFT` apresenta um ganho muito bom para 2 e 4 processadores, mas para mais processadores o ganho se torna muito pequeno, pois o sistema não foi programado para ser mais escalável.
