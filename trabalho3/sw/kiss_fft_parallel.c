@@ -397,7 +397,6 @@ void kf_work(
     // top-level (not recursive)
     if (fstride==1 && p<=5)
     {
-        //fprintf(stderr,"X");
         int k;
 
         // execute the p different work units in different threads
@@ -506,7 +505,7 @@ kiss_fft_cfg kiss_fft_alloc(int nfft,int inverse_fft,void * mem,size_t * lenmem 
 
     int i;
     int start = (proc-1)*(nfft/processors);
-    int end; 
+    int end;
 
     if (proc == processors)
         end = nfft;

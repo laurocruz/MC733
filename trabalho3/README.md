@@ -14,6 +14,8 @@ O software escolhido pelo grupo para o projeto 3 foi o `FFT` (Fast Fourier Trans
 
 O `FFT` apresenta características que nos permite tirar proveito do paralelismo obtido através do uso de múltiplos processadores, como as diversas operações matemáticas e a geração de tabelas geométricas. Além disso, podemos fazer uso de pelo menos dois tipos de aceleradores, que serão discutidos abaixo.
 
+Foi usada no projeto uma implementação de `FFT` chamada [`KissFFT`](https://sourceforge.net/projects/kissfft/), que se encontra sobre licença BSD e seu [Copyright](sw/COPYING) está presente na pasta [sw](sw). Foi testado e usado neste projeto apenas a implementação principal do `KissFFT`, que consiste em um FFT complexo de uma dimensão.
+
 ### Kernel de Código a ser Acelerado
 Com o `FFT`, iremos utilizar dois tipos de aceleradores:
 - **Acelerador 1:** operações de ponto flutuante.
@@ -40,10 +42,100 @@ A fim de analisar o impacto de múltiplos cores, assim como o impacto do acelera
 Desta forma, vamos inicialmente determinar a melhor configuração de paralelismo, e então verificar o impacto de cada acelerador individualmente, assim como o impacto deles em conjunto, com ou sem paralelismo.
 
 ### Modificações feitas no código
+O `KissFFT` é uma library, assim é necessário importá-la para um arquivo de teste e dentro dele utilizamos suas funções. Sendo assim, aqui não será muito discutido aqui o que foi alterado no arquivo de teste, pois nesse basicamente foi feita sincronização das threads, e nenhuma real paralelização ou utilização dos periféricos foi feita nele.
+
+#### Paralelismo
+A implementação do paralelismo no `KissFFT` foi feita principalmente em duas funções:
+
+`kiss_fft_alloc`:
+
+É a funcão responsável por realizar a alocação e inicialização do buffer de dados do `FFT`. Em nossa implementação a função já recebe a estrutura alocada e faz a inicialização que é totalmente paralelizável, já que consiste de um for do-all (ou seja, um for em que todas as iterações são realizadas e sem interação entre si).
+
+Aqui basicamente dividimos um pedaço do for para cada processador:
+
+```C
+int start = (proc-1)*(nfft/processors);
+int end;
+
+if (proc == processors) // Numero do processador == Quantidade de processadores
+    end = nfft;         // Feito para evitar erros de aproximação
+else end = proc*(nfft/processors);
+```
+
+Essa função claramente não pertence ao core do FFT, mas para valores grandes do N-Point FFT (`nfft`), ou seja, o comprimento do FFT, é uma função que pode ser demorada.
+
+
+`kf_work`:
+
+Esta é a principal função do `Kiss_FFT`. Ela é a responsável por fazer o processamento do sinal e sendo assim é foco principal da paralelização.
+
+Na implementação do `KissFFT` ela já se encontrava paralelizada usando OpenMP, o que pode ser visto no arquivo de sua implementação [original](sw/kiss_fft_serial.c) utilizada para testar a execuçõ em um processador. Sendo assim, o que fizemos foi adaptar essa região paralelizada para nosso modelo. A seguir temos a principal região da paralelização:
+
+```C
+if (fstride==1 && p<=5)
+{
+    // execute the p different work units in different threads
+    for (int k = proc-1; k < p; k += processors)
+        kf_work(Fout + k*m, f + fstride*in_stride*k, fstride*p, in_stride, factors, st, proc);
+        .
+        .
+```
+
+Podemos ver acima que o for paralelizado chama a função recursivamente. Cada um dos processadores entra neste loop apenas uma vez, já que nas chamadas recursivas temos uma mudança do parâmetro `fstride` (que é o terceiro parâmetro da função), que  como pode ser visto acima, precisa ser igual a 1 para entrar na região. Caso não entre, temos uma execução "alternativa" abaixo, que é o trabalho que cada processador executará separadamente.
+
+Pode-se ver acima que a divisão é feita entre **p** pedaços de **m** regiões do vetor e esse **p** precisa ser menor que 5.
+
+Este valor **p** é o primeiro divisor do `nfft`, mencionado acima, que pode ter valor 4, 2, 3, 5 ou outros (nessa ordem de teste). Isso é uma limitação da implementação do `KissFFT` que não foi possível contornar, o que resultará em limitações no número de processadores na paralelização, o que será visto abaixo nos resultados.
+
+- **Locks**: Na implementação da paralelização foi usado o periférico de hardware lock implementado no último exercício, este foi utilizado para criar locks locais que são utilizados instansamente na paralelização. A implementação desses locks pode ser vista no [arquivo de demo do sistema](sw/demo_paralle.c).
+
+
+#### Periféricos
 
 
 ## Resultados
 
+Diferentemente do que poderia ser esperado, precisamos analisar a quantidade de instruções executadas pelos processadores para avaliar o ganhou (ou não) com a paralelização e a utilização de aceleradores, pois o tempo de execução apresentado pelo simulador do mips é o tempo real de execução, e como toda a execução é feita sobre um único processador, toda a execução é, na na máquina real, feita concorrentemente.
+
+Sendo assim, os dados analidados abaixo são a quantidade de instruções executadas pelo processador que executou a maor quantidade de instruções (no caso de mais de um processador).
+
+Todos os testes do trabalho foram realizados para os seguintes valores de entrada:
+
+- **nfft** = 65536
+
+Representa o valor do comprimento do FFT, que também é o número de coeficientes de frquência e o número de samples de sinal
+
+- **numffts** = 10
+
+Quantidade de vezes que executamos o FFT
+
 ## Análise
 
+![all_times](graphs/times.png)
+
+Acima temos a quantidade de instruções para todos os casos de teste do KissFFT, com paralelização e utilização do periférico.
+
+### Paralelização
+Para avaliar a paralelização do programa testamos o programa original com apenas um processador e então a versão paralelizada com 2, 4 e 8 processadores. Assim, podemos avaliar se o programa apresenta uma boa escalabilidade.
+
+Como podemos ver acima no gráfico e nas porcentagens resultantes, a relação entre a execução do `KissFFT` com e sem aceleradores para duas quantidades diferentes de processadores é basicamente a mesma, então faremos a análise da paralelização pensando apenas nos testes sem uso dos periféricos, já que ela é a mesma para os testes com os periféricos.
+
+Vamos então comparar a porcentagem de diminuição da quantidade de instruções de uma execução com X processadores para uma com 2*X processadores:
+
+- **1 -> 2**: Melhoria de **42.27%**
+- **2 -> 4**: Melhoria de **39.71%**
+- **4 -> 8**: Melhoria de **7.30%**
+
+Como podemos verificar pelos dados acima, a utilização de 2 e 4 processadores aparesentaram resulados muito bons, considerando que o esperado na teoria seria uma melhora de 50% com a dobra de processadores, essa melhoria chegou próximo ao esperado, considerando o overhead criado com a necessidade de garantir a sincronização dos processadores utilizando os locks.
+
+O resultado aqui que foje (negativamente) do esperado é quando é utilizado 8 processadores. Isso se dá pelo o que foi comentado acima quando explicamos a implementação da paralelização do `KissFFT`. Basicamente, na paralelização original do código, que foi a que seguimos para obter os mesmos resultados, a divisão das tarefas é feita em **p** pedações de **m** posições do vetor de buffer do FFT. Acontece que esse **p** pode ter valor 4, 2, 3, 5 ou outros, dependendo de qual desses valores primeiro divido **nfft**. E a paralelização é feito apenas para um valor **p <= 5**.
+
+Como nos nossos testes **nfft == 4**, então o trabaho é divido apenas para 4 processadores, e os outros 4 ficam parados sem realizar nenhum trabalho.
+
+Ainda conseguimos obtem um pequeno ganho pois, como explicamos antes, a função `kiss_fft_alloc` também está paralelizada, e essa faz proveito total dos processadores, mas ela não tem a maior expressão na execução total do software.
+
+Assim, pela forma como o `KissFFT` foi implementado, ele não apresenta uma escalabilidade muito boa para multicores, já que acima de, no máximo, 5 processadores, o ganho será minúsculo, pois ele virá inteiro da função de `alloc`.
+
 ## Conclusão
+
+- O `KissFFT` apresenta um ganho muito bom para 2 e 4 processadores, mas para mais processadores o ganho se torna muito pequeno, pois o sistema não foi programado para ser mais escalável.

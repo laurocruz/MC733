@@ -1,0 +1,43 @@
+(2S) em relacao a (1S):
+42.27%
+
+(4S) em relacao a (1S):
+65.20%
+
+(4S) em relacao a (2S):
+39.71%
+
+(8S) em relacao a (1S):
+67.74%
+
+(8S) em relacao a (4S):
+7.30%
+
+
+(1P) em relacao a (1S):
+41.54%
+
+(2P) em relacao a (2S):
+39.72%
+
+(4P) em relacao a (4S):
+39.77%
+
+(8P) em relacao a (8S):
+41.42%
+
+
+(2P) em relacao a (1P):
+40.48%
+
+(4P) em relacao a (1P):
+64.15%
+
+(4P) em relacao a (2P):
+39.76%
+
+(8P) em relacao a (1P):
+67.67%
+
+(8P) em relacao a (4P):
+9.84%

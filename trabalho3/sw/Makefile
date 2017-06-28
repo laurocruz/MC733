@@ -4,13 +4,13 @@
 
 #changed as this option was given in path
 CC = mips-newlib-elf-gcc
-CFLAGS = -msoft-float -specs=archc -D_PER
+CFLAGS = -msoft-float -specs=archc
 LDFLAGS = -lm
 
 TARGET = hello_world.mips
 INC_DIR := -I.
 
-SRCS := demo_serial.c
+SRCS := demo_parallel.c
 OBJS := $(SRCS:.c=.o)
 
 #------------------------------------------------------
