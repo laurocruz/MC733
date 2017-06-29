@@ -94,22 +94,22 @@ Este valor **p** é o primeiro divisor do `nfft`, mencionado acima, que pode ter
 
 O periférico de ponto flutuante permite que operações de ponto flutuante (adição, subtração, multiplicação e divisão) sejam executadas em apenas um ciclo de clock do processador.
 
-Para isso, a implementação do periférico (feita no arquivo [peripheral.cpp](peripheral/peripheral.cpp)) subdivide regiões de acesso ao periférico para cada uma das operações possíveis, permitindo que se possa realizar multiplas operações de ponto flutuante simultaneamente a partir de um offset.
-Temos uma região para os números `a`'s, uma região para os números `b`'s e regiões para as operações (`a+b`, `a-b`, `a*b`, `a/b`) e, um número `a` ou `b` específico ou uma operação entre `a` e `b` especifico é escrito/lido utilizando um mesmo deslocamento a partir de um endereço base.
-Abaixo está uma tabela em que indica como deve ser o uso do periférico. A primeira coluna indica se naquele endereço o valor deve ser lido ou escrito, a segunda coluna indica o que será escrito ou lido daquele endereço e a terceira diz qual o endereço.
+Para isso, a implementação do periférico (feita no arquivo [peripheral.cpp](peripheral/peripheral.cpp)) separa regiões de acesso ao periférico para cada uma das operações possíveis, permitindo que possam ser realizadas diversas operações de ponto flutuante simultaneamente, com a utilização de um offset apropriado. Sejam `a` e `b` dois operandos de uma operação de ponto flutuante. Temos uma região para os números `a's`, uma região para os números `b's` e regiões para as operações (`a+b`, `a-b`, `a*b`, `a/b`). Além disso, um número `a` ou `b` específico, ou uma operação entre `a` e `b` especifica é escrita/lida utilizando um mesmo deslocamento a partir de um endereço base.
+
+Abaixo está uma tabela que indica como deve ser feito o uso do periférico com relação à escrita dos operandos e à leitura da operação desejada. A primeira coluna indica se naquele endereço o valor deve ser lido ou escrito, a segunda coluna indica o que será escrito ou lido no endereço em questão e a terceira diz qual o valor desse endereço.
 
 |         |              |                      |
 |---------|--------------|----------------------|
 | Escrita | a+offset              | 1992294100U + offset |
 | Escrita | b+offset              | 1992294200U + offset |
 | Leitura | (a+offset)+(b+offset) | 1992294300U + offset |
-| Leitura | (a+offset)+(b+offset) | 1992294400U + offset |
-| Leitura | (a+offset)+(b+offset) | 1992294500U + offset |
-| Leitura | (a+offset)+(b+offset) | 1992294600U + offset |
+| Leitura | (a+offset)-(b+offset) | 1992294400U + offset |
+| Leitura | (a+offset)*(b+offset) | 1992294500U + offset |
+| Leitura | (a+offset)/(b+offset) | 1992294600U + offset |
 
-Também, para auxiliar na implementação durante ao código foram criada funções para realizar a conversão e envio de dados ao periférico e conversão e retorno do valor desejado. Essas funções se encontram em [peripheral_use_parallel.h](sw/peripheral_use_parallel.h). Para um rápido entendimento do seu funcionamento foi criado este [arquivo](peripheral/README.md) que mostra um uso isolado do periférico.
+Além disso, para auxiliar na implementação durante do código foram criadas funções para realizar a conversão e envio de dados ao periférico e conversão e retorno do valor desejado. Essas funções se encontram em [peripheral_use_parallel.h](sw/peripheral_use_parallel.h). Para um rápido entendimento do seu funcionamento foi elaborado este [arquivo](peripheral/README.md) que mostra um uso isolado do periférico.
 
-Depois de implementado, as funções descrita em [peripheral_use_parallel.h](sw/peripheral_use_parallel.h) foram aplicadas no código do KissFFT modificando as operações originais do ponto flutuante, substituindo-as pelas novas funções, também, no KissFFT as operações com números imaginários são operações de ponto flutuante e portanto também foram substituidas pelas operações do periférico. Todas essas modificações foram feitas nos arquivos [_kiss_fft_guts_serial.h](sw/_kiss_fft_guts_serial.h), [_kiss_fft_guts_parallel.h](sw/_kiss_fft_guts_parallel.h), [kiss_fft_parallel.c](sw/kiss_fft_parallel.c), [kiss_fft_parallel.h](sw/kiss_fft_parallel.h)
+Depois de implementado o periférico, as funções descritas em [peripheral_use_parallel.h](sw/peripheral_use_parallel.h) foram aplicadas no código do KissFFT modificando as operações originais de ponto flutuante, substituindo-as pelas funções do nosso periférico. No KissFFT, as operações com números imaginários são operações de ponto flutuante, e portanto também foram substituidas pelas funções do periférico. Essas modificações foram realizadas nos arquivos [_kiss_fft_guts_serial.h](sw/_kiss_fft_guts_serial.h), [_kiss_fft_guts_parallel.h](sw/_kiss_fft_guts_parallel.h), [kiss_fft_parallel.c](sw/kiss_fft_parallel.c) e [kiss_fft_parallel.h](sw/kiss_fft_parallel.h).
 
 
 ## Resultados
